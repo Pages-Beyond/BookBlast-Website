@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="assets/Bookblast Official Logo.png" type="image/png">
+</head>
+
+<style>
+    body {
+        background-color: #5E4447;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body,
+    html {
+        overflow-x: hidden;
+        margin: 0;
+    }
+
+    .navbar,
+    .offcanvas {
+        background-color: #5E4447;
+    }
+
+    .form-container {
+        background-color: #9B775D;
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .form-layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .book-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        flex: 1;
+    }
+
+    .input-field {
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+        max-width: 100%;
+    }
+
+    .upload-box {
+        margin: 0 auto;
+        border: 2px solid white;
+        width: 160px;
+        height: 160px;
+        background-color: white;
+        border-radius: 8px;
+    }
+
+    .preview-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0;
+        margin: 20px auto 0;
+    }
+
+    .preview-image {
+        width: 100%;
+        max-width: 800px;
+        /* Increased the max-width for a larger image */
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        border: 2px solid white;
+    }
+
+    .add-book-btn {
+        display: block;
+        width: 100%;
+        max-width: 180px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #7D97A0;
+        color: white;
+        border: none;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+        .preview-section {
+            margin: 20px 0 0;
+        }
+
+        .form-layout {
+            gap: 20px;
+        }
+
+        .book-details {
+            align-items: center;
+            text-align: center;
+        }
+
+        .input-field {
+            max-width: 100%;
+        }
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+    }
+
+    .navbar-brand-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .navbar-brand-text {
+        font-size: 1.8rem;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    .navbar-collapse {
+        justify-content: flex-end;
+    }
+
+    .nav-item .nav-link {
+        font-size: 20px;
+        color: white;
+    }
+
+    /* Responsiveness for NavBar */
+    @media (max-width: 991px) {
+        .navbar-brand-img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 18px;
+        }
+
+        .navbar-brand-text {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-brand-text {
+            font-size: 1.2rem;
+        }
+    }
+
+    .highlighted-link {
+        background-color: #BAAA74;
+        border: 2px solid #BAAA74;
+        border-radius: 10px;
+        padding: 8px;
+        text-decoration: none;
+    }
+
+    .nav-link:hover {
+        background-color: #BAAA74;
+        color: #5E4447;
+        border-radius: 10px;
+        padding: 8px;
+        text-decoration: none;
+    }
+
+    .nav-link.active {
+        background-color: #BAAA74;
+        color: #5E4447;
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    @media (max-width: 768px) {
+        .main-column .bookTitle h1 {
+            font-size: 1.5rem;
+            margin-left: 50px !important;
+        }
+    }
+
+    .add-form-container {
+        width: 60%;
+        max-width: 1000px;
+        margin: 20px auto;
+        background-color: #9B775D;
+        padding: 20px;
+        border-radius: 8px;
+    }
+</style>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-fixed-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/artN.jpg" alt="Admin" class="navbar-brand-img">
+                <span class="navbar-brand-text">Admin</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
+                <button type="button" class="btn-close text-reset position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div class="offcanvas-body">
+                    <h5 class="text-white mb-4">Menu</h5>
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="" id="navbar-edit">Edit Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="" id="navbar-logout">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="sidebar-column col-2 d-flex flex-column p-3 text-white" style="height: 100vh;">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white text-center highlighted-link" href="books1.html"
+                            id="bookLink">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white text-center" href="users1.html" id="userLink">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white text-center" href="requests1.html"
+                            id="requestLink">Requests</a>
+                    </li>
+                </ul>
+
+                <!-- Image at the Bottom of the Sidebar / Logo -->
+                <div class="mt-auto">
+                    <img src="assets/Bookblast Official Logo.png" alt="Bottom Image" class="img-fluid w-100"
+                        style="max-height: 70px; object-fit: contain;margin-left: -30px; margin-top: -50px;">
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-column col-10 d-flex flex-column align-items-start ps-3">
+                <div class="bookTitle text-end">
+                    <h1 class="ms-0">Books</h1>
+                </div>
+
+                <!-- Add Form -->
+                <div class="add-form-container mt-4 ms-5 form-container">
+                    <form id="bookForm" class="form-layout">
+                        <div class="row w-100">
+
+                            <!-- Left side: Book Title and Author -->
+                            <div class="col-12 col-md-6 book-details">
+                                <div class="mb-3">
+                                    <label for="bookTitle" class="form-label text-white">Title</label>
+                                    <input type="text" class="form-control input-field" id="bookTitle" name="bookTitle"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookAuthor" class="form-label text-white">Author</label>
+                                    <input type="text" class="form-control input-field" id="bookAuthor"
+                                        name="bookAuthor" required>
+                                </div>
+
+                                <!-- New Box Below Author -->
+                                <div class="upload-box"></div>
+                                <h5 class="text-white text-center">Upload Cover</h5>
+                            </div>
+
+                            <!-- Right side: Preview next to the book fields -->
+                            <div class="col-12 col-md-6 preview-section">
+                                <!-- Changed col-md-4 to col-md-6 for more space -->
+                                <label for="previewImage" class="form-label text-white">Preview</label>
+                                <img src="assets/peterpan.jfif" alt="Preview Image" class="preview-image">
+
+                                <!-- Add Book Button moved below the image -->
+                                <button type="submit" class="btn btn-light add-book-btn"
+                                    onclick="validateAndRedirect(event)">
+                                    Add Book
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add Button Required
+        function validateAndRedirect(event) {
+            event.preventDefault();
+            const form = document.getElementById('bookForm');
+            if (form.checkValidity()) {
+                window.location.href = 'books.html';
+            } else {
+                form.reportValidity();
+            }
+        }
+    </script>
+    <script>
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
