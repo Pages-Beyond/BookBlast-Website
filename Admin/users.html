@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="assets/Bookblast Official Logo.png" type="image/png">
+</head>
+
+<style>
+    body {
+        background-color: #5E4447;
+        color: white;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body,
+    html {
+        overflow-x: hidden;
+        margin: 0;
+    }
+
+    .navbar,
+    .offcanvas {
+        background-color: #5E4447;
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+    }
+
+    .navbar-brand-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .navbar-brand-text {
+        font-size: 1.8rem;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+    }
+
+    .navbar-collapse {
+        justify-content: flex-end;
+    }
+
+    .nav-item .nav-link {
+        font-size: 20px;
+        color: white;
+    }
+
+    /* Responsiveness for NavBar */
+    @media (max-width: 991px) {
+        .navbar-brand-img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 18px;
+        }
+
+        .navbar-brand-text {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .navbar-brand-text {
+            font-size: 1.2rem;
+        }
+
+        .container,
+        #expandable {
+            width: calc(100% - 30px);
+            margin: 0 15px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        #expandable {
+            max-width: 100%;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        #expandable p {
+            font-size: 12px;
+        }
+
+        #expandable h5 {
+            font-size: 14px;
+        }
+
+        .bookTitle h1 {
+            font-size: 1.5rem;
+        }
+
+        .restrict-button {
+            margin-right: 15px;
+        }
+
+        .container button {
+            margin-right: 15px;
+            margin-left: 15px;
+        }
+    }
+
+    .highlighted-link {
+        background-color: #BAAA74;
+        border: 2px solid #BAAA74;
+        border-radius: 10px;
+        padding: 8px;
+        text-decoration: none;
+    }
+
+    .nav-link:hover {
+        background-color: #BAAA74;
+        color: #5E4447;
+        border-radius: 10px;
+        padding: 8px;
+        text-decoration: none;
+    }
+
+    .nav-link.active {
+        background-color: #BAAA74;
+        color: #5E4447;
+        border-radius: 10px;
+        padding: 8px;
+    }
+</style>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-fixed-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/artN.jpg" alt="Admin" class="navbar-brand-img">
+                <span class="navbar-brand-text">Admin</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
+                <button type="button" class="btn-close text-reset position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div class="offcanvas-body">
+                    <h5 class="text-white mb-4">Menu</h5>
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="" id="navbar-edit">Edit Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="" id="navbar-logout">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="container-fluid">
+        <div class="row d-flex flex-nowrap">
+            <div class="sidebar col-2 d-flex flex-column p-3 text-white" style="height: 100vh;">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white text-center" href="books.html" id="bookLink">Books</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white text-center highlighted-link" href="users.html"
+                            id="userLink">Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white text-center" href="requests.html"
+                            id="requestLink">Requests</a>
+                    </li>
+                </ul>
+
+                <!-- Image at the Bottom of the Sidebar / Logo -->
+                <div class="mt-auto">
+                    <img src="assets/Bookblast Official Logo.png" alt="Bottom Image" class="img-fluid w-100"
+                        style="max-height: 70px; object-fit: contain;margin-left: -30px; margin-top: -50px;">
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content col-10 d-flex flex-column align-items-start">
+                <div class="bookTitle">
+                    <h1>Users</h1>
+                </div>
+
+                <div class="container ms-3"
+                    style="width: 800px; border-radius: 10px; height: 60px; background-color: #C29A7D; display: flex; align-items: center; justify-content: space-between;">
+                    <span>John Doe</span>
+
+                    <!-- Dropdown Button -->
+                    <button class="btn" type="button" id="expandButton"
+                        style="background-color: #C29A7D; border: none;">
+                        <i class="fa-solid fa-caret-down" style="font-size: 24px;"></i>
+                    </button>
+                </div>
+
+                <!-- Expandable Section Below the Container -->
+                <div id="expandable" class="ms-3"
+                    style="display: none; background-color: #9B775D; width: 800px; height: 350px; padding-top: 30px; border-radius: 10px;">
+                    <p style="color: white; text-align: left; padding-left: 20px; margin-bottom: 0;">Name: John Doe</p>
+                    <p style="color: white; text-align: left; padding-left: 20px; margin-bottom: 0;">Contact No:
+                        123-456-7890</p>
+                    <p style="color: white; text-align: left; padding-left: 20px; margin-bottom: 0;">Email:
+                        example@example.com</p>
+                    <p style="color: white; text-align: left; padding-left: 20px; margin-bottom: 0;">Address: 123 Main
+                        St, City, Country</p>
+                    <p
+                        style="color: white; text-align: left; padding-left: 20px; margin-bottom: 0; border-bottom: 1px solid white; width: 750px; margin-left: 20px;">
+                    </p>
+
+                    <!-- Table Header -->
+                    <div class="mt-4" style="display: flex; justify-content: space-between; padding: 10px 20px;">
+                        <h5 style="color: white; font-weight: bold; margin: 0; flex: 1;">Borrowed Books</h5>
+                        <p style="color: white; font-weight: bold; margin: 0; flex: 1; margin-top: -20px;">Title</p>
+                        <p style="color: white; font-weight: bold; margin: 0; flex: 1; margin-top: -20px;">Author</p>
+                        <p style="color: white; font-weight: bold; margin: 0; flex: 1; margin-top: -20px;">Return By</p>
+                    </div>
+
+                    <!-- Table Content (Aligned Columns with p tags for Title, Author, Return By) -->
+                    <div style="display: flex; justify-content: space-between; padding: 10px 20px;">
+                        <p style="color: white; margin: 0; flex: 1;"></p>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">Book 1</h5>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">John Doe</h5>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">04-08-2025</h5>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px 20px;">
+                        <p style="color: white; margin: 0; flex: 1;"></p>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">Book 2</h5>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">Stephen G</h5>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">04-08-2025</h5>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px 20px;">
+                        <p style="color: white; margin: 0; flex: 1;"></p>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">Book 3</h5>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">JohnB C</h5>
+                        <h5 style="color: white; margin: 0; flex: 1; margin-top: -30px;">04-08-2025</h5>
+                    </div>
+
+                    <!-- Restrict Button -->
+                    <div style="display: flex; justify-content: flex-end; padding: 10px 20px;">
+                        <button
+                            style="background-color: #B26424; color: white; padding: 10px 40px; border: none; border-radius: 25px; cursor: pointer; font-size: 16px;">
+                            Restrict
+                        </button>
+                    </div>
+                </div>
+
+                <div class="container ms-3 mt-4"
+                    style="width: 800px; border-radius: 10px; height: 60px; background-color: #C29A7D; display: flex; align-items: center; justify-content: space-between;">
+                    <span>Michael Jackson</span>
+
+                    <!-- Dropdown Button -->
+                    <button class="btn" type="button" id="expandButton"
+                        style="background-color: #C29A7D; border: none;">
+                        <i class="fa-solid fa-caret-down" style="font-size: 24px;"></i>
+                    </button>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+                <script>
+                    document.getElementById('expandButton').addEventListener('click', function () {
+                        const expandable = document.getElementById('expandable');
+                        if (expandable.style.display === 'none' || expandable.style.display === '') {
+                            expandable.style.display = 'block';
+                        } else {
+                            expandable.style.display = 'none';
+                        }
+                    });
+                </script>
+                <script>
+                    const currentPage = window.location.pathname.split('/').pop();
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        if (link.getAttribute('href') === currentPage) {
+                            link.classList.add('active');
+                        }
+                    });
+                </script>
+</body>
+
+</html>
