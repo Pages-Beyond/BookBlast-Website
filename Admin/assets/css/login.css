@@ -1,0 +1,54 @@
+body {
+    background-color: #5E4447;
+    color: white;
+    height: 100vh;
+    margin: 0;
+}
+.form-control {
+    max-width: 400px;
+    height: 45px;
+    margin: 0 auto;
+    background-color: #5E4447;
+    color: white;
+    border: 2px solid white;
+}
+
+.form-control::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+.btn {
+    width: 130px;
+    border-radius: 50px;
+    font-weight: bold;
+    border: none;
+    color: white;
+}
+
+.login-btn {
+    background-color: #7D97A0;
+}
+
+.sign-up-btn {
+    background-color: #B26424;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn:hover {
+    background-color: #BAAA74;
+    color: white;
+}
+
+.sign-up-button-container p {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 11px;
+}
+
+  
+
