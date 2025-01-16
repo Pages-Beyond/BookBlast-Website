@@ -1,0 +1,30 @@
+body {
+    background-color: #5E4447;
+    color: white;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-control {
+  background-color: #5E4447;
+  color: white;
+  border: 2px solid white;
+}
+
+.form-control::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.register-btn {
+  background-color: #B26424;
+  color: white;
+  border: none;
+  width: 130px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #BAAA74;
+}
