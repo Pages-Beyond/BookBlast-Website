@@ -14,57 +14,73 @@
 
 
     <style>
-        body {
-            background-color: #5E4447;
-            font-family: 'Poppins', sans-serif;
-        }
+    body {
+        background-color: #5E4447;
+        font-family: 'Poppins', sans-serif;
+    }
 
-        .navbar-nav {
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 25px;
-            align-items: center;
-            padding: 10px 20px;
-        }
+    .navbar {
+        padding: 5px 0;
+    }
 
-        .nav-link {
-            color: white;
-            font-size: 1rem;
-        }
+    .navbar-nav {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 25px;
+        align-items: center;
+        padding: 10px 20px;
+    }
 
-        .nav-link:hover {
-            color: #f5c6cb;
-            text-decoration: underline;
-        }
+    .nav-link {
+        color: white;
+    }
 
-        .profile img {
-            width: 5vw;
-            height: auto;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
+    .navbar-nav .nav-link {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
 
-        .navbar-toggler {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+    .nav-link:hover {
+        color: #f5c6cb;
+        text-decoration: underline;
+    }
 
-        .navbar-toggler .profile img {
-            position: relative;
-            width: 5vw;
-            height: auto;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
+    .navbar-brand img {
+        max-height: 40px;
+    }
 
-        .navbar-toggler .profile img:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            transform: scale(1.05);
-        }
+    .profile img {
+        width: auto;
+        max-height: 35px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        margin-top: -5px;
+        object-fit: contain;
+
+    }
+
+    .navbar-toggler {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .navbar-toggler .profile img {
+        position: relative;
+        width: 5vw;
+        height: auto;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .navbar-toggler .profile img:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        transform: scale(1.05);
+    }
+
 
         .container h3 {
             font-size: 3.5rem;
@@ -72,15 +88,6 @@
             font-weight: 1000;
             margin-top: 10px;
             margin-left: 3px;
-        }
-
-        .nav-item:hover {
-            color: #f5c6cb;
-            text-decoration: underline;
-        }
-
-        .nav-pills {
-            color: white;
         }
 
         .category-item {
@@ -171,7 +178,7 @@
         <div class="container-fluid">
             <!-- BookBlast Logo -->
             <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
-                <img src="assets/img/books/bookblast-logoSmall.png" alt="BookBlast Logo">
+                <img src="assets/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -195,7 +202,7 @@
                     </li>
                     <!-- Profile Image -->
                     <a class="profile" href="userDashboard.html">
-                        <img src="assets/img/books/img-profile.png" alt="Profile">
+                        <img src="assets/img/homepage/img-profile.png" alt="Profile">
                     </a>
                 </ul>
 
@@ -203,6 +210,7 @@
         </div>
 
     </nav>
+
     <!-- Main Content Row -->
     <div class="container-fluid">
         <div class="row">
@@ -217,7 +225,7 @@
                 </div>
 
                 <!-- Categories -->
-                <div class="d-flex flex-column flex-shrink-0 p-1 text-white"
+                <div class="d-flex flex-column flex-shrink-0 p-1 text-white m-0"
                     style="background-color: #5E4447; margin-left: 15px;">
                     <div class="row">
                         <div class="col">
@@ -287,7 +295,7 @@
             <!-- FICTION -->
 
             <div class="col-12 col-md-9" id="fiction">
-                <div class="row row-cols-1 row-cols-md-5 g-4" style="max-width: 100%; padding: 10px;">
+                <div class="row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%; padding: 10px;">
                     <div class="col">
                         <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
                             <!-- LINK TO VIEWING PAGE -->
@@ -1786,4 +1794,3 @@
 </body>
 
 </html>
-``
