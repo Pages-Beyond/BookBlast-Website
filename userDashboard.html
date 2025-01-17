@@ -28,14 +28,16 @@
                 <button type="button" class="btn-close text-reset position-absolute top-0 end-0 m-3"
                     data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 <div class="offcanvas-body">
-                    <h5 class="text-white mb-4">Menu</h5>
+                    <h5 class="text-white fw-bold mb-4 m-0" style="font-size: 2rem;">Menu</h5>
                     <ul class="navbar-nav">
                         <!-- User Dashboard Link -->
-                        <li class="nav-item"><a class="nav-link" href="userDashboard.html" id="navbar-wishlists">User</a></li>
+                        <li class="nav-item"><a class="nav-link" href="userDashboard.html"
+                                id="navbar-wishlists">User</a></li>
                         <!-- Profile Link -->
                         <li class="nav-item"><a class="nav-link" href="profile.html" id="navbar-books">Profile</a></li>
                         <!-- Home Link -->
-                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a>
+                        </li>
                         <!-- Log-out Link -->
                         <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a>
                         </li>
@@ -50,7 +52,7 @@
     <div class="container-fluid">
         <div class="row d-flex flex-nowrap">
             <!-- Sidebar -->
-            <div class="sidebar col-2 d-flex flex-column p-3 text-white" style="height: 100vh;">
+            <div class="sidebar col-2 d-flex flex-column p-2 text-white m-0" style="height: 50vh;">
                 <ul class="nav flex-column">
                     <!-- Books Section -->
                     <li class="nav-item">
@@ -74,113 +76,116 @@
                         </a>
                     </li>
                 </ul>
-                <div class="mt-auto" style="margin-bottom: 50px;">
-                    <img src="assets/logo-img/bookblast-logo.png" alt="Logo" class="img-fluid"
-                        style="max-height: 80px; object-fit: contain;">
-                </div>
             </div>
 
 
             <!-- Main Content -->
             <div class="main-content col-10 d-flex flex-column align-items-start">
-                <!-- Books Section -->
-                <div class="book-section" id="book-section">
-                    <h1>Books</h1>
-                    <!-- Reading Now Section -->
-                    <div class="reading-now-section mb-4">
-                        <h3 class="reading-now-title mb-3">Reading Now</h3>
-                        <div class="row g-2">
-                            <!-- First Card -->
-                            <div class="col-md-4 col-lg-3 mb-4">
-                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
-                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                        style="height: 160px; object-fit: cover;">
+                <!-- Link to Book Review Page -->
+                <a href="UserDashboard-Bookview.html" style="text-decoration: none; color: white;">
+                    <!-- Books Section -->
+                    <div class="book-section" id="book-section">
+                        <h1>Books</h1>
+                        <!-- Reading Now Section -->
+                        <div class="reading-now-section mb-4">
+                            <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now
+                            </h3>
+                            <div class="row g-2">
+                                <!-- First Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card"
+                                        style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-center"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2">
+                                        <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                        <h5 class="text-nowrap">John Doe</h5>
+                                    </div>
                                 </div>
-                                <div class="mt-2">
-                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
-                                    <h5 class="text-nowrap">John Doe</h5>
+                                <!-- Second Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card"
+                                        style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2">
+                                        <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                        <h5 class="text-nowrap">John Doe</h5>
+                                    </div>
+                                </div>
+                                <!-- Third Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card"
+                                        style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2">
+                                        <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                        <h5 class="text-nowrap">John Doe</h5>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- Second Card -->
-                            <div class="col-md-4 col-lg-3 mb-4">
-                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
-                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                        style="height: 160px; object-fit: cover;">
-                                </div>
-                                <div class="mt-2">
-                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
-                                    <h5 class="text-nowrap">John Doe</h5>
-                                </div>
-                            </div>
-                            <!-- Third Card -->
-                            <div class="col-md-4 col-lg-3 mb-4">
-                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
-                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                        style="height: 160px; object-fit: cover;">
-                                </div>
-                                <div class="mt-2">
-                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
-                                    <h5 class="text-nowrap">John Doe</h5>
+                        </div>
+
+                        <!-- Done Section -->
+                        <div class="done-section mb-4">
+                            <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Done</h3>
+                            <div class="row g-1">
+                                <!-- Fourth Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2">
+                                        <h2 class="mb-2 text-nowrap">Peter Pan</h2>
+                                        <h5 class="text-nowrap">John Doe</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Done Section -->
-                    <div class="done-section mb-4">
-                        <h3 class="done-title mb-3">Done</h3>
-                        <div class="row g-1">
-                            <!-- Fourth Card -->
-                            <div class="col-md-4 col-lg-3 mb-4">
-                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
-                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                        style="height: 160px; object-fit: cover;">
+                    <!-- Favorites Section -->
+                    <div class="favorites-section" id="favorites-section" style="display: none;">
+                        <h1>Favorites</h1>
+                        <div class="row g-4" id="favorites-list">
+                            <!-- First Favorite Card -->
+                            <div class="col-md-4 col-lg-3 mb-4 favorite-card">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
                                 </div>
-                                <div class="mt-2">
-                                    <h2 class="mb-2 text-nowrap">Peter Pan</h2>
-                                    <h5 class="text-nowrap">John Doe</h5>
+                                <div class="mt-2 d-flex align-items-center">
+                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                    <button class="btn btn-outline-danger heart-btn" onclick="toggleFavorite(this)"
+                                        style="border: none;">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
                                 </div>
+                                <h5 class="text-nowrap">John Doe</h5>
+                            </div>
+                            <!-- Second Favorite Card -->
+                            <div class="col-md-4 col-lg-3 mb-4 favorite-card">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2 d-flex align-items-center">
+                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                    <button class="btn btn-outline-danger heart-btn" onclick="toggleFavorite(this)"
+                                        style="border: none;">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </div>
+                                <h5 class="text-nowrap">John Doe</h5>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Favorites Section -->
-                <div class="favorites-section" id="favorites-section" style="display: none;">
-                    <h1>Favorites</h1>
-                    <div class="row g-4" id="favorites-list">
-                        <!-- First Favorite Card -->
-                        <div class="col-md-4 col-lg-3 mb-4 favorite-card">
-                            <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
-                                <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                    style="height: 160px; object-fit: cover;">
-                            </div>
-                            <div class="mt-2 d-flex align-items-center">
-                                <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
-                                <button class="btn btn-outline-danger heart-btn" onclick="toggleFavorite(this)"
-                                    style="border: none;">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
-                            <h5 class="text-nowrap">John Doe</h5>
-                        </div>
-                        <!-- Second Favorite Card -->
-                        <div class="col-md-4 col-lg-3 mb-4 favorite-card">
-                            <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
-                                <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                    style="height: 160px; object-fit: cover;">
-                            </div>
-                            <div class="mt-2 d-flex align-items-center">
-                                <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
-                                <button class="btn btn-outline-danger heart-btn" onclick="toggleFavorite(this)"
-                                    style="border: none;">
-                                    <i class="fas fa-heart"></i>
-                                </button>
-                            </div>
-                            <h5 class="text-nowrap">John Doe</h5>
-                        </div>
-                    </div>
-                </div>
+                </a>
 
                 <!-- Wishlists Section -->
                 <div class="wishlists-section" id="wishlists-section" style="display: none;">
@@ -189,8 +194,8 @@
                         <!-- First Wishlist Card -->
                         <div class="col-md-4 col-lg-3 mb-4 wishlist-card">
                             <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
-                                <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image"
-                                    style="height: 160px; object-fit: cover;">
+                                <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                    alt="Dashboard Image" style="height: 160px; object-fit: cover;">
                             </div>
                             <div class="mt-2 d-flex align-items-center">
                                 <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
