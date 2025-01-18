@@ -1,4 +1,7 @@
 <?php
+
+
+
 include('../../shared/connect.php');
 $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
 $lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
@@ -7,8 +10,6 @@ $contactNumber = isset($_POST['contactNumber']) ? $_POST['contactNumber'] : '';
 $street = isset($_POST['street']) ? $_POST['street'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 $confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : '';
-
-
 
 $provinceSelectResult = isset($_POST['provinceSelect']) ? $_POST['provinceSelect'] : '';
 $provinceIDarr = '';
