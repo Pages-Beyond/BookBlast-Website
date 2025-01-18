@@ -16,6 +16,14 @@ body {
     text-decoration: none;
 }
 
+.navbar-brand:hover,
+.navbar-brand:focus,
+.navbar-brand:active {
+    color: white; /* Prevent blackening */
+    text-decoration: none; /* Optional: Prevent underline */
+}
+
+
 .navbar-brand-img {
     width: 40px;
     height: 40px;
@@ -37,6 +45,20 @@ body {
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler {
+    border: none; /* Removes the default border */
+    outline: none; /* Removes the focus outline */
+    box-shadow: none; /* Removes any additional focus styling */
+    background-color: transparent; /* Optional: Ensure no background */
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+    border: none; /* Ensure no border when clicked or focused */
+    outline: none; /* Prevent focus outline */
+    box-shadow: none; /* Prevent focus shadow */
 }
 
 .navbar-collapse {
