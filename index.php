@@ -1,13 +1,23 @@
-<?php 
-include ('shared/connect.php');
+<?php
+include('shared/connect.php');
 
 session_start();
 $userID = $_SESSION['userID'];
+$userPic = '';
 
-if (!isset($_SESSION['userID'])){
-    header ('location:Login/login.php');
+
+
+if (!isset($_SESSION['userID'])) {
+    header('location:Login/login.php');
+
 }
 
+$getUserPicQuery = "SELECT `userProfilePic` FROM `tbl_users` WHERE userID = $userID";
+$userPicResult = executeQuery($getUserPicQuery);
+
+while ($userPicRows = mysqli_fetch_assoc($userPicResult)) {
+    $userPic = $userPicRows['userProfilePic'];
+}
 
 
 ?>
@@ -142,7 +152,7 @@ if (!isset($_SESSION['userID'])){
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow" style="background-color: #5E4447;">
         <div class="container-fluid">
-            <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
+            <a href="../" class="navbar-brand" style="padding-left: 30px;">
                 <img src="assets/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo" class="img-fluid">
             </a>
 
@@ -170,7 +180,7 @@ if (!isset($_SESSION['userID'])){
                 <!-- Profile Image -->
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
                     <a class="profile" href="userDashboard.html">
-                        <img src="assets/img/homepage/img-profile.png" alt="Profile" class="rounded-circle"
+                        <img src="assets/img/<?php echo $userPic; ?>" alt="Profile" class="rounded-circle"
                             style="width: 40px; height: 40px;">
                     </a>
                 </div>
@@ -197,87 +207,44 @@ if (!isset($_SESSION['userID'])){
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%;">
-            <div class="col">
-                <a href="books-viewingPage.html">
-                    <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                        <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                        <div class="card-body" style="color: white;">
-                            <h4 class="card-title">Peter Pan</h4>
 
-                            <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                            <div class="rating">
-                                <span class="fa fa-star checked"></span>
-                                <p class="card-text">4/5</p>
+
+        <div class="row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%;">
+            <?php
+            $getFeaturedBooksQuery = "SELECT tbl_transactions.bookID, COUNT(tbl_transactions.bookID) AS topBooks, tbl_books.bookTitle as bookTitle, tbl_books.bookCover as bookCover, tbl_authors.firstName as firstName, tbl_authors.lastName 
+            FROM tbl_transactions 
+            LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID 
+            LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
+            WHERE tbl_transactions.isApproved = 'approved' GROUP BY tbl_transactions.bookID ORDER BY tbl_transactions.bookID ASC LIMIT 5; ";
+            $featuredBooksResult = executeQuery($getFeaturedBooksQuery);
+
+            while ($featureBooksRow = mysqli_fetch_assoc($featuredBooksResult)) {
+                $bookTitle = $featureBooksRow['bookTitle'];
+                $bookCover = $featureBooksRow['bookCover'];
+                $author = $featureBooksRow['firstName']. " " . $featureBooksRow['lastName'];
+
+
+                ?>
+
+                <div class="col">
+                    <a href="books-viewingPage.html">
+                        <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
+                            <img src="assets/img/bookCovers/<?php echo $bookCover?>" class="card-img-top" alt="...">
+                            <div class="card-body" style="color: white;">
+                                <h4 class="card-title"><?php echo $bookTitle?></h4>
+
+                                <h1 class="display-6" style="font-size: 1rem;"><?php echo $author?></h1>
+                                <div class="rating">
+                                    <span class="fa fa-star checked"></span>
+                                    <p class="card-text">4/5</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col ">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
-                </a>
-            </div>
-
-            <div class="col">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-
-            <div class="col">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-
-            <div class="col">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
+                <?php
+            }
+            ?>
 
         </div>
 
