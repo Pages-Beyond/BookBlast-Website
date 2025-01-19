@@ -70,7 +70,7 @@ if (isset($_POST['btnRegister'])) {
         $_SESSION['lastName'] = $lastName;
 
 
-        header('location: ../../index.php');
+        header('location: ../../');
     } else {
         $passwordError = "Password Unmatched";
 
@@ -98,7 +98,7 @@ if (isset($_POST['btnRegister'])) {
 <body>
     <!-- LOGO AND WORDMARK -->
     <div class="container text-center pt-4 d-flex justify-content-center">
-        <a href="../Login/login.php"><img src="../../assets/img/signup/bb logo.png" alt="Logo" class="img-fluid"
+        <a href="../../Login/login.php"><img src="../../assets/img/signup/bb logo.png" alt="Logo" class="img-fluid"
                 style="max-width: 60px;"></a>
     </div>
 

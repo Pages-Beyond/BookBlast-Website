@@ -1,11 +1,13 @@
 <?php 
-include ('../shared/connect.php');
+include ('shared/connect.php');
 
 session_start();
+$userID = $_SESSION['userID'];
 
 if (!isset($_SESSION['userID'])){
     header ('location:Login/login.php');
 }
+
 
 
 ?>
@@ -18,7 +20,7 @@ if (!isset($_SESSION['userID'])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BookBlast | Website</title>
-    <link rel="icon" type="image/x-icon" href="../assets/img/homepage/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="assets/img/homepage/bookblast-logo.png" />
     <link>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -137,41 +139,43 @@ if (!isset($_SESSION['userID'])){
 </style>
 
 <body id="home">
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow" style="background-color: #5E4447;">
         <div class="container-fluid">
-            <!-- BookBlast Logo -->
             <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
-                <img src="../assets/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
+                <img src="assets/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo" class="img-fluid">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <!-- Navbar links -->
-                    <li class="nav-item active-main-item">
-                        <a class="nav-link" href="homepage.html">Home</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="homepage.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="books.html">Books</a>
+                        <a class="nav-link text-white" href="books.html">Books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">About</a>
+                        <a class="nav-link text-white" href="#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#help">Help</a>
+                        <a class="nav-link text-white" href="#help">Help</a>
                     </li>
-                    <!-- Profile Image -->
-                    <a class="profile" href="userDashboard.html">
-                        <img src="../assets/img/homepage/img-profile.png" alt="Profile">
-                    </a>
                 </ul>
 
+                <!-- Profile Image -->
+                <div class="d-flex justify-content-center mt-3 mt-lg-0">
+                    <a class="profile" href="userDashboard.html">
+                        <img src="assets/img/homepage/img-profile.png" alt="Profile" class="rounded-circle"
+                            style="width: 40px; height: 40px;">
+                    </a>
+                </div>
             </div>
         </div>
-
     </nav>
 
 
@@ -179,7 +183,7 @@ if (!isset($_SESSION['userID'])){
     <div class="bbWordmark-container text-center">
         <div class="row">
             <div class="col">
-                <img src="../assets/img/homepage/bookblast-wordmark.png" class="bbWordmark" alt="wordmark"
+                <img src="assets/img/homepage/bookblast-wordmark.png" class="bbWordmark" alt="wordmark"
                     style="max-width: 100%; height: auto;">
             </div>
         </div>
@@ -197,7 +201,7 @@ if (!isset($_SESSION['userID'])){
             <div class="col">
                 <a href="books-viewingPage.html">
                     <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                        <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                        <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                         <div class="card-body" style="color: white;">
                             <h4 class="card-title">Peter Pan</h4>
 
@@ -214,7 +218,7 @@ if (!isset($_SESSION['userID'])){
             <div class="col ">
                 <a href="books-viewingPage.html">
                 <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h4 class="card-title">Peter Pan</h4>
                         <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
@@ -230,7 +234,7 @@ if (!isset($_SESSION['userID'])){
             <div class="col">
                 <a href="books-viewingPage.html">
                 <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h4 class="card-title">Peter Pan</h4>
                         <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
@@ -246,7 +250,7 @@ if (!isset($_SESSION['userID'])){
             <div class="col">
                 <a href="books-viewingPage.html">
                 <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h4 class="card-title">Peter Pan</h4>
                         <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
@@ -262,7 +266,7 @@ if (!isset($_SESSION['userID'])){
             <div class="col">
                 <a href="books-viewingPage.html">
                 <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h4 class="card-title">Peter Pan</h4>
                         <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
@@ -290,7 +294,7 @@ if (!isset($_SESSION['userID'])){
                 <div class="col">
                     <a href="books.html#fiction">
                         <div class="card" style="background-color: transparent; border: none;">
-                            <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                            <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                             <div class="card-body" style="color: white;">
                                 <h1 class="display-6" style="font-size: 1.5rem;">Fiction</h1>
                     </a>
@@ -302,7 +306,7 @@ if (!isset($_SESSION['userID'])){
         <div class="col">
             <a href="books.html#non-fiction">
                 <div class="card" style="background-color: transparent; border: none;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h1 class="display-6" style="font-size: 1.5rem;">Non-Fiction</h1>
                     </div>
@@ -313,7 +317,7 @@ if (!isset($_SESSION['userID'])){
         <div class="col">
             <a href="books.html#scienceTech">
                 <div class="card" style="background-color: transparent; border: none;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h1 class="display-6" style="font-size: 1.5rem;">Science</h1>
                     </div>
@@ -324,7 +328,7 @@ if (!isset($_SESSION['userID'])){
         <div class="col">
             <a href="books.html#healthWelness">
                 <div class="card" style="background-color: transparent; border: none;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h1 class="display-6" style="font-size: 1.5rem;">Health</h1>
                     </div>
@@ -335,7 +339,7 @@ if (!isset($_SESSION['userID'])){
         <div class="col">
             <a href="books.html#literature">
                 <div class="card" style="background-color: transparent; border: none;">
-                    <img src="../assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
+                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
                     <div class="card-body" style="color: white;">
                         <h1 class="display-6" style="font-size: 1.5rem;">Literature</h1>
                     </div>
@@ -377,7 +381,7 @@ if (!isset($_SESSION['userID'])){
         <div class=" container">
             <div class="row">
                 <div class="col text-center">
-                    <img src="../assets/img/homepage/bookblast-logo.png" class="bbLogo" alt="bbLogo"
+                    <img src="assets/img/homepage/bookblast-logo.png" class="bbLogo" alt="bbLogo"
                         style="max-width: 30%; height: auto;">
                 </div>
             </div>
@@ -492,7 +496,7 @@ if (!isset($_SESSION['userID'])){
         <footer class="py-3 my-4">
             <ul class="nav justify-content-center border-bottom pb-3 mb-3"
                 style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <img src="../assets/img/homepage/p&b-logo.png" class="pbLogo" style="width: 150px; max-height: 150px;">
+                <img src="assets/img/homepage/p&b-logo.png" class="pbLogo" style="width: 150px; max-height: 150px;">
                 <h3 style="letter-spacing: 1rem; color: white;">PAGES & BEYOND</h3>
             </ul>
             <p class="text-center text-white" style="font-size: 0.9rem;">©2025 Organization</p>
