@@ -1,8 +1,17 @@
 <?php
-
-
-
 include('../../shared/connect.php');
+
+session_start();
+
+$_SESSION['email'] = '';
+$_SESSION['password'] = '';
+$_SESSION['userID'] = '';
+$_SESSION['firstName'] = '';
+$_SESSION['lastName'] = '';
+
+$passwordError = '';
+
+
 $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
 $lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -10,6 +19,15 @@ $contactNumber = isset($_POST['contactNumber']) ? $_POST['contactNumber'] : '';
 $street = isset($_POST['street']) ? $_POST['street'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 $confirmPassword = isset($_POST['confirmPassword']) ? $_POST['confirmPassword'] : '';
+
+$firstName = str_replace('\'', '', $firstName);
+$lastName = str_replace('\'', '', $lastName);
+$email = str_replace('\'', '', $email);
+$contactNumber = str_replace('\'', '', $contactNumber);
+$street = str_replace('\'', '', $street);
+$password = str_replace('\'', '', $password);
+$confirmPassword = str_replace('\'', '', $confirmPassword);
+
 
 $provinceSelectResult = isset($_POST['provinceSelect']) ? $_POST['provinceSelect'] : '';
 $provinceIDarr = '';
@@ -20,14 +38,14 @@ if ($provinceSelectResult != '') {
 
 $citySelectResult = isset($_POST['citySelect']) ? $_POST['citySelect'] : '';
 
-$cityIDarr ='';
+$cityIDarr = '';
 $citymunCodearr = '';
-if ($citySelectResult != ''){
-    list ($cityIDarr, $citymunCodearr) = explode(",", $citySelectResult );
-} 
+if ($citySelectResult != '') {
+    list($cityIDarr, $citymunCodearr) = explode(",", $citySelectResult);
+}
 $barangaySelectResult = isset($_POST['barangaySelect']) ? $_POST['barangaySelect'] : '';
 $barangayID = '';
-if ($barangaySelectResult != ''){
+if ($barangaySelectResult != '') {
     $barangayID = $barangaySelectResult;
 
 }
@@ -45,9 +63,19 @@ if (isset($_POST['btnRegister'])) {
         $insertUserAddressQuery = "INSERT INTO `tbl_addresses`(`userID`, `provinceID`, `cityID`, `barangayID`, `street`) VALUES ('$lastID','$provinceIDarr','$cityIDarr','$barangayID','$street')";
         executeQuery($insertUserAddressQuery);
 
-        header('location: ../../homepage.html');
+        $_SESSION['email'] = $email;
+        $_SESSION['password'] = $password;
+        $_SESSION['userID'] = $lastID;
+        $_SESSION['firstName'] = $firstName;
+        $_SESSION['lastName'] = $lastName;
+
+
+        header('location: ../../index.php');
+    } else {
+        $passwordError = "Password Unmatched";
+
     }
-    $passwordError = "Password Unmatched";
+   
 
 
 }
@@ -70,7 +98,8 @@ if (isset($_POST['btnRegister'])) {
 <body>
     <!-- LOGO AND WORDMARK -->
     <div class="container text-center pt-4 d-flex justify-content-center">
-        <img src="../../assets/img/signup/bb logo.png" alt="Logo" class="img-fluid" style="max-width: 60px;">
+        <a href="../Login/login.php"><img src="../../assets/img/signup/bb logo.png" alt="Logo" class="img-fluid"
+                style="max-width: 60px;"></a>
     </div>
 
     <div class="container-fluid text-center pt-3">
@@ -79,25 +108,33 @@ if (isset($_POST['btnRegister'])) {
 
     <form method="POST" action="signUp.php">
         <div class="container mt-2">
+        <?php if ($passwordError == "Password Unmatched") { ?>
+            <div class="alert alert-danger mb-3" role="alert">
+                Password not matched.
+            </div>
+        <?php } ?>
             <div class="row justify-content-center g-1">
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <input type="text" class="form-control" placeholder="First Name" name="firstName"
                         value="<?php echo htmlspecialchars($firstName); ?>">
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
-                    <input type="text" class="form-control" placeholder="Last Name" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>">
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastName"
+                        value="<?php echo htmlspecialchars($lastName); ?>">
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                    <small>Format: 0912-345-6789</small>
+                    <small>Format: 09xx-xxx-xxxx</small>
                     <input type="tel" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" class="form-control"
-                        placeholder="Contact Number" name="contactNumber" maxlength="13" value="<?php echo htmlspecialchars($contactNumber); ?>">
+                        placeholder="Contact Number" name="contactNumber" maxlength="13"
+                        value="<?php echo htmlspecialchars($contactNumber); ?>">
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
-                    <input type="text" class="form-control" placeholder="Lot no./Street/House no." name="street" value="<?php echo htmlspecialchars($street); ?>">
+                    <input type="text" class="form-control" placeholder="Lot no./Street/House no." name="street"
+                        value="<?php echo htmlspecialchars($street); ?>">
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <select class="form-select customSelect form-select-md" onchange="this.form.submit()"
@@ -122,40 +159,43 @@ if (isset($_POST['btnRegister'])) {
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
-                    <select class="form-select customSelect form-select-md" name="citySelect" onchange="this.form.submit()" <?php echo empty($provinceSelectResult) ? 'disabled' : ''; ?>>
+                    <select class="form-select customSelect form-select-md" name="citySelect"
+                        onchange="this.form.submit()" <?php echo empty($provinceSelectResult) ? 'disabled' : ''; ?>>
                         <option value="" selected>Select City</option>
                         <?php
                         if ($provinceCodearr) {
                             $getCityQuery = "SELECT cityID, citymunCode, citymunDesc FROM `refcitymun` WHERE provCode = '$provinceCodearr' ORDER BY citymunDesc ASC;";
                             $cityResult = executeQuery($getCityQuery);
                             while ($cityRows = mysqli_fetch_assoc($cityResult)) {
-                                $selected = ($citySelectResult == $cityRows['cityID']. ',' . $cityRows['citymunCode']) ? 'selected' : '' ;
+                                $selected = ($citySelectResult == $cityRows['cityID'] . ',' . $cityRows['citymunCode']) ? 'selected' : '';
 
 
 
-                        ?>
-                        <option value="<?php echo $cityRows['cityID']. ',' . $cityRows['citymunCode']?>" <?php echo $selected ?>><?php echo $cityRows['citymunDesc']?></option>
-                        <?php
+                                ?>
+                                <option value="<?php echo $cityRows['cityID'] . ',' . $cityRows['citymunCode'] ?>" <?php echo $selected ?>><?php echo $cityRows['citymunDesc'] ?></option>
+                                <?php
                             }
                         }
                         ?>
                     </select>
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
-                    <select class="form-select customSelect form-select-md" name="barangaySelect" onchange="this.form.submit()" <?php echo empty($citySelectResult && $provinceSelectResult)  ? 'disabled' : ''; ?>>
-                        <option value = "" selected>Select Barangay</option>
+                    <select class="form-select customSelect form-select-md" name="barangaySelect"
+                        onchange="this.form.submit()" <?php echo empty($citySelectResult && $provinceSelectResult) ? 'disabled' : ''; ?>>
+                        <option value="" selected>Select Barangay</option>
                         <?php
                         if ($citymunCodearr) {
                             $getBarangayQuery = "SELECT barangayID, brgyCode, brgyDesc FROM `refbrgy` WHERE citymunCode = '$citymunCodearr' ORDER BY brgyDesc ASC;";
                             $brgyResult = executeQuery($getBarangayQuery);
                             while ($brgyRows = mysqli_fetch_assoc($brgyResult)) {
-                                $selected = ($barangaySelectResult == $brgyRows['barangayID']) ? 'selected' : '' ;
+                                $selected = ($barangaySelectResult == $brgyRows['barangayID']) ? 'selected' : '';
 
 
 
-                        ?>
-                        <option value="<?php echo $brgyRows['barangayID']?>" <?php echo $selected ?>><?php echo $brgyRows['brgyDesc']?></option>
-                        <?php
+                                ?>
+                                <option value="<?php echo $brgyRows['barangayID'] ?>" <?php echo $selected ?>>
+                                    <?php echo $brgyRows['brgyDesc'] ?></option>
+                                <?php
                             }
                         }
                         ?>
@@ -164,17 +204,20 @@ if (isset($_POST['btnRegister'])) {
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                    <input type="text" class="form-control" placeholder="Email" name="email" value="<?php echo htmlspecialchars($email); ?>">
+                    <input type="text" class="form-control" placeholder="Email" name="email"
+                        value="<?php echo htmlspecialchars($email); ?>">
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                    <input type="password" class="form-control" placeholder="Password" name="password" value="<?php echo htmlspecialchars($password); ?>">
+                    <input type="password" class="form-control" placeholder="Password" name="password"
+                        value="<?php echo htmlspecialchars($password); ?>">
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" value="<?php echo htmlspecialchars($confirmPassword); ?>">
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword"
+                        value="<?php echo htmlspecialchars($confirmPassword); ?>">
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-4">
