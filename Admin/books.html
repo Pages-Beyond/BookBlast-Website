@@ -177,6 +177,16 @@
     .navbar-nav .nav-link:hover {
         color: #cec39e;
     }
+ 
+    .book-card-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    .card-wrapper {
+    margin-left: 20px; /* Apply margin to the wrapper */
+}
 </style>
 
 <body>
@@ -242,7 +252,7 @@
                     <div class="bookTitle">
                         <h1 style="margin-left: -20px;">Books</h1>
                     </div>
-
+            
                     <!-- Card Row -->
                     <div class="row ms-1 g-5 justify-content-start">
                         <!-- Add Book Card -->
@@ -258,41 +268,40 @@
                                 </div>
                             </a>
                         </div>
-
+            
                         <!-- First Card -->
                         <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                             <div class="card" style="max-width: 256px; min-width: 192px;">
                                 <img src="assets/img/peterpan.png" class="card-img-top" alt="Dashboard Image"
                                     style="height: 160px; object-fit: cover;">
                             </div>
-                            <div class="mt-2 book-card-header"
-                                style="display: flex; justify-content: flex-start; align-items: center;">
+                            <div class="mt-2 book-card-header" style="display: flex; justify-content: flex-start; align-items: center;">
                                 <h3 class="mb-0">Peter Pan</h3>
-                                <button class="btn btn-link"
-                                    style="border: none; background: transparent; padding: 0; margin-left: 20px;">
+                                <button class="btn btn-link" style="border: none; background: transparent; padding: 0; margin-left: 20px;">
                                     <i class="fa-solid fa-trash" style="cursor: pointer; color: white;"></i>
                                 </button>
                             </div>
                             <h6 style="margin-top: -4px;">John Doe</h6>
                         </div>
-
+            
                         <!-- Second Card -->
                         <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                             <div class="card" style="max-width: 256px; min-width: 192px;">
                                 <img src="assets/img/peterpan.png" class="card-img-top" alt="Dashboard Image"
                                     style="height: 160px; object-fit: cover;">
                             </div>
-                            <div class="mt-2 book-card-header"
-                                style="display: flex; justify-content: flex-start; align-items: center;">
+                            <div class="mt-2 book-card-header" style="display: flex; justify-content: flex-start; align-items: center;">
                                 <h3 class="mb-0">Peter Pan</h3>
-                                <button class="btn btn-link"
-                                    style="border: none; background: transparent; padding: 0; margin-left: 20px;">
+                                <button class="btn btn-link" style="border: none; background: transparent; padding: 0; margin-left: 20px;">
                                     <i class="fa-solid fa-trash" style="cursor: pointer; color: white;"></i>
                                 </button>
                             </div>
                             <h6 style="margin-top: -4px;">John Doe</h6>
                         </div>
                     </div>
+                </div>
+            </div>
+            
 
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
                     <script>
@@ -304,6 +313,8 @@
                             }
                         });
                     </script>
+
+                    
 </body>
 
 </html>
