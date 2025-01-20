@@ -75,6 +75,12 @@
                             <i class="fas fa-bookmark d-md-none"></i> <!-- Icon for small screens -->
                         </a>
                     </li>
+                    <!-- Transactions Section -->
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white" href="#" id="transactions-link">
+                            <span class="d-none d-md-inline">Transactions</span> <!-- Text for large screens -->
+                            <i class="fas fa-bookmark d-md-none"></i> <!-- Icon for small screens -->
+                        </a>
                 </ul>
             </div>
 
@@ -208,6 +214,69 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Transactions Section -->
+                <div class="transactions-section" id="transactions-section">
+                    <h1>Transactions</h1>
+                    <!-- Pending Section -->
+                    <div class="reading-now-section mb-4">
+                        <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Pending
+                        </h3>
+                        <div class="row g-2">
+                            <!-- First Card -->
+                            <div class="col-md-4 col-lg-3 mb-4">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-center"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2">
+                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                    <h5 class="text-nowrap">John Doe</h5>
+                                </div>
+                            </div>
+                            <!-- Second Card -->
+                            <div class="col-md-4 col-lg-3 mb-4">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2">
+                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                    <h5 class="text-nowrap">John Doe</h5>
+                                </div>
+                            </div>
+                            <!-- Third Card -->
+                            <div class="col-md-4 col-lg-3 mb-4">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2">
+                                    <h2 class="mb-0 me-2 text-nowrap">Peter Pan</h2>
+                                    <h5 class="text-nowrap">John Doe</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decline Section -->
+                    <div class="done-section mb-4">
+                        <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Decline</h3>
+                        <div class="row g-1">
+                            <!-- Fourth Card -->
+                            <div class="col-md-4 col-lg-3 mb-4">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2">
+                                    <h2 class="mb-2 text-nowrap">Peter Pan</h2>
+                                    <h5 class="text-nowrap">John Doe</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -265,7 +334,7 @@
 
                 // Show the corresponding section
                 const sectionId = this.id.replace('-link', '-section');
-                document.querySelectorAll('.book-section, .favorites-section, .wishlists-section').forEach(section => {
+                document.querySelectorAll('.book-section, .favorites-section, .wishlists-section, .transactions-section').forEach(section => {
                     section.style.display = 'none';
                 });
                 document.getElementById(sectionId).style.display = 'block';
@@ -281,11 +350,13 @@
         const bookLink = document.getElementById('books-link');
         const userLink = document.getElementById('favorites-link');
         const requestLink = document.getElementById('wishlists-link');
+        const transactionLink = document.getElementById('transactions-link');
 
         // Get the content sections
         const bookSection = document.getElementById('book-section');
         const favoritesSection = document.getElementById('favorites-section');
         const wishlistsSection = document.getElementById('wishlists-section');
+        const transactionsSection = document.getElementById('transactions-section');
 
         // Function to hide all sections
         function hideAllSections() {
@@ -308,6 +379,11 @@
         requestLink.addEventListener('click', () => {
             hideAllSections();
             wishlistsSection.style.display = 'block';
+        });
+
+        transactionLink.addEventListener('click', () => {
+            hideAllSections();
+            transactionsSection.style.display = 'block';
         });
 
         // Show the default section (Books)
