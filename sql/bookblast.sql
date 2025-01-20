@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2025 at 02:27 PM
+-- Generation Time: Jan 20, 2025 at 07:00 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43911,7 +43911,8 @@ CREATE TABLE `tbl_addresses` (
 
 INSERT INTO `tbl_addresses` (`addressID`, `userID`, `provinceID`, `cityID`, `barangayID`, `street`) VALUES
 (1, 1, 17, 376, 9562, 'A. Bonifacio St'),
-(2, 2, 17, 362, 9141, '#451 Purok 4');
+(2, 2, 17, 362, 9141, '#451 Purok 4'),
+(3, 3, 17, 379, 9673, '#123');
 
 -- --------------------------------------------------------
 
@@ -44378,6 +44379,41 @@ CREATE TABLE `tbl_favorites` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_feedbacks`
+--
+
+CREATE TABLE `tbl_feedbacks` (
+  `feedbackID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `feedBack` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_questions`
+--
+
+CREATE TABLE `tbl_questions` (
+  `questionID` int(11) NOT NULL,
+  `question` varchar(1000) NOT NULL,
+  `answer` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_questions`
+--
+
+INSERT INTO `tbl_questions` (`questionID`, `question`, `answer`) VALUES
+(1, 'Is Book Blast free to use?\r\n', 'Yes, the website is free to use to browse the catalog and manage your personal book collection. '),
+(2, 'Can I update my profile information?', 'Yes, you can update your profile information by logging into your account and navigating to the \"Profile\" section. From there, you can edit your name, email address, and other personal details.'),
+(3, 'Can I request a book online?', 'Yes, registered users can reserve books online. Once you find a book, click on the \"Request\" button to add it to your reserved list.'),
+(4, 'How do I view my borrowed books?\r\n', 'To view your borrowed books, log into your account and navigate to the \"My Books\" section in your User Dashboard. Here, you will find a list of all the books you have borrowed and their due dates.'),
+(5, 'What types of books are available on Book Blast?', 'Book Blast offers a wide range of books, including fiction, non-fiction, literature, and more. Use the search and filter options to explore the catalog.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_reviews`
 --
 
@@ -44512,7 +44548,8 @@ CREATE TABLE `tbl_userinfo` (
 
 INSERT INTO `tbl_userinfo` (`userInfoID`, `firstName`, `lastName`, `addressID`, `userID`) VALUES
 (1, 'Book', 'Blast', 1, 1),
-(2, 'Ron Gabriel', 'Ramos', 2, 2);
+(2, 'Ron Gabriel', 'Ramos', 2, 2),
+(3, 'Justine', 'Raymundo', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -44537,7 +44574,8 @@ CREATE TABLE `tbl_users` (
 
 INSERT INTO `tbl_users` (`userID`, `email`, `contactNumber`, `password`, `isActive`, `role`, `userLimit`, `userProfilePic`) VALUES
 (1, 'bookblast@gmail.com', '0912-345-6789', 'password1234', 'YES', 'admin', 0, 'defaultprofile.png'),
-(2, 'rongabriel01.ramos@gmail.com', '0966-693-3359', 'password1234', 'YES', 'user', 0, 'defaultprofile.png');
+(2, 'rongabriel01.ramos@gmail.com', '0966-693-3359', 'password1234', 'YES', 'user', 0, 'defaultprofile.png'),
+(3, 'justineraymundo@gmail.com', '0912-345-6789', 'password1234', 'YES', 'user', 0, 'defaultprofile.png');
 
 -- --------------------------------------------------------
 
@@ -44604,6 +44642,18 @@ ALTER TABLE `tbl_favorites`
   ADD PRIMARY KEY (`favoriteID`);
 
 --
+-- Indexes for table `tbl_feedbacks`
+--
+ALTER TABLE `tbl_feedbacks`
+  ADD PRIMARY KEY (`feedbackID`);
+
+--
+-- Indexes for table `tbl_questions`
+--
+ALTER TABLE `tbl_questions`
+  ADD PRIMARY KEY (`questionID`);
+
+--
 -- Indexes for table `tbl_reviews`
 --
 ALTER TABLE `tbl_reviews`
@@ -44659,7 +44709,7 @@ ALTER TABLE `refprovince`
 -- AUTO_INCREMENT for table `tbl_addresses`
 --
 ALTER TABLE `tbl_addresses`
-  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_authors`
@@ -44686,6 +44736,18 @@ ALTER TABLE `tbl_favorites`
   MODIFY `favoriteID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_feedbacks`
+--
+ALTER TABLE `tbl_feedbacks`
+  MODIFY `feedbackID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tbl_questions`
+--
+ALTER TABLE `tbl_questions`
+  MODIFY `questionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `tbl_reviews`
 --
 ALTER TABLE `tbl_reviews`
@@ -44701,13 +44763,13 @@ ALTER TABLE `tbl_transactions`
 -- AUTO_INCREMENT for table `tbl_userinfo`
 --
 ALTER TABLE `tbl_userinfo`
-  MODIFY `userInfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userInfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_wishlist`
