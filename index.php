@@ -4,6 +4,7 @@ include('shared/connect.php');
 session_start();
 $userID = $_SESSION['userID'];
 $userPic = '';
+$categoryName = '';
 
 
 
@@ -206,37 +207,37 @@ while ($userPicRows = mysqli_fetch_assoc($userPicResult)) {
                 <h3>Featured Books</h3>
             </div>
         </div>
-
-
-
         <div class="row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%;">
             <?php
-            $getFeaturedBooksQuery = "SELECT tbl_transactions.bookID, COUNT(tbl_transactions.bookID) AS topBooks, tbl_books.bookTitle as bookTitle, tbl_books.bookCover as bookCover, tbl_authors.firstName as firstName, tbl_authors.lastName 
+            $getFeaturedBooksQuery = "SELECT tbl_transactions.bookID, COUNT(tbl_transactions.bookID) AS topBooks, tbl_books.bookTitle as bookTitle, tbl_books.bookCover as bookCover, tbl_authors.firstName as firstName, tbl_authors.lastName, ROUND (AVG(tbl_reviews.userRating), 1) as avgRating 
             FROM tbl_transactions 
             LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID 
             LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
-            WHERE tbl_transactions.isApproved = 'approved' GROUP BY tbl_transactions.bookID ORDER BY tbl_transactions.bookID ASC LIMIT 5; ";
+            LEFT JOIN tbl_reviews ON tbl_books.bookID = tbl_reviews.bookID 
+            WHERE tbl_transactions.isApproved = 'approved' and tbl_transactions.status = 'done' 
+            GROUP BY tbl_transactions.bookID ORDER BY tbl_transactions.bookID ASC LIMIT 5;";
             $featuredBooksResult = executeQuery($getFeaturedBooksQuery);
 
             while ($featureBooksRow = mysqli_fetch_assoc($featuredBooksResult)) {
-                $bookTitle = $featureBooksRow['bookTitle'];
-                $bookCover = $featureBooksRow['bookCover'];
-                $author = $featureBooksRow['firstName']. " " . $featureBooksRow['lastName'];
+                $featuredBookTitle = $featureBooksRow['bookTitle'];
+                $featuredBookCover = $featureBooksRow['bookCover'];
+                $featuredAuthor = $featureBooksRow['firstName'] . " " . $featureBooksRow['lastName'];
+                $featuredRating = $featureBooksRow['avgRating']
 
 
-                ?>
+                    ?>
 
                 <div class="col">
                     <a href="books-viewingPage.html">
                         <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                            <img src="assets/img/bookCovers/<?php echo $bookCover?>" class="card-img-top" alt="...">
+                            <img src="assets/img/bookCovers/<?php echo $featuredBookCover ?>" class="card-img-top" alt="...">
                             <div class="card-body" style="color: white;">
-                                <h4 class="card-title"><?php echo $bookTitle?></h4>
+                                <h4 class="card-title"><?php echo $featuredBookTitle ?></h4>
 
-                                <h1 class="display-6" style="font-size: 1rem;"><?php echo $author?></h1>
+                                <h1 class="display-6" style="font-size: 1rem;"><?php echo $featuredAuthor ?></h1>
                                 <div class="rating">
                                     <span class="fa fa-star checked"></span>
-                                    <p class="card-text">4/5</p>
+                                    <p class="card-text"><?php echo $featuredRating . "/5" ?></p>
                                 </div>
                             </div>
                         </div>
@@ -248,72 +249,62 @@ while ($userPicRows = mysqli_fetch_assoc($userPicResult)) {
 
         </div>
 
-        <!-- FEATURED TOPICS -->
-        <div class="container" style="margin-top: 30px;">
-            <div class="row">
-                <div class="col" style="color: white; font-weight: 500;">
-                    <h3>Featured Topics</h3>
-                </div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-5 g-4 m-0 text-center"
-                style="max-width: 100%; text-decoration: none;">
-                <div class="col">
-                    <a href="books.html#fiction">
-                        <div class="card" style="background-color: transparent; border: none;">
-                            <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                            <div class="card-body" style="color: white;">
-                                <h1 class="display-6" style="font-size: 1.5rem;">Fiction</h1>
-                    </a>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <a href="books.html#non-fiction">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Non-Fiction</h1>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="books.html#scienceTech">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Science</h1>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="books.html#healthWelness">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Health</h1>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col">
-            <a href="books.html#literature">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Literature</h1>
-                    </div>
-                </div>
-        </div>
-        </a>
     </div>
+
+    <!-- FEATURED TOPICS -->
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col" style="color: white; font-weight: 500;">
+                <h3>Featured Topics</h3>
+            </div>
+        </div>
+
+        <div class="row row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%; text-decoration: none;">
+            <?php 
+            $getBookCategoriesQuery = "SELECT tbl_categories.categoryID, tbl_categories.categoryName, tbl_books.bookCover from tbl_categories LEFT JOIN tbl_books ON tbl_categories.categoryID = tbl_books.categoryID GROUP BY categoryName;";
+            $getBookCategoriesResult = executeQuery($getBookCategoriesQuery);
+            while ($categoryRows = mysqli_fetch_assoc($getBookCategoriesResult))
+            {
+                $categoryName = $categoryRows["categoryName"];
+                $categoryBookCover = $categoryRows["bookCover"];
+            ?>
+            
+        
+            <div class="col">
+                <a href="books.html?category=">
+                    <div class="card" style="background-color: transparent; border: none;">
+                        <img src="assets/img/bookCovers/<?php echo $categoryBookCover?>" class="card-img-top" alt="...">
+                        <div class="card-body" style="color: white;">
+                            <h1 class="display-6" style="font-size: 1.5rem;"><?php echo $categoryName?></h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <?php
+            }
+            ?>
+          
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- ABOUT -->
     <div class="container" id="about" style="margin-top: 30px;">

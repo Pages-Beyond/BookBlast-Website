@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2025 at 07:05 PM
+-- Generation Time: Jan 20, 2025 at 02:27 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44389,6 +44389,35 @@ CREATE TABLE `tbl_reviews` (
   `userRating` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_reviews`
+--
+
+INSERT INTO `tbl_reviews` (`reviewID`, `userID`, `bookID`, `userReview`, `userRating`) VALUES
+(1, 14, 220, 'I couldn\'t put it down!', 3),
+(2, 12, 210, 'Not my style, but others might like it.', 5),
+(3, 10, 200, 'A bit boring, but had its moments.', 1),
+(4, 8, 190, 'Fantastic, would recommend to others!', 3),
+(5, 6, 180, 'Fantastic, would recommend to others!', 4),
+(6, 4, 170, 'Not my style, but others might like it.', 3),
+(7, 1, 155, 'The book was not what I expected.', 2),
+(8, 19, 145, 'Great book, really enjoyed it!', 5),
+(9, 16, 125, 'Loved the characters and the plot!', 4),
+(10, 14, 111, 'Loved the characters and the plot!', 2),
+(11, 4, 30, 'Fantastic, would recommend to others!', 3),
+(12, 10, 30, 'One of the best books I\'ve read!', 4),
+(13, 8, 25, 'Loved the characters and the plot!', 2),
+(14, 18, 25, 'Decent read but could have been better.', 5),
+(15, 8, 25, 'A bit boring, but had its moments.', 4),
+(16, 5, 20, 'Great book, really enjoyed it!', 3),
+(17, 16, 20, 'Loved the characters and the plot!', 5),
+(18, 6, 20, 'I couldn\'t put it down!', 4),
+(19, 6, 15, 'Great book, really enjoyed it!', 4),
+(20, 2, 15, 'One of the best books I\'ve read!', 2),
+(21, 20, 10, 'Fantastic, would recommend to others!', 4),
+(22, 3, 10, 'Not my style, but others might like it.', 5),
+(23, 10, 10, 'A bit boring, but had its moments.', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -44660,7 +44689,7 @@ ALTER TABLE `tbl_favorites`
 -- AUTO_INCREMENT for table `tbl_reviews`
 --
 ALTER TABLE `tbl_reviews`
-  MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tbl_transactions`
