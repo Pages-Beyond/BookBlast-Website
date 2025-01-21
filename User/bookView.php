@@ -1,3 +1,39 @@
+<?php
+include('../shared/connect.php');
+
+$bookTitle = '';
+$bookAuthor = '';
+$bookCover = '';
+$bookRating = '';
+
+if (isset($_GET['bookID'])){
+    $bookID = $_GET['bookID'];
+    $getBookDataQuery = "SELECT * from tbl_Books 
+    LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
+    WHERE tbl_books.bookID = '$bookID'";
+
+
+    $bookResult = executeQuery($getBookDataQuery);
+
+    while ($bookRow = mysqli_fetch_assoc($bookResult)){
+        $bookTitle = $bookRow['bookTitle'];
+        $bookAuthor = $bookRow['firstName']." ". $bookRow['lastName'];
+        $bookCover = $bookRow['bookCover'];
+      
+       
+
+    }
+
+
+
+}else{
+    header('Location: ../');
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -125,7 +161,7 @@
 
                 <div class="title-content">
                     <h2 class="text-white m-0" style="font-size: 4rem;">
-                        Alice in Wonderland
+                        <?php echo $bookTitle ?>
                     </h2>
                     <div class="icons-wrapper">
                         <input type="checkbox" class="heart-checkbox" id="heart-checkbox">
@@ -144,7 +180,7 @@
 
             <!-- Author and Rating -->
             <div class="author-section mt-2">
-                <h3 class="text-white mb-1" style="font-size: 2rem;">John Doe</h3>
+                <h3 class="text-white mb-1" style="font-size: 2rem;"><?php echo $bookAuthor?></h3>
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-star checked"></span>
                     <span class="text-white">3/5</span>
@@ -157,7 +193,7 @@
         <div class="row justify-content-center mb-5">
             <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                 <div class="card" style="border-radius: 10px;">
-                    <img src="assets/img/bookview/peterBig.png" class="card-img-top img-fluid" alt="Book Image"
+                    <img src="../assets/shared/img/bookCovers/<?php echo $bookCover?>" class="card-img-top img-fluid" alt="Book Image"
                         style="max-width: 100%; height: auto;">
                 </div>
 
