@@ -75,10 +75,10 @@
                             <i class="fas fa-bookmark d-md-none"></i> <!-- Icon for small screens -->
                         </a>
                     </li>
-                    <!-- Transactions Section -->
+                    <!-- Request Section -->
                     <li class="nav-item">
-                        <a class="nav-link mb-4 text-white" href="#" id="transactions-link">
-                            <span class="d-none d-md-inline">Transactions</span> <!-- Text for large screens -->
+                        <a class="nav-link mb-4 text-white" href="#" id="request-link">
+                            <span class="d-none d-md-inline">Request</span> <!-- Text for large screens -->
                             <i class="fas fa-bookmark d-md-none"></i> <!-- Icon for small screens -->
                         </a>
                 </ul>
@@ -215,9 +215,9 @@
                     </div>
                 </div>
 
-                <!-- Transactions Section -->
-                <div class="transactions-section" id="transactions-section">
-                    <h1>Transactions</h1>
+                <!-- Request Section -->
+                <div class="request-section" id="request-section">
+                    <h1>Request</h1>
                     <!-- Pending Section -->
                     <div class="reading-now-section mb-4">
                         <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Pending
@@ -334,7 +334,7 @@
 
                 // Show the corresponding section
                 const sectionId = this.id.replace('-link', '-section');
-                document.querySelectorAll('.book-section, .favorites-section, .wishlists-section, .transactions-section').forEach(section => {
+                document.querySelectorAll('.book-section, .favorites-section, .wishlists-section, .request-section').forEach(section => {
                     section.style.display = 'none';
                 });
                 document.getElementById(sectionId).style.display = 'block';
@@ -350,19 +350,20 @@
         const bookLink = document.getElementById('books-link');
         const userLink = document.getElementById('favorites-link');
         const requestLink = document.getElementById('wishlists-link');
-        const transactionLink = document.getElementById('transactions-link');
+        const rquestLink = document.getElementById('request-link');
 
         // Get the content sections
         const bookSection = document.getElementById('book-section');
         const favoritesSection = document.getElementById('favorites-section');
         const wishlistsSection = document.getElementById('wishlists-section');
-        const transactionsSection = document.getElementById('transactions-section');
+        const requestSection = document.getElementById('request-section');
 
         // Function to hide all sections
         function hideAllSections() {
             bookSection.style.display = 'none';
             favoritesSection.style.display = 'none';
             wishlistsSection.style.display = 'none';
+            requestSection.style.display = 'none';
         }
 
         // Add click event listeners to each link
@@ -376,14 +377,14 @@
             favoritesSection.style.display = 'block';
         });
 
-        requestLink.addEventListener('click', () => {
+        wishlistsLink.addEventListener('click', () => {
             hideAllSections();
             wishlistsSection.style.display = 'block';
         });
 
-        transactionLink.addEventListener('click', () => {
+        requestLink.addEventListener('click', () => {
             hideAllSections();
-            transactionsSection.style.display = 'block';
+            requestSection.style.display = 'block';
         });
 
         // Show the default section (Books)
