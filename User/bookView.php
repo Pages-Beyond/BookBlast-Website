@@ -10,7 +10,9 @@ if (isset($_GET['bookID'])){
     $bookID = $_GET['bookID'];
     $getBookDataQuery = "SELECT * from tbl_Books 
     LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
-    WHERE tbl_books.bookID = '$bookID'";
+    WHERE tbl_books.bookID = '$bookID';";
+
+    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) from tbl_rating WHERE bookID = '$bookID';"
 
 
     $bookResult = executeQuery($getBookDataQuery);
@@ -20,9 +22,9 @@ if (isset($_GET['bookID'])){
         $bookAuthor = $bookRow['firstName']." ". $bookRow['lastName'];
         $bookCover = $bookRow['bookCover'];
       
-       
-
     }
+
+
 
 
 
@@ -41,7 +43,7 @@ if (isset($_GET['bookID'])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BookBlast | Website</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/homepage/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="../assets/user/img/homepage/bookblast-logo.png" />
     <link>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
