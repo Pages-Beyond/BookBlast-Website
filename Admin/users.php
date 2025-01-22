@@ -1,3 +1,10 @@
+<?php 
+include("connect.php");
+
+$userDetailsQuery = "SELECT * FROM tbl_transactions WHERE isApproved = 'yes'";
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -8,17 +15,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="assets/img/bookblast-logo.png" type="image/png">
-    <link rel="stylesheet" href="assets/css/users.css">
+    <link rel="icon" href="../assets/admin/img/bookblast-logo.png" type="image/png">
+    <link rel="stylesheet" href="../assets/admin/css/users.css">
 
 </head>
 
 <body>
     <!-- Navbar -->
-    <?php include("assets/shared/navbar.php"); ?>
+    <?php include("../assets/admin/shared/navbar.php"); ?>
 
     <!-- Sidebar -->
-    <?php include("assets/shared/sidebar.php"); ?>
+    <?php include("../assets/admin/shared/sidebar.php"); ?>
 
 
     <!-- Main Content -->
