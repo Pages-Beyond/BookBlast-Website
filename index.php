@@ -5,7 +5,7 @@ session_start();
 $userID = $_SESSION['userID'];
 $userPic = '';
 $categoryName = '';
-$feedbackStat = 'sent';
+$feedbackStat = '';
 
 
 
@@ -254,7 +254,7 @@ if (isset($_POST['feedbackBtn'])) {
                     ?>
 
                 <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                    <a href="books-viewingPage.html?bookID=<?php echo $featuredBookID ?>">
+                    <a href="User/bookView.php?bookID=<?php echo $featuredBookID ?>">
                         <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
                             <img src="assets/shared/img/bookCovers/<?php echo $featuredBookCover ?>" class="card-img-top"
                                 style="max-height: 380px;" alt="...">
