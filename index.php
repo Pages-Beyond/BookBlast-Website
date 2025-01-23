@@ -169,7 +169,7 @@ if (!isset($_SESSION['userID'])){
 
                 <!-- Profile Image -->
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
-                    <a class="profile" href="userDashboard.html">
+                    <a class="profile" href="userDashboard.php">
                         <img src="assets/img/homepage/img-profile.png" alt="Profile" class="rounded-circle"
                             style="width: 40px; height: 40px;">
                     </a>
