@@ -1,6 +1,9 @@
 <?php
 include('../shared/connect.php');
+session_start();
 
+
+$userID = $_SESSION['userID'];
 $bookTitle = '';
 $bookAuthor = '';
 $bookCover = '';
@@ -12,16 +15,20 @@ if (isset($_GET['bookID'])){
     LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
     WHERE tbl_books.bookID = '$bookID';";
 
-    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) from tbl_rating WHERE bookID = '$bookID';"
+    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) as bookRating from tbl_reviews WHERE bookID = '$bookID';";
+    
+    $bookDataResult = executeQuery($getBookDataQuery);
 
-
-    $bookResult = executeQuery($getBookDataQuery);
-
-    while ($bookRow = mysqli_fetch_assoc($bookResult)){
-        $bookTitle = $bookRow['bookTitle'];
-        $bookAuthor = $bookRow['firstName']." ". $bookRow['lastName'];
-        $bookCover = $bookRow['bookCover'];
+    while ($bookDataRow = mysqli_fetch_assoc($bookDataResult)){
+        $bookTitle = $bookDataRow['bookTitle'];
+        $bookAuthor = $bookDataRow['firstName']." ". $bookDataRow['lastName'];
+        $bookCover = $bookDataRow['bookCover'];
       
+    }
+
+    $bookRatingResult = executeQuery($getBookRatingQuery);
+    while ($bookRatingRow = mysqli_fetch_assoc($bookRatingResult)){
+        $bookRating = $bookRatingRow['bookRating'];
     }
 
 
@@ -185,7 +192,7 @@ if (isset($_GET['bookID'])){
                 <h3 class="text-white mb-1" style="font-size: 2rem;"><?php echo $bookAuthor?></h3>
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-star checked"></span>
-                    <span class="text-white">3/5</span>
+                    <span class="text-white"><?php echo $bookRating?>/5</span>
                 </div>
             </div>
         </div>
@@ -210,86 +217,54 @@ if (isset($_GET['bookID'])){
         <!-- Reviews Section -->
         <h2 class="text-white mb-4">Reviews</h2>
         <div class="row g-4">
+            <?php 
+            $getUserReviewQuery = "SELECT tbl_reviews.userID, tbl_reviews.userReview, tbl_reviews.userRating, tbl_users.userProfilePic, tbl_userinfo.firstName, tbl_userinfo.firstName FROM `tbl_reviews` 
+            LEFT JOIN tbl_users ON tbl_reviews.userID = tbl_users.userID
+            LEFT JOIN tbl_userinfo ON tbl_users.userID = tbl_userinfo.userID 
+            WHERE bookID = $bookID;";
+            $userReviewResult = executeQuery($getUserReviewQuery);
+            while ($userReviewRows = mysqli_fetch_assoc($userReviewResult) ){
+                $userReview = $userReviewRows['userReview'];
+                $userRating = $userReviewRows['userRating'];
+                $userProfilePic = $userReviewRows['userProfilePic'];
+                
+
+          
+            ?>
             <div class="col-12 col-lg-6">
                 <div class="card">
                     <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
+                        <img src="../assets/shared/img/userpfp/<?php echo $userProfilePic?>" class="rounded-circle"
                             style="width: 80px; height: 80px;" alt="Profile">
                         <div class="ms-3">
                             <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
+                            <p class="card-text"><?php echo $userReview?></p>
                             <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
+                                <?php
+                               
+                                for ($i=0; $i<5; $i++){
+                                    for ($j=0; $j<4; $j++){
+                                        $checked = 'checked';
+                                        if ($j == 3) {
+                                            $checked =' ';
+                                        }
+                                    }
+                              
+                                    ?>
+                                  
+                                 <span class="fa fa-star <?php echo $checked?>" ></span>
+                                <?php
+                                };
+                                ?> 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php 
+            }
+            ?>
+          
         </div>
     </div>
 
