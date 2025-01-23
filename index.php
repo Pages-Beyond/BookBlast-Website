@@ -194,8 +194,8 @@ if (isset($_POST['feedbackBtn'])) {
 
                 <!-- Profile Image -->
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
-                    <a class="profile" href="userDashboard.html">
-                        <img src="assets/user/img/<?php echo $userPic; ?>" alt="Profile" class="rounded-circle"
+                    <a class="profile" href="userDashboard.php">
+                        <img src="assets/user/img/homepage/<?php echo $userPic; ?>" alt="Profile" class="rounded-circle"
                             style="width: 40px; height: 40px;">
                     </a>
                 </div>
