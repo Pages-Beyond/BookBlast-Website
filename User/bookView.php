@@ -12,10 +12,10 @@ if (isset($_GET['bookID'])){
     LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
     WHERE tbl_books.bookID = '$bookID';";
 
-    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) from tbl_rating WHERE bookID = '$bookID';"
-
-
     $bookResult = executeQuery($getBookDataQuery);
+
+    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) from tbl_rating WHERE bookID = '$bookID'";
+
 
     while ($bookRow = mysqli_fetch_assoc($bookResult)){
         $bookTitle = $bookRow['bookTitle'];
@@ -23,9 +23,6 @@ if (isset($_GET['bookID'])){
         $bookCover = $bookRow['bookCover'];
       
     }
-
-
-
 
 
 }else{

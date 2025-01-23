@@ -180,10 +180,13 @@ $declinedResult = executeQuery($declinedQuery);
                 <div class="offcanvas-body">
                     <h5 class="text-white fw-bold mb-4 m-0" style="font-size: 2rem;">Menu</h5>
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="userDashboard.html" id="navbar-wishlists">User</a></li>
+                        <li class="nav-item"><a class="nav-link" href="userDashboard.html"
+                                id="navbar-wishlists">User</a></li>
                         <li class="nav-item"><a class="nav-link" href="profile.html" id="navbar-books">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -196,10 +199,17 @@ $declinedResult = executeQuery($declinedQuery);
             <!-- Sidebar -->
             <div class="sidebar col-2 d-flex flex-column p-2 text-white m-0" style="height: 50vh;">
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="books-link"><span class="d-none d-md-inline">Books</span><i class="fas fa-book d-md-none"></i></a></li>
-                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="favorites-link"><span class="d-none d-md-inline">Favorites</span><i class="fas fa-heart d-md-none"></i></a></li>
-                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="wishlists-link"><span class="d-none d-md-inline">Wishlists</span><i class="fas fa-bookmark d-md-none"></i></a></li>
-                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="transactions-link"><span class="d-none d-md-inline">Transactions</span><i class="fas fa-bookmark d-md-none"></i></a></li>
+                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="books-link"><span
+                                class="d-none d-md-inline">Books</span><i class="fas fa-book d-md-none"></i></a></li>
+                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="favorites-link"><span
+                                class="d-none d-md-inline">Favorites</span><i class="fas fa-heart d-md-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="wishlists-link"><span
+                                class="d-none d-md-inline">Wishlists</span><i class="fas fa-bookmark d-md-none"></i></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link mb-4 text-white" href="#" id="transactions-link"><span
+                                class="d-none d-md-inline">Transactions</span><i
+                                class="fas fa-bookmark d-md-none"></i></a></li>
                 </ul>
             </div>
 
@@ -208,55 +218,63 @@ $declinedResult = executeQuery($declinedQuery);
                 <a href="UserDashboard-Bookview.html" style="text-decoration: none; color: white;">
                     <!-- Books Section -->
                     <div class="book-section" id="book-section">
-    <h1>Books</h1>
-    
-    <!-- Reading Now Section -->
-    <div class="reading-now-section mb-4">
-        <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now</h3>
-        <div class="row g-4">
-            <?php if (mysqli_num_rows($readingResult) > 0) {
-                while ($readingRow = mysqli_fetch_assoc($readingResult)) {
-            ?>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
-                    </div>
-                    <div class="mt-2 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><?php echo $readingRow['bookTitle']; ?></h5>
-                    </div>
-                    <h6 style="margin-top: 4px;"><?php echo $readingRow['AuthorsName']; ?></h6>
-                </div>
-            <?php
-                }
-            } ?>
-        </div>
-    </div>
+                        <h1>Books</h1>
 
-    <!-- Done Section -->
-    <div class="done-section mb-4">
-        <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Done</h3>
-        <div class="row g-4">
-            <?php if (mysqli_num_rows($doneResult) > 0) {
-                while ($doneRow = mysqli_fetch_assoc($doneResult)) {
-            ?>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="card" style="max-width: 100%; min-width: 100%; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
-                        <div style="height: 160px; overflow: hidden;">
-                            <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image" style="width: 100%; height: 100%; object-fit: cover;">
+                        <!-- Reading Now Section -->
+                        <div class="reading-now-section mb-4">
+                            <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now
+                            </h3>
+                            <div class="row g-4">
+                                <?php if (mysqli_num_rows($readingResult) > 0) {
+                                    while ($readingRow = mysqli_fetch_assoc($readingResult)) {
+                                        ?>
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="card"
+                                                style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
+                                                <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                                    alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                            </div>
+                                            <div class="mt-2 d-flex justify-content-between align-items-center">
+                                                <h5 class="mb-0"><?php echo $readingRow['bookTitle']; ?></h5>
+                                            </div>
+                                            <h6 style="margin-top: 4px;"><?php echo $readingRow['AuthorsName']; ?></h6>
+                                        </div>
+                                        <?php
+                                    }
+                                } ?>
+                            </div>
                         </div>
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title text-truncate mb-2" style="font-size: 1rem;"><?php echo $doneRow['bookTitle']; ?></h5>
-                            <p class="card-text text-nowrap" style="font-size: 0.875rem;"><?php echo $doneRow['AuthorsName']; ?></p>
-                        </div>
-                    </div>
-                </div>
-            <?php
-                }
-            } ?>
-        </div>
-    </div>
 
-</div>
+                        <!-- Done Section -->
+                        <div class="done-section mb-4">
+                            <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Done</h3>
+                            <div class="row g-4">
+                                <?php if (mysqli_num_rows($doneResult) > 0) {
+                                    while ($doneRow = mysqli_fetch_assoc($doneResult)) {
+                                        ?>
+                                        <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="card"
+                                                style="max-width: 100%; min-width: 100%; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
+                                                <div style="height: 160px; overflow: hidden;">
+                                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                                        alt="Dashboard Image"
+                                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                                </div>
+                                                <div class="card-body d-flex flex-column">
+                                                    <h5 class="card-title text-truncate mb-2" style="font-size: 1rem;">
+                                                        <?php echo $doneRow['bookTitle']; ?></h5>
+                                                    <p class="card-text text-nowrap" style="font-size: 0.875rem;">
+                                                        <?php echo $doneRow['AuthorsName']; ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                } ?>
+                            </div>
+                        </div>
+
+                    </div>
 
                 </a>
 
@@ -266,17 +284,21 @@ $declinedResult = executeQuery($declinedQuery);
                     <div class="row g-4" id="favorites-list">
                         <?php if (mysqli_num_rows($favoriteResult) > 0) {
                             while ($favoritesRow = mysqli_fetch_assoc($favoriteResult)) {
-                        ?>
+                                ?>
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                                    <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    <div class="card"
+                                        style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
                                     </div>
                                     <div class="mt-2 d-flex justify-content-between align-items-center">
                                         <h3 class="mb-0"><?php echo $favoritesRow['bookTitle']; ?></h3>
                                     </div>
                                     <form method="post" action="userDashboard.php" id="removefavoriteForm">
-                                        <input type="hidden" name="favoriteID" value="<?php echo $favoritesRow['favoriteID']; ?>">
-                                        <button type="submit" name="favoriteRemove" class="btn btn-danger" style="float: right; position: relative;">
+                                        <input type="hidden" name="favoriteID"
+                                            value="<?php echo $favoritesRow['favoriteID']; ?>">
+                                        <button type="submit" name="favoriteRemove" class="btn btn-danger"
+                                            style="float: right; position: relative;">
                                             <div class="d-flex justify-content-end mb-1">
                                                 <i class="fas fa-heart" style="cursor: pointer; font-size: large;"></i>
                                             </div>
@@ -284,7 +306,7 @@ $declinedResult = executeQuery($declinedQuery);
                                     </form>
                                     <h6 style="margin-top: 4px;"><?php echo $favoritesRow['AuthorsName']; ?></h6>
                                 </div>
-                        <?php }
+                            <?php }
                         } ?>
                     </div>
                 </div>
@@ -295,85 +317,95 @@ $declinedResult = executeQuery($declinedQuery);
                     <div class="row g-4" id="wishlists-list">
                         <?php if (mysqli_num_rows($wishListResult) > 0) {
                             while ($wishListRow = mysqli_fetch_assoc($wishListResult)) {
-                        ?>
+                                ?>
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                                    <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    <div class="card"
+                                        style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
                                     </div>
                                     <div class="mt-2 d-flex justify-content-between align-items-center">
                                         <div>
                                             <h3 class="mb-0"><?php echo $wishListRow['bookTitle']; ?></h3>
                                             <h6 style="margin-top: 4px;"><?php echo $wishListRow['AuthorsName']; ?></h6>
                                         </div>
-                                        <form method="post" action="userDashboard.php" id="removeWishlistForm" style="padding: 0; margin: 0;">
-                                            <input type="hidden" name="wishListID" value="<?php echo $wishListRow['wishListID']; ?>">
-                                            <button type="submit" name="wishListRemove" class="btn btn-outline-primary bookmark-btn" style="border: none; padding: 0;">
+                                        <form method="post" action="userDashboard.php" id="removeWishlistForm"
+                                            style="padding: 0; margin: 0;">
+                                            <input type="hidden" name="wishListID"
+                                                value="<?php echo $wishListRow['wishListID']; ?>">
+                                            <button type="submit" name="wishListRemove"
+                                                class="btn btn-outline-primary bookmark-btn" style="border: none; padding: 0;">
                                                 <i class="fas fa-bookmark" style="cursor: pointer; font-size: large;"></i>
                                             </button>
                                         </form>
                                     </div>
                                 </div>
-                        <?php }
+                            <?php }
                         } ?>
                     </div>
                 </div>
 
-   <!-- Transactions Section -->
-<div class="transactions-section" id="transactions-section">
-    <h1>Transactions</h1>
+                <!-- Transactions Section -->
+                <div class="transactions-section" id="transactions-section">
+                    <h1>Transactions</h1>
 
-   <!-- Pending Section -->
-   <div class="pending-now-section mb-4">
-        <h3 class="pending-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Pending</h3>
-        <div class="row g-4">
-            <?php if (mysqli_num_rows($pendingResult) > 0) {
-                while ($pendingRow = mysqli_fetch_assoc($pendingResult)) {
-            ?>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                    <!-- Pending Section -->
+                    <div class="pending-now-section mb-4">
+                        <h3 class="pending-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Pending</h3>
+                        <div class="row g-4">
+                            <?php if (mysqli_num_rows($pendingResult) > 0) {
+                                while ($pendingRow = mysqli_fetch_assoc($pendingResult)) {
+                                    ?>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
+                                        <div class="card"
+                                            style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
+                                            <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                                alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                        </div>
+                                        <div class="mt-2 d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0"><?php echo $pendingRow['bookTitle']; ?></h5>
+                                            <form method="post" action="userDashboard.php" id="removePendingForm" class="ms-2">
+                                                <input type="hidden" name="transactionID"
+                                                    value="<?php echo $pendingRow['transactionID']; ?>">
+                                                <button type="submit" name="pendingRemove" class="btn btn-danger btn-sm">
+                                                    <i class="fas fa-times" style="font-size: 1rem;"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <h6 style="margin-top: 4px;"><?php echo $pendingRow['AuthorsName']; ?></h6>
+                                    </div>
+                                    <?php
+                                }
+                            } ?>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><?php echo $pendingRow['bookTitle']; ?></h5>
-                        <form method="post" action="userDashboard.php" id="removePendingForm" class="ms-2">
-                            <input type="hidden" name="transactionID" value="<?php echo $pendingRow['transactionID']; ?>">
-                            <button type="submit" name="pendingRemove" class="btn btn-danger btn-sm">
-                                <i class="fas fa-times" style="font-size: 1rem;"></i>
-                            </button>
-                        </form>
+
+                    <!-- Decline Section -->
+                    <div class="done-section mb-4">
+                        <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Decline</h3>
+                        <div class="row g-4">
+                            <?php if (mysqli_num_rows($declinedResult) > 0) {
+                                while ($declinedRow = mysqli_fetch_assoc($declinedResult)) {
+                                    ?>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
+                                        <div class="card"
+                                            style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
+                                            <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                                alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                        </div>
+                                        <div class="mt-2">
+                                            <h5 class="mb-0"><?php echo $declinedRow['bookTitle']; ?></h5>
+                                            <h6 class="text-nowrap"><?php echo $declinedRow['AuthorsName']; ?></h6>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            } ?>
+                        </div>
                     </div>
-                    <h6 style="margin-top: 4px;"><?php echo $pendingRow['AuthorsName']; ?></h6>
                 </div>
-            <?php
-                }
-            } ?>
-        </div>
-    </div>
 
-    <!-- Decline Section -->
-    <div class="done-section mb-4">
-        <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Decline</h3>
-        <div class="row g-4">
-            <?php if (mysqli_num_rows($declinedResult) > 0) {
-                while ($declinedRow = mysqli_fetch_assoc($declinedResult)) {
-            ?>
-                    <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
-                        <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                            <img src="assets/img/userDashboard/peterpan.png" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
-                        </div>
-                        <div class="mt-2">
-                            <h5 class="mb-0"><?php echo $declinedRow['bookTitle']; ?></h5>
-                            <h6 class="text-nowrap"><?php echo $declinedRow['AuthorsName']; ?></h6>
-                        </div>
-                    </div>
-            <?php
-                }
-            } ?>
-        </div>
-    </div>
-</div>
-
-</div> <!-- End of Main Content -->
+            </div> <!-- End of Main Content -->
 
         </div>
     </div> <!-- End of Container Fluid -->
@@ -424,7 +456,7 @@ $declinedResult = executeQuery($declinedQuery);
 
         // Function to handle the active state on click
         sidebarLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function () {
                 // Remove 'active' class from all sidebar links
                 sidebarLinks.forEach(link => link.classList.remove('active'));
 
