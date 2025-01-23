@@ -93,7 +93,7 @@ body {
 }
 
 /* Make the sidebar font smaller on smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 950px) {
     .sidebar .nav-link {
         font-size: 0.8rem; /* Smaller font size on mobile */
     }
@@ -180,6 +180,13 @@ body {
     background-color: #BAAA74;
     color: white;
 }
+
+.text-wrap {
+    white-space: normal !important;
+    word-wrap: break-word;
+}
+
+
 
 
 

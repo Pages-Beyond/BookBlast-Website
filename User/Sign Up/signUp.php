@@ -28,6 +28,8 @@ $street = str_replace('\'', '', $street);
 $password = str_replace('\'', '', $password);
 $confirmPassword = str_replace('\'', '', $confirmPassword);
 
+$formattedContactNumber = substr($contactNumber, 0, 4) . '-' . substr($contactNumber, 4, 3) . '-' . substr($contactNumber, 7);
+
 
 $provinceSelectResult = isset($_POST['provinceSelect']) ? $_POST['provinceSelect'] : '';
 $provinceIDarr = '';
@@ -55,7 +57,7 @@ if (isset($_POST['btnRegister'])) {
 
 
     if ($password == $confirmPassword) {
-        $insertUserQuery = "INSERT INTO tbl_users(email, contactNumber, password) VALUES ('$email','$contactNumber','$password')";
+        $insertUserQuery = "INSERT INTO tbl_users(email, contactNumber, password) VALUES ('$email','$formattedContactNumber','$password')";
         executeQuery($insertUserQuery);
         $lastID = mysqli_insert_id($conn);
         $insertUserInfoQuery = "INSERT INTO tbl_userinfo (firstName, lastName, addressID, userID) VALUES ('$firstName','$lastName','$lastID', '$lastID')";
@@ -88,22 +90,22 @@ if (isset($_POST['btnRegister'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign Up Page</title>
-    <link rel="icon" type="image/x-icon" href="../../assets/img/signup/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="../../assets/user/img/signup/bookblast-logo.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/signup.css">
+    <link rel="stylesheet" href="../../assets/user/css/signup.css">
 </head>
 
 <body>
     <!-- LOGO AND WORDMARK -->
     <div class="container text-center pt-4 d-flex justify-content-center">
-        <a href="../../Login/login.php"><img src="../../assets/img/signup/bb logo.png" alt="Logo" class="img-fluid"
+        <a href="../../Login/login.php"><img src="../../assets/user/img/signup/bb logo.png" alt="Logo" class="img-fluid"
                 style="max-width: 60px;"></a>
     </div>
 
     <div class="container-fluid text-center pt-3">
-        <img src="../../assets/img/signup/bb wordmark sp.png" alt="Wordmark" class="img-fluid">
+        <img src="../../assets/user/img/signup/bb wordmark sp.png" alt="Wordmark" class="img-fluid">
     </div>
 
     <form method="POST" action="signUp.php">
@@ -126,8 +128,8 @@ if (isset($_POST['btnRegister'])) {
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
                     <small>Format: 09xx-xxx-xxxx</small>
-                    <input type="tel" pattern="[0-9]{4}-[0-9]{3}-[0-9]{4}" class="form-control"
-                        placeholder="Contact Number" name="contactNumber" maxlength="13"
+                    <input type="text" class="form-control"
+                        placeholder="Contact Number" name="contactNumber" maxlength="11"
                         value="<?php echo htmlspecialchars($contactNumber); ?>">
                 </div>
             </div>
