@@ -8,7 +8,7 @@ if (isset($_POST['btnAdd'])) {
     $email = $_POST['email'];
     $address = $_POST['address'];
 
-    $insertQuery = "INSERT INTO tbl_users (userName, contactNumber, email, address, role) VALUES ('$userName', '$contactNumber', '$email', '$address', 'admin')";
+    $insertQuery = "INSERT INTO tbl_users (userName, contactNumber, email, address, role) VALUES ('$userName', '$contactNumber', '$email', '$address', 'user')";
     executeQuery($insertQuery);
 }
 
@@ -20,11 +20,11 @@ if (isset($_POST['btnUpdate'])) {
     $address = $_POST['address'];
     $userID = $_POST['userID'];
 
-    $updateQuery = "UPDATE tbl_users SET userName='$userName', contactNumber='$contactNumber', email='$email', address='$address' WHERE userID='$userID' and role='admin'";
+    $updateQuery = "UPDATE tbl_users SET userName='$userName', contactNumber='$contactNumber', email='$email', address='$address' WHERE userID='$userID' and role='user'";
     executeQuery($updateQuery);
 }
 
-$query = "SELECT * FROM tbl_users WHERE role = 'admin'";
+$query = "SELECT * FROM tbl_users WHERE role = 'user' LIMIT 1";
 $result = executeQuery($query);
 $user = mysqli_fetch_assoc($result);
 
@@ -40,19 +40,47 @@ $user = mysqli_fetch_assoc($result);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/img/bookblast-logo.png" />
-    <link rel="stylesheet" href="../assets/admin/css/adminProfile.css">
+    <link rel="stylesheet" href="assets/user/css/user-profile.css">
 </head>
 
 
 <body>
-<?php include("../assets/admin/shared/navbarAdmin.php"); ?>
+    <!-- Navbar ONLY IN Admin Profile -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/user/img/userDashboard/kween.png" alt="User" class="navbar-brand-img">
+                <span class="navbar-brand-text">User Name</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
+                <button type="button" class="btn-close text-reset position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div class="offcanvas-body">
+                    <h5 class="text-white fw-bold mb-4 m-0" style="font-size: 2rem;">Menu</h5>
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="userDashboard.php" id="navbar-wishlists">User</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="profile.php" id="navbar-books">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <!-- Profile Photo Section -->
     <div class="container mt-5 pt-5 d-flex justify-content-center profile-photo-section">
         <div class="row align-items-center">
             <div class="col-12 col-md-4 text-center mb-4 mb-md-0">
                 <div class="profile-photo-container d-flex justify-content-center">
-                    <img id="profile-photo" src="../assets/admin/img/artN.jpg"  alt="Profile Photo"
+                    <img id="profile-photo" src="assets/user/img/userDashboard/kween.png" alt="Profile Photo"
                         class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;">
                 </div>
 
