@@ -197,6 +197,7 @@ if (isset($_POST['feedbackBtn'])) {
 
                 <!-- Profile Image -->
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
+
                     <a class="profile" href="User/userDashboard.php">
                         <img src="assets/shared/img/userpfp/<?php echo $userPic; ?>" alt="Profile" class="rounded-circle"
                             style="width: 40px; height: 40px;">
