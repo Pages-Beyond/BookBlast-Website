@@ -77,6 +77,11 @@ $userFavoriteResult = executeQuery($getUserFavoriteQuery);
 $favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
     
 
+$getUserWishlistQuery = "SELECT `bookID`, `userID` FROM `tbl_wishlist` WHERE userID = '$userID' and bookID = '$bookID'";
+$userWishlistResult = executeQuery($getUserWishlistQuery);
+
+$wishlist = (mysqli_num_rows($userWishlistResult) > 0) ? 'checked' : '';
+
 
 
 
@@ -217,7 +222,7 @@ $favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
                     <div class="icons-wrapper"  data-book-id="123">
                     <input type="checkbox" class="heart-checkbox" id="heart-checkbox" name="favoriteBtn" onchange="handleFavorite(this)" <?php echo $favorite?>>
                     <label for="heart-checkbox" class="heart">❤</label>
-                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox" onchange="handleWishlist(this)">
+                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox" onchange="handleWishlist(this)" <?php echo $wishlist?>>
                         <label for="wishlist-checkbox" class="wishlist">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
