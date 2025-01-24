@@ -4,20 +4,22 @@ include('connect.php');
 
 session_start();
 
-// Fetch user information from the database
-// $userID = $_SESSION['usersID'];
-$userID = '1';  // Temporarily hardcoded for testing
+// Fetch user information from the session
+$userID = $_SESSION['usersID'] ?? '1';  // Default to '1' for testing if session value is missing
 
+// General function to execute delete query
+function removeItemFromTable($table, $idColumn, $idValue, $additionalConditions = "")
+{
+    $query = "DELETE FROM $table WHERE $idColumn = '$idValue' $additionalConditions";
+    return executeQuery($query);
+}
+
+// Handle item removals based on POST requests
 if (isset($_POST['pendingRemove'])) {
-    $transactionID = $_POST['transactionID'];  // Use transactionID instead of readingID
-
+    $transactionID = $_POST['transactionID'];
     if (!empty($transactionID)) {
-        // Ensure correct query to delete the book from reading section
-        $removependingQuery = "DELETE FROM tbl_transactions WHERE `tbl_transactions`.`transactionID` = '$transactionID' AND `tbl_transactions`.`isApproved` = 'till'";
-
-        $readingResults = executeQuery($removependingQuery);
-
-        // Redirect back to the user dashboard
+        // Remove from transactions table where isApproved = 'till'
+        removeItemFromTable('tbl_transactions', 'transactionID', $transactionID, "AND isApproved = 'till'");
         header('Location: userDashboard.php');
         exit;
     }
@@ -25,12 +27,9 @@ if (isset($_POST['pendingRemove'])) {
 
 if (isset($_POST['wishListRemove'])) {
     $wishlistID = $_POST['wishListID'];
-
     if (!empty($wishlistID)) {
-
-        $removeWishQuery = "DELETE FROM tbl_wishlist WHERE `tbl_wishlist`.`wishListID` = '$wishlistID'";
-        $removeWishResult = executeQuery($removeWishQuery);
-
+        // Remove from wishlist
+        removeItemFromTable('tbl_wishlist', 'wishListID', $wishlistID);
         header('Location: userDashboard.php');
         exit;
     }
@@ -38,16 +37,38 @@ if (isset($_POST['wishListRemove'])) {
 
 if (isset($_POST['favoriteRemove'])) {
     $favoriteID = $_POST['favoriteID'];
-
     if (!empty($favoriteID)) {
-
-        $removeFavoriteQuery = "DELETE FROM tbl_favorites WHERE `tbl_favorites`.`favoriteID` = '$favoriteID'";
-        $favoriteResults = executeQuery($removeFavoriteQuery);
-
+        // Remove from favorites
+        removeItemFromTable('tbl_favorites', 'favoriteID', $favoriteID);
         header('Location: userDashboard.php');
         exit;
     }
 }
+
+
+function getBooks($userID, $additionalConditions = "")
+{
+    $query = "SELECT 
+                tbl_books.bookTitle,  tbl_books.bookCover,
+                CONCAT(tbl_authors.firstName, ' ', tbl_authors.lastName) AS AuthorsName, 
+                tbl_transactions.transactionID
+              FROM 
+                tbl_transactions
+              INNER JOIN 
+                tbl_books ON tbl_books.bookID = tbl_transactions.bookID
+              INNER JOIN 
+                tbl_authors ON tbl_authors.authorID = tbl_books.authorID 
+              WHERE 
+                tbl_transactions.userID = '$userID' $additionalConditions";
+
+    return executeQuery($query);
+}
+
+// Fetch different book statuses
+$readingResult = getBooks($userID, "AND tbl_transactions.status = 'reading'");
+$doneResult = getBooks($userID, "AND tbl_transactions.status = 'done'");
+$pendingResult = getBooks($userID, "AND tbl_transactions.isApproved = 'till' AND tbl_transactions.isDeclined = 'no'");
+$declinedResult = getBooks($userID, "AND tbl_transactions.isApproved = 'no' AND tbl_transactions.isDeclined = 'yes'");
 
 $wishListQuery = "SELECT 
     tbl_books.bookTitle, 
@@ -57,7 +78,7 @@ FROM
 INNER JOIN 
     tbl_books ON tbl_books.bookID = tbl_wishlist.bookID
 INNER JOIN 
-    tbl_authors ON tbl_authors.authorID = tbl_books.authorID WHERE userID=$userID";
+    tbl_authors ON tbl_authors.authorID = tbl_books.authorID WHERE userID = $userID";
 
 $wishListResult = executeQuery($wishListQuery);
 
@@ -69,83 +90,12 @@ FROM
 INNER JOIN 
     tbl_books ON tbl_books.bookID = tbl_favorites.bookID
 INNER JOIN 
-    tbl_authors ON tbl_authors.authorID = tbl_books.authorID WHERE userID=$userID";
+    tbl_authors ON tbl_authors.authorID = tbl_books.authorID WHERE userID = $userID";
 
 $favoriteResult = executeQuery($favoriteQuery);
 
-// Book reading or done
-function getBooksByStatus($userID, $status)
-{
-    $bookstatusquery = "SELECT 
-                  tbl_books.bookTitle, 
-                  CONCAT(tbl_authors.firstName, ' ', tbl_authors.lastName) AS AuthorsName, 
-                  tbl_transactions.transactionID,
-                  tbl_transactions.userID,
-                  tbl_transactions.status
-              FROM 
-                  tbl_transactions
-              INNER JOIN 
-                  tbl_books ON tbl_books.bookID = tbl_transactions.bookID
-              INNER JOIN 
-                  tbl_authors ON tbl_authors.authorID = tbl_books.authorID 
-              WHERE 
-                  tbl_transactions.userID = $userID 
-                  AND tbl_transactions.status = '$status'";
-
-    return executeQuery($bookstatusquery);
-}
-
-// Fetch books with 'reading' status
-$readingResult = getBooksByStatus($userID, 'reading');
-
-// Fetch books with 'done' status
-$doneResult = getBooksByStatus($userID, 'done');
-
-// Fetch books with 'pending' status
-$pendingQuery = "SELECT 
-    tbl_books.bookTitle, 
-    CONCAT(tbl_authors.firstName, ' ', tbl_authors.lastName) AS AuthorsName, 
-    tbl_transactions.transactionID,
-    tbl_transactions.userID,
-    tbl_transactions.status,
-    tbl_transactions.isDeclined,
-    tbl_transactions.isApproved
-FROM 
-    tbl_transactions
-INNER JOIN 
-    tbl_books ON tbl_books.bookID = tbl_transactions.bookID
-INNER JOIN 
-    tbl_authors ON tbl_authors.authorID = tbl_books.authorID 
-WHERE 
-    tbl_transactions.userID = $userID 
-    AND tbl_transactions.isApproved = 'till'
-    AND tbl_transactions.isDeclined = 'no'";
-
-$pendingResult = executeQuery($pendingQuery);
-
-// Fetch books with 'pending' status
-$declinedQuery = "SELECT 
-    tbl_books.bookTitle, 
-    CONCAT(tbl_authors.firstName, ' ', tbl_authors.lastName) AS AuthorsName, 
-    tbl_transactions.transactionID,
-    tbl_transactions.userID,
-    tbl_transactions.status,
-    tbl_transactions.isDeclined,
-    tbl_transactions.isApproved
-FROM 
-    tbl_transactions
-INNER JOIN 
-    tbl_books ON tbl_books.bookID = tbl_transactions.bookID
-INNER JOIN 
-    tbl_authors ON tbl_authors.authorID = tbl_books.authorID 
-WHERE 
-    tbl_transactions.userID = $userID 
-    AND tbl_transactions.isApproved = 'no'
-    AND tbl_transactions.isDeclined = 'yes'";
-
-$declinedResult = executeQuery($declinedQuery);
-
 ?>
+
 
 
 <!doctype html>
@@ -218,7 +168,33 @@ $declinedResult = executeQuery($declinedQuery);
                 <a href="UserDashboard-Bookview.html" style="text-decoration: none; color: white;">
                     <!-- Books Section -->
                     <div class="book-section" id="book-section">
+<<<<<<< HEAD
+    <h1>Books</h1>
+    
+    <!-- Reading Now Section -->
+    <div class="reading-now-section mb-4">
+        <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now</h3>
+        <div class="row g-4">
+            <?php if (mysqli_num_rows($readingResult) > 0) {
+                while ($readingRow = mysqli_fetch_assoc($readingResult)) {
+            ?>
+                <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
+                        <img src="assets/img/userDashboard/<?php echo $readingRow['bookCover']; ?>" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                    </div>
+                    <div class="mt-2 d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><?php echo $readingRow['bookTitle']; ?></h5>
+                    </div>
+                    <h6 style="margin-top: 4px;"><?php echo $readingRow['AuthorsName']; ?></h6>
+                </div>
+            <?php
+                }
+            } ?>
+        </div>
+    </div>
+=======
                         <h1>Books</h1>
+>>>>>>> 335b84180c026edc61be6dd4651435c02589423c
 
                         <!-- Reading Now Section -->
                         <div class="reading-now-section mb-4">
