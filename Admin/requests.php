@@ -50,7 +50,7 @@ if (isset($_POST['btnAccept'])) {
 if (isset($_POST['btnDecline'])) {
     $transactionID = $_POST['transactionID'];
 
-    $updateRequest = "UPDATE tbl_transactions SET isDeclined = 'declined' WHERE transactionID = '$transactionID'";
+    $updateRequest = "UPDATE tbl_transactions SET isApproved = 'no', isDeclined = 'yes', status = 'NULL' WHERE transactionID = '$transactionID'";
     executeQuery($updateRequest);
     header("Location: requests.php");
 }
