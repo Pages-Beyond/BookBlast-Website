@@ -1,0 +1,156 @@
+body {
+    background-color: #5E4447;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+    padding: 5px 0;
+}
+
+.navbar-nav {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 25px;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.nav-link {
+    color: white;
+}
+
+.navbar-nav .nav-link {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.nav-link:hover {
+    color: #f5c6cb;
+    text-decoration: underline;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+}
+
+.profile img {
+    width: auto;
+    max-height: 35px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    margin-top: -5px;
+    object-fit: contain;
+
+}
+
+.navbar-toggler {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-toggler .profile img {
+    position: relative;
+    width: 5vw;
+    height: auto;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.navbar-toggler .profile img:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+
+.container h3 {
+    font-size: 3.5rem;
+    color: white;
+    font-weight: 1000;
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+.category-item {
+    position: relative;
+    padding-left: 20px;
+}
+
+.category-item::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: white;
+}
+
+.heart {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.title-and-icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.heart-checkbox,
+.wishlist-checkbox {
+    display: none;
+}
+
+.heart {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* WISHLIST */
+.wishlist {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.heart-checkbox:checked+.heart {
+    color: red;
+}
+
+.wishlist-checkbox:checked+.wishlist {
+    color: rgb(162, 177, 216);
+}
+
+/* star */
+.checked {
+    color: yellow;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.rating .fa-star {
+    margin-right: 5px;
+}
+
+.rating .card-text {
+    margin: 0;
+}

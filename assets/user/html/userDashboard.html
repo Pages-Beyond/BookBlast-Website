@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/img/userDashboard/bookblast-logo.png" />
+    <link rel="stylesheet" href="../css/user-profile.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="assets/img/userDashboard/kween.png" alt="User" class="navbar-brand-img">
+                <span class="navbar-brand-text">User Name</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
+                <button type="button" class="btn-close text-reset position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <div class="offcanvas-body">
+                    <h5 class="text-white fw-bold mb-4 m-0" style="font-size: 2rem;">Menu</h5>
+                    <ul class="navbar-nav">
+                        <!-- User Dashboard Link -->
+                        <li class="nav-item"><a class="nav-link" href="userDashboard.html"
+                                id="navbar-wishlists">User</a></li>
+                        <!-- Profile Link -->
+                        <li class="nav-item"><a class="nav-link" href="profile.html" id="navbar-books">Profile</a></li>
+                        <!-- Home Link -->
+                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a>
+                        </li>
+                        <!-- Log-out Link -->
+                        <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Sidebar and Main Content -->
+    <div class="container-fluid">
+        <div class="row d-flex flex-nowrap">
+            <!-- Sidebar -->
+            <div class="sidebar col-2 d-flex flex-column p-2 text-white m-0" style="height: 50vh;">
+                <ul class="nav flex-column">
+                    <!-- Books Section -->
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white" href="#" id="books-link">
+                            <span class="d-none d-md-inline">Books</span>
+                            <i class="fas fa-book d-md-none"></i> <!-- Icon for small screens -->
+                        </a>
+                    </li>
+                    <!-- Favorites Section -->
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white" href="#" id="favorites-link">
+                            <span class="d-none d-md-inline">Favorites</span> <!-- Text for large screens -->
+                            <i class="fas fa-heart d-md-none"></i> <!-- Icon for small screens -->
+                        </a>
+                    </li>
+                    <!-- Wishlists Section -->
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white" href="#" id="wishlists-link">
+                            <span class="d-none d-md-inline">Wishlists</span> <!-- Text for large screens -->
+                            <i class="fas fa-bookmark d-md-none"></i> <!-- Icon for small screens -->
+                        </a>
+                    </li>
+                    <!-- Transactions Section -->
+                    <li class="nav-item">
+                        <a class="nav-link mb-4 text-white" href="#" id="transactions-link">
+                            <span class="d-none d-md-inline">Transactions</span> <!-- Text for large screens -->
+                            <i class="fas fa-exchange-alt d-md-none"></i> <!-- Icon for small screens -->
+                        </a>
+                </ul>
+            </div>
+
+
+            <!-- Main Content -->
+            <div class="main-content col-10 d-flex flex-column align-items-start">
+                <!-- Link to Book Review Page -->
+
+                <!-- Books Section -->
+                <div class="book-section" id="book-section">
+                    <h1>Books</h1>
+                    <!-- Reading Now Section -->
+                    <div class="reading-now-section mb-4">
+                        <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now
+                        </h3>
+                        <a href="UserDashboard-Bookview.html" style="text-decoration: none; color: white;">
+                            <div class="row g-2">
+                                <!-- First Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Second Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <!-- Third Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Done Section -->
+                        <div class="done-section mb-4">
+                            <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Done</h3>
+                            <a href="UserDashboard-Bookview.html" style="text-decoration: none; color: white;">
+                                <div class="row g-1">
+                                    <!-- Fourth Card -->
+                                    <div class="col-md-4 col-lg-3 mb-4">
+                                        <div class="card"
+                                            style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                            <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                                alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                        </div>
+                                        <div class="mt-2" style="max-width: 14rem;">
+                                            <h2 class="mb-0 me-2 text-wrap"
+                                                style="font-size: 1.25rem; word-wrap: break-word;">
+                                                Peter Pan Alice in Wonderland The Avengers
+                                            </h2>
+                                            <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                                John Doe, Jane Doe, Sila sila, Tayo tayo
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Favorites Section -->
+                    <div class="favorites-section" id="favorites-section" style="display: none;">
+                        <h1>Favorites</h1>
+                        <div class="row g-4" id="favorites-list">
+                            <!-- First Favorite Card -->
+                            <div class="col-md-4 col-lg-3 mb-4 favorite-card">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2" style="max-width: 14rem;">
+                                    <div class="d-flex align-items-center">
+                                        <h2 class="mb-0 me-2 text-wrap" style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <button class="btn btn-outline-danger heart-btn" onclick="toggleFavorite(this)" style="border: none;">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                        John Doe, Jane Doe, Sila sila, Tayo tayo
+                                    </h5>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+
+                    <!-- Wishlists Section -->
+                    <div class="wishlists-section" id="wishlists-section" style="display: none;">
+                        <h1>Wishlists</h1>
+                        <div class="row g-4" id="wishlists-list">
+                            <!-- First Wishlist Card -->
+                            <div class="col-md-4 col-lg-3 mb-4 wishlist-card">
+                                <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1.5rem;">
+                                    <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                        alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                </div>
+                                <div class="mt-2 style=max-width: 14rem;">
+                                    <h2 class="mb-0 me-2 text-wrap" style="font-size: 1.25rem; word-wrap: break-word;">
+                                        Peter Pan
+                                    </h2>
+                                    <button class="btn btn-outline-primary bookmark-btn" onclick="toggleWishlist(this)"
+                                        style="border: none;">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
+                                </div>
+                                <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                    John Doe
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transactions Section -->
+                    <div class="transactions-section" id="transactions-section">
+                        <h1>Transactions</h1>
+                        <!-- Pending Section -->
+                        <div class="reading-now-section mb-4">
+                            <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Pending
+                            </h3>
+                            <div class="row g-2">
+                                <!-- First Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Second Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- Third Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Decline Section -->
+                        <div class="done-section mb-4">
+                            <h3 class="done-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Decline</h3>
+                            <div class="row g-1">
+                                <!-- Fourth Card -->
+                                <div class="col-md-4 col-lg-3 mb-4">
+                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
+                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
+                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
+                                    </div>
+                                    <div class="mt-2" style="max-width: 14rem;">
+                                        <h2 class="mb-0 me-2 text-wrap"
+                                            style="font-size: 1.25rem; word-wrap: break-word;">
+                                            Peter Pan Alice in Wonderland The Avengers
+                                        </h2>
+                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
+                                            John Doe, Jane Doe, Sila sila, Tayo tayo
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Function to toggle heart icon and remove from favorites
+            function toggleFavorite(button) {
+                const card = button.closest('.favorite-card');
+                const heartIcon = button.querySelector('i');
+
+                // Toggle the heart icon (filled/empty)
+                heartIcon.classList.toggle('fas');
+                heartIcon.classList.toggle('far');
+
+                // If unhearted (empty heart), remove the card from favorites
+                if (heartIcon.classList.contains('far')) {
+                    card.remove();
+                }
+            }
+
+            // Function to toggle wishlist state and remove item if unfilled
+            function toggleWishlist(button) {
+                const icon = button.querySelector('i');
+                const card = button.closest('.wishlist-card');
+
+                if (icon.classList.contains('fas')) {
+                    // Change to unfilled icon
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+
+                    // Remove the card from the wishlist
+                    card.remove();
+                } else {
+                    // Change to filled icon
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+
+                    // Optionally, you can add code here to move the item back to the wishlist if needed
+                }
+            }
+
+            // Select all sidebar links
+            const sidebarLinks = document.querySelectorAll('.sidebar .nav-link');
+
+            // Function to handle the active state on click
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    // Remove 'active' class from all sidebar links
+                    sidebarLinks.forEach(link => link.classList.remove('active'));
+
+                    // Add 'active' class to the clicked link
+                    this.classList.add('active');
+
+                    // Show the corresponding section
+                    const sectionId = this.id.replace('-link', '-section');
+                    document.querySelectorAll('.book-section, .favorites-section, .wishlists-section, .transactions-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(sectionId).style.display = 'block';
+                });
+            });
+
+            // Automatically highlight the first link ('Books') as active when the page loads
+            document.getElementById('books-link').classList.add('active');
+            document.getElementById('book-section').style.display = 'block';
+
+
+            // Get all the sidebar links
+            const bookLink = document.getElementById('books-link');
+            const userLink = document.getElementById('favorites-link');
+            const requestLink = document.getElementById('wishlists-link');
+            const transactionLink = document.getElementById('transactions-link');
+
+            // Get the content sections
+            const bookSection = document.getElementById('book-section');
+            const favoritesSection = document.getElementById('favorites-section');
+            const wishlistsSection = document.getElementById('wishlists-section');
+            const transactionsSection = document.getElementById('transactions-section');
+
+            // Function to hide all sections
+            function hideAllSections() {
+                bookSection.style.display = 'none';
+                favoritesSection.style.display = 'none';
+                wishlistsSection.style.display = 'none';
+            }
+
+            // Add click event listeners to each link
+            bookLink.addEventListener('click', () => {
+                hideAllSections();
+                bookSection.style.display = 'block';
+            });
+
+            userLink.addEventListener('click', () => {
+                hideAllSections();
+                favoritesSection.style.display = 'block';
+            });
+
+            requestLink.addEventListener('click', () => {
+                hideAllSections();
+                wishlistsSection.style.display = 'block';
+            });
+
+            transactionLink.addEventListener('click', () => {
+                hideAllSections();
+                transactionsSection.style.display = 'block';
+            });
+
+            // Show the default section (Books)
+            hideAllSections();
+            bookSection.style.display = 'block';
+        </script>
+</body>
+
+</html>

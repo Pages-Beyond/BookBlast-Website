@@ -1,3 +1,34 @@
+<?php
+include('connect.php');
+
+if (isset($_POST['btnAdd'])) {
+    // Insert New User
+    $userName = $_POST['userName'];
+    $contactNumber = $_POST['contactNumber'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+
+    $insertQuery = "INSERT INTO tbl_users (userName, contactNumber, email, address, role) VALUES ('$userName', '$contactNumber', '$email', '$address', 'admin')";
+    executeQuery($insertQuery);
+}
+
+if (isset($_POST['btnUpdate'])) {
+    // Update Existing User
+    $userName = $_POST['userName'];
+    $contactNumber = $_POST['contactNumber'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $userID = $_POST['userID'];
+
+    $updateQuery = "UPDATE tbl_users SET userName='$userName', contactNumber='$contactNumber', email='$email', address='$address' WHERE userID='$userID' and role='admin'";
+    executeQuery($updateQuery);
+}
+
+$query = "SELECT * FROM tbl_users WHERE role = 'admin' LIMIT 1";
+$result = executeQuery($query);
+$user = mysqli_fetch_assoc($result);
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -9,79 +40,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/img/bookblast-logo.png" />
-    <link rel="stylesheet" href="assets/css/adminProfile.css">
-
+    <link rel="stylesheet" href="../assets/admin/css/adminProfile.css">
 </head>
 
+
 <body>
-    <!-- Navbar ONLY IN Admin Profile -->
-    <nav class="navbar navbar-fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <!-- Add an id to the navbar profile photo for dynamic updates -->
-                <img id="navbar-profile-photo" src="assets/img/artN.jpg" alt="Admin" class="navbar-brand-img">
-                <span class="navbar-brand-text">Admin Profile</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="offcanvas offcanvas-end" id="offcanvasNavbar">
-                <button type="button" class="btn-close text-reset position-absolute top-0 end-0 m-3"
-                    data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                <div class="offcanvas-body">
-                    <h5 class="text-white mb-4">Menu</h5>
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="index.php" id="navbar-books">Books</a></li>
-                        <li class="nav-item"><a class="nav-link" href="users.php" id="navbar-users">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="requests.php" id="navbar-requests">Request</a></li>
-                        <li class="nav-item"><a class="nav-link" href="loginPage.php" id="navbar-logout">Log Out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
+<?php include("../assets/admin/shared/navbarAdmin.php"); ?>
 
     <!-- Profile Photo Section -->
     <div class="container mt-5 pt-5 d-flex justify-content-center profile-photo-section">
         <div class="row align-items-center">
-            <!-- Added justify-content-center to center columns -->
-            <!-- Profile Photo on the Left -->
             <div class="col-12 col-md-4 text-center mb-4 mb-md-0">
-                <div class="profile-photo-container">
-                    <img id="profile-photo" src="assets/img/artN.jpg" alt="Profile Photo"
-                        class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover; margin-right: 50px;">
+                <div class="profile-photo-container d-flex justify-content-center">
+                    <img id="profile-photo" src="../assets/admin/img/artN.jpg"  alt="Profile Photo"
+                        class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;">
                 </div>
 
                 <div class="mt-3">
                     <button class="btn btn-primary" id="change-photo-btn">Change Photo</button>
-                    <!-- Hidden file input -->
                     <input type="file" id="file-input" style="display: none;" accept="image/*">
                 </div>
             </div>
 
-            <!-- User Information on the Right -->
+
             <div class="col-12 col-md-8 text-center text-md-start">
-                <!-- Username with Edit Icon -->
-                <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3">
-                    <h3 style="font-family: 'Poppins', sans-serif; font-size: 1.75rem; margin-bottom: 0;">
-                        <strong>Username:</strong> <span id="username">Profile</span>
+                <div
+                    class="d-flex flex-column flex-md-row align-items-center align-items-md-start justify-content-center justify-content-md-start mb-3">
+                    <h3 class="text-center text-md-start"
+                        style="font-family: 'Poppins', sans-serif; font-size: 1.75rem; margin-bottom: 0;">
+                        <strong>Username:</strong>
                     </h3>
-                    <button class="btn btn-link text-primary ms-2" id="edit-username-btn">
-                        <i class="fas fa-edit"></i>
-                    </button>
+                    <div
+                        class="d-flex align-items-center justify-content-center justify-content-md-start ms-0 ms-md-2 mt-1 mt-md-0">
+                        <span id="username"
+                            style="font-family: 'Poppins', sans-serif; font-size: 1.75rem; white-space: nowrap;"><?php echo $user['userName']; ?></span>
+                        <button class="btn btn-link text-primary p-0 ms-2" id="edit-username-btn"
+                            style="line-height: 1; vertical-align: middle;">
+                            <i class="fas fa-edit" style="font-size: 1.2rem;"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Editable User Info -->
                 <div id="user-info">
                     <p style="font-family: 'Poppins', sans-serif; font-size: 1.25rem;">
-                        <strong>Mobile Number:</strong> <span id="mobile-number">123-456-7890</span>
+                        <strong>Mobile Number:</strong> <span
+                            id="mobile-number"><?php echo $user['contactNumber']; ?></span>
                     </p>
                     <p style="font-family: 'Poppins', sans-serif; font-size: 1.25rem;">
-                        <strong>Email:</strong> <span id="email">admin@example.com</span>
+                        <strong>Email:</strong> <span id="email"><?php echo $user['email']; ?></span>
                     </p>
                     <p style="font-family: 'Poppins', sans-serif; font-size: 1.25rem;">
-                        <strong>Address:</strong> <span id="address">123 Main St, City, Country</span>
+                        <strong>Address:</strong> <span id="address"><?php echo $user['address']; ?></span>
                     </p>
                 </div>
             </div>
@@ -91,35 +100,39 @@
         <div class="modal fade" id="editUserInfoModal" tabindex="-1" aria-labelledby="editUserInfoModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content" style="background-color: #C29A7D;">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editUserInfoModalLabel">Edit Admin Information</h5>
+                        <h5 class="modal-title text-black" id="editUserInfoModalLabel">Edit Admin Information</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editUserInfoForm">
+                        <form method="POST" id="editForm">
                             <div class="mb-3">
-                                <label for="edit-username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="edit-username" value="Profile">
+                                <label for="edit-username" class="form-label text-black">Username</label>
+                                <input type="text" class="form-control" name="userName"
+                                    value="<?php echo $user['userName']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-mobile-number" class="form-label">Mobile Number</label>
-                                <input type="text" class="form-control" id="edit-mobile-number" value="123-456-7890">
+                                <label for="edit-mobile-number" class="form-label text-black">Mobile Number</label>
+                                <input type="text" class="form-control" name="contactNumber"
+                                    value="<?php echo $user['contactNumber']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="edit-email" value="user@example.com">
+                                <label for="edit-email" class="form-label text-black">Email</label>
+                                <input type="email" class="form-control" name="email"
+                                    value="<?php echo $user['email']; ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="edit-address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="edit-address"
-                                    value="123 Main St, City, Country">
+                                <label for="edit-address" class="form-label text-black">Address</label>
+                                <input type="text" class="form-control" name="address"
+                                    value="<?php echo $user['address']; ?>" required>
+                            </div>
+                            <input type="hidden" name="userID" value="<?php echo $user['userID']; ?>">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="btnUpdate">Save Changes</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="save-changes-btn">Save Changes</button>
                     </div>
                 </div>
             </div>

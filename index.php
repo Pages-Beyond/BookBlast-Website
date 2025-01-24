@@ -1,13 +1,38 @@
-<?php 
-include ('shared/connect.php');
+<?php
+include('shared/connect.php');
 
 session_start();
 $userID = $_SESSION['userID'];
+$userPic = '';
+$categoryName = '';
+$feedbackStat = '';
 
-if (!isset($_SESSION['userID'])){
-    header ('location:Login/login.php');
+
+
+if (!isset($_SESSION['userID'])) {
+    header('location:Login/login.php');
+
 }
 
+$getUserPicQuery = "SELECT `userProfilePic` FROM `tbl_users` WHERE userID = $userID";
+$userPicResult = executeQuery($getUserPicQuery);
+
+while ($userPicRows = mysqli_fetch_assoc($userPicResult)) {
+    $userPic = $userPicRows['userProfilePic'];
+}
+
+if (isset($_POST['feedbackBtn'])) {
+    $feedBack = $_POST['feedBack'];
+    $feedBack = str_replace('\'', '', $feedBack);
+    $feedBack = addslashes($feedBack);
+
+    $insertFeedback = "INSERT INTO `tbl_feedbacks`(`userID`, `feedBack`) VALUES ('$userID','$feedBack');";
+    executeQuery($insertFeedback);
+
+    $feedbackStat = "sent";
+
+
+}
 
 
 ?>
@@ -20,7 +45,7 @@ if (!isset($_SESSION['userID'])){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BookBlast | Website</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/homepage/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="assets/user/img/homepage/bookblast-logo.png" />
     <link>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -142,8 +167,8 @@ if (!isset($_SESSION['userID'])){
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg shadow" style="background-color: #5E4447;">
         <div class="container-fluid">
-            <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
-                <img src="assets/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo" class="img-fluid">
+            <a href="../" class="navbar-brand" style="padding-left: 30px;">
+                <img src="assets/user/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo" class="img-fluid">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -169,7 +194,7 @@ if (!isset($_SESSION['userID'])){
 
                 <!-- Profile Image -->
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
-                    <a class="profile" href="userDashboard.html">
+                    <a class="profile" href="userDashboard.php">
                         <img src="assets/img/homepage/img-profile.png" alt="Profile" class="rounded-circle"
                             style="width: 40px; height: 40px;">
                     </a>
@@ -178,12 +203,23 @@ if (!isset($_SESSION['userID'])){
         </div>
     </nav>
 
+    <?php if ($feedbackStat == "sent") {
+
+        ?>
+        <div id="feedbackAlert" class="alert alert-success" role="alert">
+            Feedback and Suggestions sent!
+        </div>
+
+        <?php
+    }
+    ?>
+
 
     <!-- WORDMARK -->
     <div class="bbWordmark-container text-center">
         <div class="row">
             <div class="col">
-                <img src="assets/img/homepage/bookblast-wordmark.png" class="bbWordmark" alt="wordmark"
+                <img src="assets/user/img/homepage/bookblast-wordmark.png" class="bbWordmark" alt="wordmark"
                     style="max-width: 100%; height: auto;">
             </div>
         </div>
@@ -196,157 +232,107 @@ if (!isset($_SESSION['userID'])){
                 <h3>Featured Books</h3>
             </div>
         </div>
-
         <div class="row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%;">
-            <div class="col">
-                <a href="books-viewingPage.html">
-                    <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                        <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                        <div class="card-body" style="color: white;">
-                            <h4 class="card-title">Peter Pan</h4>
+            <?php
+            $getFeaturedBooksQuery = "SELECT tbl_transactions.bookID, COUNT(tbl_transactions.bookID) AS topBooks, tbl_books.bookTitle as bookTitle, tbl_books.bookCover as bookCover, tbl_authors.firstName as firstName, tbl_authors.lastName, ROUND (AVG(tbl_reviews.userRating), 1) as avgRating 
+            FROM tbl_transactions 
+            LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID 
+            LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
+            LEFT JOIN tbl_reviews ON tbl_books.bookID = tbl_reviews.bookID 
+            WHERE tbl_transactions.isApproved = 'approved' and tbl_transactions.status = 'done' 
+            GROUP BY tbl_transactions.bookID ORDER BY tbl_transactions.bookID ASC LIMIT 5;";
+            $featuredBooksResult = executeQuery($getFeaturedBooksQuery);
 
-                            <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                            <div class="rating">
-                                <span class="fa fa-star checked"></span>
-                                <p class="card-text">4/5</p>
+            while ($featureBooksRow = mysqli_fetch_assoc($featuredBooksResult)) {
+                $featuredBookID = $featureBooksRow['bookID'];
+                $featuredBookTitle = $featureBooksRow['bookTitle'];
+                $featuredBookCover = $featureBooksRow['bookCover'];
+                $featuredAuthor = $featureBooksRow['firstName'] . " " . $featureBooksRow['lastName'];
+                $featuredRating = $featureBooksRow['avgRating']
+
+
+                    ?>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <a href="User/bookView.php?bookID=<?php echo $featuredBookID ?>">
+                        <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
+                            <img src="assets/shared/img/bookCovers/<?php echo $featuredBookCover ?>" class="card-img-top"
+                                style="max-height: 380px;" alt="...">
+                            <div class="card-body" style="color: white;">
+                                <h4 class="card-title"><?php echo $featuredBookTitle ?></h4>
+
+                                <h1 class="display-6" style="font-size: 1rem;"><?php echo $featuredAuthor ?></h1>
+                                <div class="rating">
+                                    <span class="fa fa-star checked"></span>
+                                    <p class="card-text"><?php echo $featuredRating . "/5" ?></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col ">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-
-            <div class="col">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-
-            <div class="col">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-
-            <div class="col">
-                <a href="books-viewingPage.html">
-                <div class="card" style="background-color: transparent; border: none; line-height: 0.1;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h4 class="card-title">Peter Pan</h4>
-                        <h1 class="display-6" style="font-size: 1rem;">John Doe</h1>
-                        <div class="rating">
-                            <span class="fa fa-star checked"></span>
-                            <p class="card-text">4/5</p>
-                        </div>
-                    </div>
-                </div>
-                </a>
-            </div>
-
-        </div>
-
-        <!-- FEATURED TOPICS -->
-        <div class="container" style="margin-top: 30px;">
-            <div class="row">
-                <div class="col" style="color: white; font-weight: 500;">
-                    <h3>Featured Topics</h3>
-                </div>
-            </div>
-
-            <div class="row row-cols-1 row-cols-md-5 g-4 m-0 text-center"
-                style="max-width: 100%; text-decoration: none;">
-                <div class="col">
-                    <a href="books.html#fiction">
-                        <div class="card" style="background-color: transparent; border: none;">
-                            <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                            <div class="card-body" style="color: white;">
-                                <h1 class="display-6" style="font-size: 1.5rem;">Fiction</h1>
                     </a>
-
                 </div>
+                <?php
+            }
+            ?>
+
+        </div>
+
+    </div>
+
+    <!-- FEATURED TOPICS -->
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col" style="color: white; font-weight: 500;">
+                <h3>Featured Topics</h3>
             </div>
         </div>
 
-        <div class="col">
-            <a href="books.html#non-fiction">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Non-Fiction</h1>
-                    </div>
+        <div class="row row row-cols-1 row-cols-md-5 g-4 m-0" style="max-width: 100%; text-decoration: none;">
+            <?php
+            $getBookCategoriesQuery = "SELECT tbl_categories.categoryID, tbl_categories.categoryName, tbl_books.bookCover from tbl_categories LEFT JOIN tbl_books ON tbl_categories.categoryID = tbl_books.categoryID GROUP BY categoryName;";
+            $getBookCategoriesResult = executeQuery($getBookCategoriesQuery);
+            while ($categoryRows = mysqli_fetch_assoc($getBookCategoriesResult)) {
+                $categoryID = $categoryRows['categoryID'];
+                $categoryName = $categoryRows["categoryName"];
+                $categoryBookCover = $categoryRows["bookCover"];
+                ?>
+
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <a href="books.html?category=<?php echo $categoryID ?>">
+                        <div class="card" style="background-color: transparent; border: none;">
+                            <img src="assets/shared/img/bookCovers/<?php echo $categoryBookCover ?>" class="card-img-top"
+                                style="max-height: 380px;" alt="...">
+                            <div class="card-body" style="color: white;">
+                                <h1 class="display-6" style="font-size: 1.5rem;"><?php echo $categoryName ?></h1>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
+                <?php
+            }
+            ?>
+
         </div>
 
-        <div class="col">
-            <a href="books.html#scienceTech">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Science</h1>
-                    </div>
-                </div>
-            </a>
-        </div>
 
-        <div class="col">
-            <a href="books.html#healthWelness">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Health</h1>
-                    </div>
-                </div>
-            </a>
-        </div>
 
-        <div class="col">
-            <a href="books.html#literature">
-                <div class="card" style="background-color: transparent; border: none;">
-                    <img src="assets/img/homepage/peterpan.png" class="card-img-top" alt="...">
-                    <div class="card-body" style="color: white;">
-                        <h1 class="display-6" style="font-size: 1.5rem;">Literature</h1>
-                    </div>
-                </div>
-        </div>
-        </a>
+
+
+
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- ABOUT -->
     <div class="container" id="about" style="margin-top: 30px;">
@@ -381,7 +367,7 @@ if (!isset($_SESSION['userID'])){
         <div class=" container">
             <div class="row">
                 <div class="col text-center">
-                    <img src="assets/img/homepage/bookblast-logo.png" class="bbLogo" alt="bbLogo"
+                    <img src="assets/user/img/homepage/bookblast-logo.png" class="bbLogo" alt="bbLogo"
                         style="max-width: 30%; height: auto;">
                 </div>
             </div>
@@ -401,59 +387,33 @@ if (!isset($_SESSION['userID'])){
                 <div class="col">
                     <div class="accordion accordion-flush" id="accordionFlushExample"
                         style="border-radius: 10px; background-color: #EADCAE; gap: 10px;">
-                        <div class="accordion-item" style="border-radius: 5px;  background-color: #EADCAE; gap: 10px;">
-                            <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                    aria-controls="flush-collapseOne"
-                                    style="border-radius: 5px;  background-color: #EADCAE; gap: 10px;">
-                                    Accordion Item #1
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">Placeholder content for this accordion,
-                                    which is intended to demonstrate the <code>.accordion-flush</code>
-                                    class. This is the first item's accordion body.</div>
-                            </div>
-                        </div>
-                        <div class="accordion-item" style="border-radius: 5px; background-color: #EADCAE; gap: 10px;">
-                            <h2 class="accordion-header" id="flush-headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                    aria-controls="flush-collapseTwo"
-                                    style="border-radius: 5px; background-color: #EADCAE; gap: 10px;">
-                                    Accordion Item #2
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">Placeholder content for this accordion,
-                                    which is intended to demonstrate the <code>.accordion-flush</code>
-                                    class. This is the second item's accordion body. Let's imagine this
-                                    being filled with some actual content.</div>
-                            </div>
-                        </div>
-                        <div class="accordion-item" style="border-radius: 5px; background-color: #EADCAE; gap: 10px;">
-                            <h2 class="accordion-header" id="flush-headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                    aria-controls="flush-collapseThree"
-                                    style="border-radius: 5px; background-color: #EADCAE; gap: 30px;">
-                                    Accordion Item #3
-                                </button>
-                            </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">Placeholder content for this accordion,
-                                    which is intended to demonstrate the <code>.accordion-flush</code>
-                                    class. This is the third item's accordion body. Nothing more
-                                    exciting happening here in terms of content, but just filling up the
-                                    space to make it look, at least at first glance, a bit more
-                                    representative of how this would look in a real-world application.
+                        <?php
+                        $getFAQSQuery = "SELECT * from tbl_questions";
+                        $faqsResult = executeQuery($getFAQSQuery);
+
+                        while ($faqsRow = mysqli_fetch_assoc($faqsResult)) {
+                            $question = $faqsRow['question'];
+                            $answer = $faqsRow['answer'];
+                            $questionNumber = $faqsRow['questionID'];
+                            ?>
+                            <div class="accordion-item" style="border-radius: 5px;  background-color: #EADCAE; gap: 10px;">
+                                <h2 class="accordion-header" id="flush-heading<?php echo $questionNumber ?>">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse<?php echo $questionNumber ?>" aria-expanded="false"
+                                        aria-controls="flush-collapse<?php echo $questionNumber ?>"
+                                        style="border-radius: 5px;  background-color: #EADCAE; gap: 10px;">
+                                        <?php echo $question ?>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse<?php echo $questionNumber ?>" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-heading<?php echo $questionNumber ?>"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body"><?php echo $answer ?></div>
                                 </div>
                             </div>
-                        </div>
+                            <?php
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -468,26 +428,35 @@ if (!isset($_SESSION['userID'])){
             <div class="col" style="color: white; font-weight: 500;">
                 <h3>Feedback and Suggestions</h3>
             </div>
+
         </div>
+        <form method="POST">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating">
+                            <textarea name="feedBack" class="form-control" placeholder="Leave a comment here"
+                                id="floatingTextarea2" style="height: 100px" required></textarea>
+                            <label for="floatingTextarea2">Comments</label>
+                        </div>
+                        <div class="container" style="padding-top: 10px; color: #7D97A0;">
+                            <button type="submit" name="feedbackBtn" class="btn ms-auto d-block"
+                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;"
+                                data-toggle="modal" data-target="#exampleModalCenter">
+                                Submit
+                            </button>
 
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                            style="height: 100px"></textarea>
-                        <label for="floatingTextarea2">Comments</label>
-                    </div>
-                    <div class="container" style="padding-top: 10px; color: #7D97A0;">
-                        <button type="button" class="btn ms-auto d-block"
-                            style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
-                            Submit
-                        </button>
-                    </div>
 
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+        </form>
+
+
     </div>
     </div>
 
@@ -496,7 +465,8 @@ if (!isset($_SESSION['userID'])){
         <footer class="py-3 my-4">
             <ul class="nav justify-content-center border-bottom pb-3 mb-3"
                 style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <img src="assets/img/homepage/p&b-logo.png" class="pbLogo" style="width: 150px; max-height: 150px;">
+                <img src="assets/user/img/homepage/p&b-logo.png" class="pbLogo"
+                    style="width: 150px; max-height: 150px;">
                 <h3 style="letter-spacing: 1rem; color: white;">PAGES & BEYOND</h3>
             </ul>
             <p class="text-center text-white" style="font-size: 0.9rem;">©2025 Organization</p>
@@ -512,6 +482,18 @@ if (!isset($_SESSION['userID'])){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const feedbackAlert = document.getElementById('feedbackAlert');
+            if (feedbackAlert) {
+                setTimeout(() => {
+                    feedbackAlert.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 
 </html>
