@@ -168,34 +168,9 @@ $favoriteResult = executeQuery($favoriteQuery);
                 <a href="UserDashboard-Bookview.html" style="text-decoration: none; color: white;">
                     <!-- Books Section -->
                     <div class="book-section" id="book-section">
-<<<<<<< HEAD
-    <h1>Books</h1>
-    
-    <!-- Reading Now Section -->
-    <div class="reading-now-section mb-4">
-        <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now</h3>
-        <div class="row g-4">
-            <?php if (mysqli_num_rows($readingResult) > 0) {
-                while ($readingRow = mysqli_fetch_assoc($readingResult)) {
-            ?>
-                <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-4">
-                    <div class="card" style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                        <img src="assets/img/userDashboard/<?php echo $readingRow['bookCover']; ?>" class="card-img-top" alt="Dashboard Image" style="height: 160px; object-fit: cover;">
-                    </div>
-                    <div class="mt-2 d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><?php echo $readingRow['bookTitle']; ?></h5>
-                    </div>
-                    <h6 style="margin-top: 4px;"><?php echo $readingRow['AuthorsName']; ?></h6>
-                </div>
-            <?php
-                }
-            } ?>
-        </div>
-    </div>
-=======
-                        <h1>Books</h1>
->>>>>>> 335b84180c026edc61be6dd4651435c02589423c
 
+                        <h1>Books</h1>
+    
                         <!-- Reading Now Section -->
                         <div class="reading-now-section mb-4">
                             <h3 class="reading-now-title mb-3" style="font-size: 1rem; padding: 4px 10px;">Reading Now
