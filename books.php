@@ -62,7 +62,7 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" href="assets/css/books.css">
+    <link rel="stylesheet" href="assets/user/css/books.css">
 
 </head>
 
@@ -71,7 +71,7 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
         <div class="container-fluid">
             <!-- BookBlast Logo -->
             <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
-                <img src="assets/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
+                <img src="assets/user/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -95,7 +95,7 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                     </li>
                     <!-- Profile Image -->
                     <a class="profile" href="userDashboard.html">
-                        <img src="assets/img/homepage/img-profile.png" alt="Profile">
+                        <img src="assets/user/img/homepage/img-profile.png" alt="Profile">
                     </a>
                 </ul>
 
@@ -134,12 +134,25 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                             </a>
                         </div>
                         <!-- Sort By button -->
-                        <div class="col-auto">
-                            <button type="button" class="btn"
+                        <div class="col d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn mx-1"
+                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;" >
+                                Sort
+                            </button>
+                            <button type="button" class="btn mx-1"
                                 style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
-                                Sort By
+                                Order
                             </button>
                         </div>
+
+                        <!-- <div class="col" style="background-color: red;">
+                            <div class="container d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn"
+                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
+                                Order
+                            </button>
+                            </div>
+                        </div> -->
                     </div>
                     <hr>
                 </div>
