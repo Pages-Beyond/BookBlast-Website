@@ -45,7 +45,7 @@ $userDetailsResults = executeQuery($userDetailsQuery);
         </div>
 
         <?php include('process/viewUsers.php') ?>
-        
+
     </div>
 
     <script>
@@ -57,6 +57,15 @@ $userDetailsResults = executeQuery($userDetailsQuery);
                 expandable.style.display = expandable.style.display === 'none' ? 'block' : 'none';
             });
         });
+
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPage) {
+                link.classList.add('active');
+            }
+        });
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

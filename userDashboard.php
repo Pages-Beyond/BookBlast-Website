@@ -109,7 +109,7 @@ $favoriteResult = executeQuery($favoriteQuery);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/img/userDashboard/bookblast-logo.png" />
-    <link rel="stylesheet" href="assets/css/user-profile.css">
+    <link rel="stylesheet" href="assets/user/css/user-profile.css">
 </head>
 
 <body>
@@ -130,12 +130,12 @@ $favoriteResult = executeQuery($favoriteQuery);
                 <div class="offcanvas-body">
                     <h5 class="text-white fw-bold mb-4 m-0" style="font-size: 2rem;">Menu</h5>
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="userDashboard.html"
+                        <li class="nav-item"><a class="nav-link" href="userDashboard.php"
                                 id="navbar-wishlists">User</a></li>
-                        <li class="nav-item"><a class="nav-link" href="profile.html" id="navbar-books">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a>
+                        <li class="nav-item"><a class="nav-link" href="profile.php" id="navbar-books">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="homepage.php" id="navbar-favorites">Home</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a>
+                        <li class="nav-item"><a class="nav-link" href="loginPage.php" id="navbar-wishlists">Log-out</a>
                         </li>
                     </ul>
                 </div>

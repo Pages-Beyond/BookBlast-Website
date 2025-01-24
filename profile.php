@@ -2,6 +2,33 @@
 
 include('connect.php');
 
+if (isset($_POST['btnAdd'])) {
+    // Insert New User
+    $userName = $_POST['userName'];
+    $contactNumber = $_POST['contactNumber'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+
+    $insertQuery = "INSERT INTO tbl_users (userName, contactNumber, email, address, role) VALUES ('$userName', '$contactNumber', '$email', '$address', 'user')";
+    executeQuery($insertQuery);
+}
+
+if (isset($_POST['btnUpdate'])) {
+    // Update Existing User
+    $userName = $_POST['userName'];
+    $contactNumber = $_POST['contactNumber'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $userID = $_POST['userID'];
+
+    $updateQuery = "UPDATE tbl_users SET userName='$userName', contactNumber='$contactNumber', email='$email', address='$address' WHERE userID='$userID' and role='user'";
+    executeQuery($updateQuery);
+}
+
+$query = "SELECT * FROM tbl_users WHERE role = 'user'";
+$result = executeQuery($query);
+$user = mysqli_fetch_assoc($result);
+=======
 
 session_start();
 
@@ -9,8 +36,6 @@ session_start();
 // $userID = $_SESSION['usersID'];
 
 $userID = '1';
-
-
 
 ?>
 
