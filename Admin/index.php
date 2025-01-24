@@ -44,30 +44,33 @@ if (isset($_POST['btnDelete'])) {
 
     <!-- Main Content -->
     <div class="main-column col-10 d-flex flex-column align-items-start ps-3">
-        <div class="bookTitle my-3">
-            <h1>Books</h1>
+        <div class="row w-100 align-items-center mt-3 mb-5">
+            <!-- Book Title -->
+            <div class="col-auto">
+                <h1 class="mb-0">Books</h1>
+            </div>
+
+            <!-- Add Book Button -->
+            <div class="col-auto ms-3">
+                <a href="add.php" style="text-decoration: none;">
+                    <div style="width: auto; height: auto; display: flex; align-items: center; 
+                    padding: 10px; background-color: #EBDDAE; max-width: 400px; border-radius: 5px;">
+                    
+                        <!-- Text "Add Book" -->
+                        <h3 class="mb-0 mx-2" style="flex-grow: 1; color: black">Add Book</h3>
+
+                        <!-- Plus Icon -->
+                        <i class="fa-solid fa-plus mx-3" style="font-size: 48px; color: black"></i>
+                    </div>
+                </a>
+            </div>
         </div>
+
 
         <!-- Card Row -->
         <div class="row mx-auto g-5 justify-content-start">
 
-            <!-- Card that Add Books -->
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                <a href="add.php" style="text-decoration: none;">
-                    <div style="margin-top: 23px"></div>
-                    <div class="card"
-                        style="max-width: 100%; min-width: 100%; min-height: 250px; box-sizing: border-box;">
-                        <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-                            <i class="fa-solid fa-plus" style="font-size: 96px;"></i>
-                        </div>
-                    </div>
-                    <div class="mt-2 text-white" style="text-align: center">
-                        <h3>Add Book</h3>
-                    </div>
-                </a>
-            </div>
-
-           <?php include('process/viewBooks.php')?>
+            <?php include('process/viewBooks.php') ?>
 
         </div>
     </div>

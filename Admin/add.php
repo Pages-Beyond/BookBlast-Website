@@ -4,13 +4,11 @@ include("connect.php");
 $categoryFilter = '';
 $authorFilter = '';
 $imgNumber = '';
+$authorExists = false;
+
 
 $categoryQuery = "SELECT * FROM tbl_categories";
 $categoryResults = executeQuery($categoryQuery);
-
-$authorQuery = "SELECT DISTINCT(CONCAT(firstName, ' ', lastName)) AS fullName, authorID FROM tbl_authors ORDER BY fullName ASC";
-$authorResults = executeQuery($authorQuery);
-
 
 $lastNumberQuery = "SELECT MAX(bookID + 1) AS imgNumber from tbl_books";
 $lastNumberResult = executeQuery($lastNumberQuery);
@@ -28,6 +26,8 @@ if (isset($_POST['btnSubmit'])) {
     $imgFileUpload = $_FILES['imgFile']['name'];
     $imgFileUploadTMP = $_FILES['imgFile']['tmp_name'];
 
+    $bookTitle = str_replace("'", "\'", $bookTitle);
+
     //RENAME THE FILE
     $imgFileExt = substr($imgFileUpload, strripos($imgFileUpload, '.'));
     $imgNewName = "book" . "" . "$imgNumber";
@@ -42,6 +42,32 @@ if (isset($_POST['btnSubmit'])) {
     $insertBook = "INSERT INTO tbl_books (bookTitle, authorID, categoryID, bookCover, datePublished) VALUES ('$bookTitle', '$authorID', ' $categoryID', '$imgNewFileName', '$yearPublished')";
     executeQuery($insertBook);
 }
+
+if (isset($_POST['btnSubmitAuthor'])) {
+    $authorFName = $_POST['authorFName'];
+    $authorLName = $_POST['authorLName'];
+    $authorFullName = $authorFName . " " . $authorLName;
+
+    $authorQuery = "SELECT DISTINCT(CONCAT(firstName, ' ', lastName)) AS fullName, authorID FROM tbl_authors ORDER BY fullName ASC";
+    $authorResults = executeQuery($authorQuery);
+
+    // Check if author already exists
+    while ($row = mysqli_fetch_assoc($authorResults)) {
+        if ($authorFullName == $row['fullName']) {
+            $authorExists = true;
+            break;
+        }
+    }
+
+    // If the author doesn't exist, insert them
+    if (!$authorExists) {
+        $insertAuthor = "INSERT INTO tbl_authors (firstName, lastName) VALUES ('$authorFName', '$authorLName')";
+        executeQuery($insertAuthor);
+    }
+}
+
+$authorQuery = "SELECT DISTINCT(CONCAT(firstName, ' ', lastName)) AS fullName, authorID FROM tbl_authors ORDER BY fullName ASC";
+$authorResults = executeQuery($authorQuery);
 
 ?>
 
@@ -74,6 +100,12 @@ if (isset($_POST['btnSubmit'])) {
         </div>
 
         <?php include('process/addBookProcess.php') ?>
+
+        <div class="bookTitle text-end">
+            <h1 class="ms-0 mt-5">Add Author</h1>
+        </div>
+
+        <?php include('process/addAuthorProcess.php') ?>
 
     </div>
 

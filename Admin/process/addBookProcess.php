@@ -12,7 +12,7 @@
                 <div class="mb-3">
 
                     <label for="bookAuthor" class="form-label text-white">Author</label>
-                    <select id="categoryNameSelect" name="authorID" class="form-control input-field">
+                    <select id="categoryNameSelect" name="authorID" class="form-control input-field" required>
                         <option value="">Select Author Name</option>
 
                         <?php
@@ -38,12 +38,12 @@
                 <div class="mb-3">
                     <label for="bookAuthor" class="form-label text-white">Published Year</label>
                     <input type="text" class="form-control input-field" id="yearPublished" name="yearPublished"
-                        required>
+                     required maxlength="4" pattern="^\d{4}$" min="1800" max="2025" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="bookCategory" class="form-label text-white">Book Category</label>
-                    <select id="categoryNameSelect" name="categoryID" class="form-control input-field">
+                    <select id="categoryNameSelect" name="categoryID" class="form-control input-field" required>
                         <option value="">Select a Book Category</option>
 
                         <?php
