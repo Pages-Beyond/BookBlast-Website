@@ -217,7 +217,7 @@ $favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
                     <div class="icons-wrapper"  data-book-id="123">
                     <input type="checkbox" class="heart-checkbox" id="heart-checkbox" name="favoriteBtn" onchange="handleFavorite(this)" <?php echo $favorite?>>
                     <label for="heart-checkbox" class="heart">❤</label>
-                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox">
+                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox" onchange="handleWishlist(this)">
                         <label for="wishlist-checkbox" class="wishlist">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
@@ -351,7 +351,31 @@ $favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
         })
         .then(response => response.text())
         .then(data => {
-            console.log(data); // Handle the response from the server
+            console.log(data); 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+
+<script>
+    function handleWishlist(checkbox) {
+        const isWishlist = checkbox.checked; // True if checked, false otherwise
+        const bookID = <?php echo $bookID ?>;
+
+        const formData = new FormData();
+        formData.append('bookID',  bookID);
+        formData.append('isWishlist', isWishlist ? 1 : 0);
+
+        fetch('handle_wishlist.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); 
         })
         .catch(error => {
             console.error('Error:', error);
