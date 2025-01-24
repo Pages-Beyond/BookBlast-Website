@@ -1,8 +1,9 @@
 <?php
 
-include('connect.php');
+include('../shared/connect.php');
 
 session_start();
+
 
 if (!isset($_SESSION['password'])) {
     header("Location: ../login/login.php");
@@ -10,7 +11,7 @@ if (!isset($_SESSION['password'])) {
 
 $userID = $_SESSION['userID'];
 
-$userID = 2;
+
 
 if (isset($_POST['btnUpdate'])) {
     // Update Existing User
@@ -78,7 +79,7 @@ if (isset($_POST['btnUpdateProfile'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="assets/img/bookblast-logo.png" />
-    <link rel="stylesheet" href="assets/user/css/user-profile.css">
+    <link rel="stylesheet" href="../assets/user/css/user-profile.css">
 </head>
 
 
@@ -87,7 +88,7 @@ if (isset($_POST['btnUpdateProfile'])) {
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="assets/shared/img/userpfp/<?php echo $user['userProfilePic'] ?>" alt="User" class="navbar-brand-img">
+                <img src="../assets/shared/img/userpfp/<?php echo $user['userProfilePic'] ?>" alt="User" class="navbar-brand-img">
                 <span class="navbar-brand-text">User Name</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -103,9 +104,9 @@ if (isset($_POST['btnUpdateProfile'])) {
                         <li class="nav-item"><a class="nav-link" href="userDashboard.php" id="navbar-wishlists">User</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="profile.php" id="navbar-books">Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="homepage.html" id="navbar-favorites">Home</a>
+                        <li class="nav-item"><a class="nav-link" href="../" id="navbar-favorites">Home</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="loginPage.html" id="navbar-wishlists">Log-out</a>
+                        <li class="nav-item"><a class="nav-link" href="../Login/login.php" id="navbar-wishlists">Log-out</a>
                         </li>
                     </ul>
                 </div>
@@ -118,7 +119,7 @@ if (isset($_POST['btnUpdateProfile'])) {
         <div class="row align-items-center">
             <div class="col-12 col-md-4 text-center mb-4 mb-md-0">
                 <div class="profile-photo-container d-flex justify-content-center">
-                    <img id="profile-photo" src="assets/shared/img/userpfp/<?php echo $user['userProfilePic'] ?>"
+                    <img id="profile-photo" src="../assets/shared/img/userpfp/<?php echo $user['userProfilePic'] ?>"
                         alt="Profile Photo" class="rounded-circle"
                         style="width: 200px; height: 200px; object-fit: cover;">
                 </div>

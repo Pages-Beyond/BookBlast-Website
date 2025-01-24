@@ -141,7 +141,7 @@ $favoriteResult = executeQuery($favoriteQuery);
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="userDashboard.php" id="navbar-wishlists">User</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="User/profile.php" id="navbar-books">Profile</a>
+                        <li class="nav-item"><a class="nav-link" href="profile.php" id="navbar-books">Profile</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="../" id="navbar-favorites">Home</a>
                         </li>
