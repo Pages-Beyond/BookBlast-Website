@@ -1,10 +1,23 @@
+
 <?php
+
+
 include('../shared/connect.php');
+
 session_start();
 
+if(isset($_SESSION['rating'])){
+    $rating = $_SESSION['rating'];
+}else {
+    $rating = 0;
+}
 
 $userID = $_SESSION['userID'];
 $userPic = $_SESSION['userPic'];
+
+$disabled = '';
+
+
 
 $getUserNameQuery = "SELECT tbl_userInfo.firstName,  tbl_userInfo.lastName FROM `tbl_users` LEFT JOIN tbl_userinfo on tbl_users.userID = tbl_userinfo.userID WHERE tbl_users.userID = $userID";
 $userNameResult = executeQuery($getUserNameQuery);
@@ -36,6 +49,7 @@ if ($bookID != '') {
         $bookTitle = $bookDataRow['bookTitle'];
         $bookAuthor = $bookDataRow['firstName'] . " " . $bookDataRow['lastName'];
         $bookCover = $bookDataRow['bookCover'];
+        $bookStock = $bookDataRow['stocks'];
 
     }
 
@@ -44,6 +58,24 @@ if ($bookID != '') {
 
 
 }
+
+
+
+if (isset($_POST['btnDone'])) {
+    $updateTransactionQuery = "UPDATE `tbl_transactions` SET `status`='done',`dateReturned`= CURRENT_TIMESTAMP() WHERE userID = $userID AND bookID = $bookID";
+    executeQuery($updateTransactionQuery);
+
+    $updateBookStocksQuery = "UPDATE `tbl_books` SET `stocks`='$bookStock'+1 WHERE bookID = $bookID";
+    executeQuery($updateBookStocksQuery);
+
+
+
+}
+
+
+
+
+
 
 $getUserTransactionQuery = "SELECT tbl_transactions.datetoReturn, tbl_transactions.status FROM `tbl_transactions` LEFT JOIN tbl_users ON tbl_transactions.userID = tbl_users.userID LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID WHERE tbl_transactions.userID = '$userID' AND tbl_transactions.bookID='$bookID';";
 $userTransactionResult = executeQuery($getUserTransactionQuery);
@@ -56,6 +88,10 @@ while ($row = mysqli_fetch_assoc($userTransactionResult)) {
 
 }
 
+if ($status == 'done') {
+    $disabled = 'disabled';
+    $review = 'open';
+}
 
 $getUserFavoriteQuery = "SELECT `bookID`, `userID` FROM `tbl_favorites` WHERE userID = '$userID' and bookID = '$bookID'";
 $userFavoriteResult = executeQuery($getUserFavoriteQuery);
@@ -67,6 +103,27 @@ $getUserWishlistQuery = "SELECT `bookID`, `userID` FROM `tbl_wishlist` WHERE use
 $userWishlistResult = executeQuery($getUserWishlistQuery);
 
 $wishlist = (mysqli_num_rows($userWishlistResult) > 0) ? 'checked' : '';
+
+
+
+if(isset($_POST['btnSubmitReview'])){
+    $userReview = $_POST['review'];
+    $userReview = str_replace('\'', '', $userReview);
+
+
+    $insertUserReviewQuery = "INSERT INTO `tbl_reviews`(`userID`, `bookID`, `userReview`, `userRating`) VALUES ('$userID','$bookID','$userReview','$rating');";
+    executeQuery( $insertUserReviewQuery);
+    
+}
+
+$getReviewQuery ="SELECT `reviewID` FROM `tbl_reviews` WHERE userID = '$userID' AND bookID='$bookID';";
+$reviewQuery = executeQuery($getReviewQuery);
+
+if (mysqli_num_rows($reviewQuery) > 0){
+   $review = 'close';
+}
+
+
 ?>
 
 
@@ -380,9 +437,11 @@ $wishlist = (mysqli_num_rows($userWishlistResult) > 0) ? 'checked' : '';
                 <div class="d-flex justify-content-between align-items-center mb-2" style="gap: 15px;">
                     <h1><?php echo $bookTitle ?></h1>
                     <div class="icons-wrapper" style="gap: 10px;">
-                        <input type="checkbox" class="heart-checkbox" id="heart-checkbox"  onchange="handleFavorite(this)" <?php echo $favorite ?>>
+                        <input type="checkbox" class="heart-checkbox" id="heart-checkbox"
+                            onchange="handleFavorite(this)" <?php echo $favorite ?>>
                         <label for="heart-checkbox" class="heart">❤</label>
-                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox"  onchange="handleWishlist(this)" <?php echo $wishlist ?>>
+                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox"
+                            onchange="handleWishlist(this)" <?php echo $wishlist ?>>
                         <label for="wishlist-checkbox" class="wishlist">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
@@ -397,6 +456,8 @@ $wishlist = (mysqli_num_rows($userWishlistResult) > 0) ? 'checked' : '';
                 <h5>Due: <?php echo $datetoReturn ?></h5>
 
                 <!-- Book image and review section -->
+
+
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6" style="margin-left: -15px;">
@@ -412,40 +473,74 @@ $wishlist = (mysqli_num_rows($userWishlistResult) > 0) ? 'checked' : '';
                         <!-- Review and rating -->
                         <div class="col-md-6 mt-3">
                             <h3>Status</h3>
-                            <button class="btn reading-now-btn mb-3 rounded-pill" name="buttonDone" style="cursor: pointer;">Done</button>
-                            
-
-                            <!-- Star ratings -->
-                            <div class="mb-2">
-                                <span class="fa fa-star checked" data-value="1" onclick="toggleStar(this)"></span>
-                                <span class="fa fa-star" data-value="2" onclick="toggleStar(this)"></span>
-                                <span class="fa fa-star" data-value="3" onclick="toggleStar(this)"></span>
-                                <span class="fa fa-star" data-value="4" onclick="toggleStar(this)"></span>
-                                <span class="fa fa-star" data-value="5" onclick="toggleStar(this)"></span>
-                            </div>
-                            <script>
-                                function toggleStar(star) {
-                                    if (star.style.color === 'gold') {
-                                        star.style.color = '#ccc';
-                                    } else {
-                                        star.style.color = 'gold';
-                                    }
-                                }
-                            </script>
-                            <form class="mt-4">
-                                <div class="mb-1">
-                                    <textarea class="form-control" id="statusNote" rows="3"
-                                        placeholder="Write your review here..."></textarea>
-                                </div>
-                                <div class="d-flex justify-content-end mt-2">
-                                    <button type="submit" class="btn btn-primary rounded-pill"
-                                        style="background-color: #a89450; border: none; padding: 4px 10px; font-size: 1rem;">Submit
-                                        and Return</button>
-                                </div>
+                            <form method="POST">
+                                <button class="btn reading-now-btn mb-3 rounded-pill" type=submit name="btnDone"
+                                    style="cursor: pointer;" <?php echo $disabled ?>>Done</button>
                             </form>
-                        </div>
+
+                            <?php
+                            if ($review == 'open') {
+
+                            
+                                ?>
+
+                                <!-- Star ratings -->
+                                <div class="mb-2">
+                                    <span class="fa fa-star" data-value="1" onclick="toggleStar(this)"></span>
+                                    <span class="fa fa-star" data-value="2" onclick="toggleStar(this)"></span>
+                                    <span class="fa fa-star" data-value="3" onclick="toggleStar(this)"></span>
+                                    <span class="fa fa-star" data-value="4" onclick="toggleStar(this)"></span>
+                                    <span class="fa fa-star" data-value="5" onclick="toggleStar(this)"></span>
+                                </div>
+                                <script>
+                                    function toggleStar(star) {
+                                        const selectedValue = parseInt(star.getAttribute('data-value')); 
+                                        const stars = document.querySelectorAll('.fa-star');
+
+                                       
+                                        stars.forEach(s => {
+                                            const value = parseInt(s.getAttribute('data-value'));
+                                            s.style.color = value <= selectedValue ? 'gold' : '#ccc'; 
+                                        });
+
+
+                                       
+                                        const formData = new FormData();
+                                        formData.append('rating', selectedValue);
+
+                                   
+                                        fetch('process_rating.php', {
+                                            method: 'POST',
+                                            body: formData,
+                                        })
+                                            .then(response => response.text())
+                                            .then(data => {
+                                                console.log(data); 
+                                            })
+                                            .catch(error => {
+                                                console.error('Error:', error);
+                                            });
+                                    }
+                                </script>
+                                <form method="POST" class="mt-4">
+                                    <div class="mb-1">
+                                        <textarea class="form-control" id="statusNote" name="review" rows="3"
+                                            placeholder="Write your review here..."></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-end mt-2">
+                                        <button type="submit" name="btnSubmitReview" class="btn btn-primary rounded-pill"
+                                            style="background-color: #a89450; border: none; padding: 4px 10px; font-size: 1rem;">Submit
+                                            and Return</button>
+                                    </div>
+                                </form>
+                            </div>
+                        <?php 
+                          }
+                          ?>
                     </div>
                 </div>
+
+
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
                 <script>
