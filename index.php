@@ -242,7 +242,7 @@ if (isset($_POST['feedbackBtn'])) {
             LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID 
             LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
             LEFT JOIN tbl_reviews ON tbl_books.bookID = tbl_reviews.bookID 
-            WHERE tbl_transactions.isApproved = 'approved' and tbl_transactions.status = 'done' 
+            WHERE tbl_transactions.isApproved = 'yes' and tbl_transactions.status = 'done' 
             GROUP BY tbl_transactions.bookID ORDER BY tbl_transactions.bookID ASC LIMIT 5;";
             $featuredBooksResult = executeQuery($getFeaturedBooksQuery);
 
