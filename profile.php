@@ -1,21 +1,3 @@
-<?php 
-
-include('connect.php');
-
-
-session_start();
-
-// Fetch user information from the database
-// $userID = $_SESSION['usersID'];
-
-$userID = '1';
-
-
-
-?>
-
-
-
 <!doctype html>
 <html lang="en">
 
