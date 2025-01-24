@@ -182,10 +182,10 @@ if (isset($_POST['feedbackBtn'])) {
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="homepage.html">Home</a>
+                        <a class="nav-link text-white" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="books.html">Books</a>
+                        <a class="nav-link text-white" href="User/books.php">Books</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#about">About</a>
@@ -302,7 +302,7 @@ if (isset($_POST['feedbackBtn'])) {
 
 
                 <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                    <a href="books.html?category=<?php echo $categoryID ?>">
+                    <a href="User/books.php?category=<?php echo $categoryID ?>">
                         <div class="card" style="background-color: transparent; border: none;">
                             <img src="assets/shared/img/bookCovers/<?php echo $categoryBookCover ?>" class="card-img-top"
                                 style="max-height: 380px;" alt="...">

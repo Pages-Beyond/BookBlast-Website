@@ -71,7 +71,7 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
         <div class="container-fluid">
             <!-- BookBlast Logo -->
             <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
-                <img src="assets/user/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
+                <img src="../assets/user/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -145,6 +145,7 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                             </button>
                         </div>
 
+                     
                     </div>
                     <hr>
                 </div>
