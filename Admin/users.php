@@ -1,6 +1,21 @@
 <?php
 include("connect.php");
 
+session_start();
+
+if (!isset($_SESSION['password'])) {
+    header("Location: ../login/login.php");
+}
+
+$userID = $_SESSION['userID'];
+
+$userQuery = "SELECT * FROM tbl_users WHERE role = 'admin' AND tbl_users.userID = '$userID'";
+
+$userResult = executeQuery($userQuery);
+while($row = mysqli_fetch_assoc($userResult)){
+    $userProfilePic = $row['userProfilePic'];
+};
+
 $userDetailsQuery = "SELECT tbl_transactions.*, tbl_users.*, tbl_addresses.*, refbrgy.*, refcitymun.*, refprovince.*,
     CONCAT(tbl_userinfo.firstName, ' ' ,tbl_userinfo.lastName) AS userFullName
     FROM tbl_transactions 
@@ -10,9 +25,19 @@ $userDetailsQuery = "SELECT tbl_transactions.*, tbl_users.*, tbl_addresses.*, re
     LEFT JOIN refcitymun ON tbl_addresses.cityID = refcitymun.cityID 
     LEFT JOIN refprovince ON tbl_addresses.provinceID = refprovince.provinceID 
     LEFT JOIN tbl_userinfo ON tbl_users.userID = tbl_userinfo.userID 
-    WHERE (isApproved = 'approved' AND status ='reading') GROUP BY userFullName";
+    WHERE (isApproved = 'approved' AND status = 'reading' AND isActive = 'YES') GROUP BY userFullName";
 
 $userDetailsResults = executeQuery($userDetailsQuery);
+
+if(isset($_POST['btnRestrict'])){
+    $userID = $_POST['userID'];
+
+    $updateUserStatus = "UPDATE tbl_users SET isActive = 'NO' WHERE userID = '$userID'";
+    executeQuery($updateUserStatus);
+
+    header("Location: users.php");
+
+}
 
 ?>
 

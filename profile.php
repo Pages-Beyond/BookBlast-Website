@@ -29,7 +29,6 @@ $query = "SELECT * FROM tbl_users WHERE role = 'user'";
 $result = executeQuery($query);
 $user = mysqli_fetch_assoc($result);
 
-
 session_start();
 
 // Fetch user information from the database

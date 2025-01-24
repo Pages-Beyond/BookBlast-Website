@@ -9,7 +9,7 @@
     }
 
     .bookTitle {
-        margin-top: -5px;
+        margin-top: 5px;
     }
 
     .navbar,
@@ -29,7 +29,7 @@
         height: 40px;
         border-radius: 50%;
         object-fit: cover;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     .navbar-brand-text {

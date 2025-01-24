@@ -45,7 +45,7 @@ if (isset($_POST['loginButton'])) {
       header ('location:../');
 
     }else{
-      header ('location:../Admin/books.html');
+      header ('location:../Admin/index.php');
     }
     
     

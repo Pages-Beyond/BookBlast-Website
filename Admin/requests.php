@@ -1,6 +1,21 @@
 <?php
 include("connect.php");
 
+session_start();
+
+if (!isset($_SESSION['password'])) {
+    header("Location: ../login/login.php");
+}
+
+$userID = $_SESSION['userID'];
+
+$userQuery = "SELECT * FROM tbl_users WHERE role = 'admin' AND tbl_users.userID = '$userID'";
+$userResult = executeQuery($userQuery);
+
+while($row = mysqli_fetch_assoc($userResult)){
+    $userProfilePic = $row['userProfilePic'];
+};
+
 date_default_timezone_set('Asia/Manila');
 
 $currentTime = date("F d, Y : H:i A");
@@ -67,7 +82,7 @@ if (isset($_POST['btnDecline'])) {
     <!-- Main Content -->
     <div class="main-content col-10 d-flex flex-column">
         <div class="bookTitle my-3">
-            <h1>Requests --- <?php echo $currentTime?></h1>
+            <h1>Requests</h1>
         </div>
 
         <?php include('process/requestProcess.php') ?>

@@ -1,9 +1,20 @@
 <?php
 include("connect.php");
 
-// if (!isset($_SESSION['email']) || ($_SESSION['contactNumber'])) {
-//     header("Location: loginPage.php");
-// }
+session_start();
+
+if (!isset($_SESSION['password'])) {
+    header("Location: ../login/login.php");
+}
+
+$userID = $_SESSION['userID'];
+
+$userQuery = "SELECT * FROM tbl_users WHERE role = 'admin' AND tbl_users.userID = '$userID'";
+$userResult = executeQuery($userQuery);
+
+while($row = mysqli_fetch_assoc($userResult)){
+    $userProfilePic = $row['userProfilePic'];
+};
 
 $booksQuery = "SELECT DISTINCT(bookTitle), tbl_books.bookID, tbl_books.categoryID, tbl_books.bookCover, tbl_authors.* FROM tbl_books 
                 INNER JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID";
@@ -43,11 +54,11 @@ if (isset($_POST['btnDelete'])) {
     <?php include("../assets/admin/shared/sidebar.php"); ?>
 
     <!-- Main Content -->
-    <div class="main-column col-10 d-flex flex-column align-items-start ps-3">
-        <div class="row w-100 align-items-center mt-3 mb-5">
+    <div class="main-column col-10 d-flex flex-column align-items-start p-3">
+        <div class="row align-items-center mt-3 mb-5">
             <!-- Book Title -->
             <div class="col-auto">
-                <h1 class="mb-0">Books</h1>
+                <h1 class="mb-0 ms-2">Books</h1>
             </div>
 
             <!-- Add Book Button -->
@@ -60,7 +71,7 @@ if (isset($_POST['btnDelete'])) {
                         <h3 class="mb-0 mx-2" style="flex-grow: 1; color: black">Add Book</h3>
 
                         <!-- Plus Icon -->
-                        <i class="fa-solid fa-plus mx-3" style="font-size: 48px; color: black"></i>
+                        <i class="fa-solid fa-plus mx-3" style="font-size: 28px; color: black"></i>
                     </div>
                 </a>
             </div>
