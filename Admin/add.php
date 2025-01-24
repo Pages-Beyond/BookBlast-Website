@@ -1,6 +1,23 @@
 <?php
 include("connect.php");
 
+session_start();
+
+if (!isset($_SESSION['password'])) {
+    header("Location: ../login/login.php");
+}
+
+$userID = $_SESSION['userID'];
+
+$userQuery = "SELECT * FROM tbl_users WHERE role = 'admin' AND tbl_users.userID = '$userID'";
+$userResult = executeQuery($userQuery);
+
+while($row = mysqli_fetch_assoc($userResult)){
+    $userProfilePic = $row['userProfilePic'];
+};
+
+
+
 $categoryFilter = '';
 $authorFilter = '';
 $imgNumber = '';

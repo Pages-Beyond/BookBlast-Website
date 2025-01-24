@@ -1,7 +1,7 @@
 <nav class="navbar navbar-fixed-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <div class="container-fluid">
-            <div class="navbar-brand d-flex align-items-center">
-                <img src="../assets/admin/img/artN.jpg" alt="Admin" class="navbar-brand-img">
+            <div class="navbar-brand d-flex align-items-center mx-3">
+                <img src="../assets/shared/img/profile/<?php echo $userProfilePic?>" alt="Admin" class="navbar-brand-img">
                 <span class="navbar-brand-text">Admin</span>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -15,7 +15,7 @@
                     <h5 class="text-white fw-bold mb-4 m-0" style="font-size: 2rem;">Menu</h5>
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="adminProfile.php" id="navbar-edit">Edit Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="loginPage.php" id="navbar-logout">Log Out</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Login/login.php" id="navbar-logout">Log Out</a></li>
                     </ul>
                 </div>
             </div>

@@ -5,12 +5,13 @@ if (mysqli_num_rows($userDetailsResults) > 0) {
         $userID = $userDetailsRows['userID'];
 
         // Query to fetch the books borrowed by this user
-        $borrowedBooksQuery = "SELECT tbl_books.*, tbl_authors.*,
+        $borrowedBooksQuery = "SELECT tbl_books.*, tbl_authors.*, tbl_transactions.*, tbl_users.*,
                 CONCAT(tbl_authors.firstName, ' ' ,tbl_authors.lastName) AS authorFullName
                 FROM tbl_transactions
+                LEFT JOIN tbl_users ON tbl_transactions.userID = tbl_users.userID 
                 LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID 
                 LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
-                WHERE userID = '$userID' AND status = 'reading'";
+                WHERE tbl_transactions.userID = '$userID' AND status = 'reading' AND isActive = 'YES'";
 
         $borrowedBooksResults = executeQuery($borrowedBooksQuery);
         ?>
@@ -62,7 +63,7 @@ if (mysqli_num_rows($userDetailsResults) > 0) {
                             <?php echo $book['authorFullName'] ?>
                         </h6>
                         <h6 style="color: white; margin: 0; flex: 1; margin-top: 2px;">
-                            2022-04-08
+                            <?php echo $book['datetoReturn'] ?>
                         </h6>
                     </div>
                     <?php
@@ -73,11 +74,18 @@ if (mysqli_num_rows($userDetailsResults) > 0) {
             ?>
 
             <!-- Restrict Button -->
-            <div style="display: flex; justify-content: flex-end; padding: 10px 20px;">
-                <button style="background-color: #B26424; color: white; padding: 10px 40px; border: none; border-radius: 5px;">
-                    Restrict
-                </button>
-            </div>
+            <form method="POST">
+
+                <div style="display: flex; justify-content: flex-end; padding: 10px 20px;">
+                    <input type="hidden" value="<?php echo $userID ?>" name="userID">
+                    <button type="submit" name="btnRestrict"
+                        style="background-color: #B26424; color: white; padding: 10px 40px; border: none; border-radius: 5px;">
+                        Restrict
+                    </button>
+                </div>
+
+            </form>
+
         </div>
 
         <?php
