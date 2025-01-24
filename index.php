@@ -9,6 +9,7 @@ $feedbackStat = '';
 
 
 
+
 if (!isset($_SESSION['userID'])) {
     header('location:Login/login.php');
 
@@ -18,7 +19,9 @@ $getUserPicQuery = "SELECT `userProfilePic` FROM `tbl_users` WHERE userID = $use
 $userPicResult = executeQuery($getUserPicQuery);
 
 while ($userPicRows = mysqli_fetch_assoc($userPicResult)) {
+    $_SESSION['userPic'] = $userPicRows['userProfilePic'];
     $userPic = $userPicRows['userProfilePic'];
+    
 }
 
 if (isset($_POST['feedbackBtn'])) {
@@ -194,8 +197,9 @@ if (isset($_POST['feedbackBtn'])) {
 
                 <!-- Profile Image -->
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
-                    <a class="profile" href="userDashboard.php">
-                        <img src="assets/img/homepage/img-profile.png" alt="Profile" class="rounded-circle"
+
+                    <a class="profile" href="User/userDashboard.php">
+                        <img src="assets/shared/img/userpfp/<?php echo $userPic; ?>" alt="Profile" class="rounded-circle"
                             style="width: 40px; height: 40px;">
                     </a>
                 </div>
