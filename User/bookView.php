@@ -12,6 +12,7 @@ $bookRating = '';
 $bookID = '';
 $dateReturned ='';
 $disabled = '';
+$favorite = '';
 
 if (isset($_GET['bookID']) && $_GET['bookID'] != '') {
     $bookID = $_GET['bookID'];
@@ -69,6 +70,13 @@ while ($row = mysqli_fetch_assoc($userTransactionResult)){
     $disabled = ($dateReturned == NULL || $stocks <= 0 || $userLimit == 5) ? 'disabled': '';
 
 }
+
+$getUserFavoriteQuery = "SELECT `bookID`, `userID` FROM `tbl_favorites` WHERE userID = '$userID' and bookID = '$bookID'";
+$userFavoriteResult = executeQuery($getUserFavoriteQuery);
+
+$favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
+    
+
 
 
 
@@ -206,9 +214,9 @@ while ($row = mysqli_fetch_assoc($userTransactionResult)){
                     <h2 class="text-white m-0" style="font-size: 4rem;">
                     <?php echo $bookTitle?>
                     </h2>
-                    <div class="icons-wrapper">
-                        <input type="checkbox" class="heart-checkbox" id="heart-checkbox" name="favoriteBtn">
-                        <label for="heart-checkbox" class="heart">❤</label>
+                    <div class="icons-wrapper"  data-book-id="123">
+                    <input type="checkbox" class="heart-checkbox" id="heart-checkbox" name="favoriteBtn" onchange="handleFavorite(this)" <?php echo $favorite?>>
+                    <label for="heart-checkbox" class="heart">❤</label>
                         <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox">
                         <label for="wishlist-checkbox" class="wishlist">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
@@ -327,6 +335,29 @@ while ($row = mysqli_fetch_assoc($userTransactionResult)){
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    function handleFavorite(checkbox) {
+        const isFavorite = checkbox.checked; // True if checked, false otherwise
+        const bookID = <?php echo $bookID ?>;
+
+        const formData = new FormData();
+        formData.append('bookID',  bookID);
+        formData.append('isFavorite', isFavorite ? 1 : 0);
+
+        fetch('handle_favorite.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Handle the response from the server
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 </body>
 
 </html>
