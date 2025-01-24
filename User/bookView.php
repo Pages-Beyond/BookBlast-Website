@@ -1,3 +1,38 @@
+<?php
+include('../shared/connect.php');
+
+$bookTitle = '';
+$bookAuthor = '';
+$bookCover = '';
+$bookRating = '';
+
+if (isset($_GET['bookID'])){
+    $bookID = $_GET['bookID'];
+    $getBookDataQuery = "SELECT * from tbl_Books 
+    LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
+    WHERE tbl_books.bookID = '$bookID';";
+
+    $bookResult = executeQuery($getBookDataQuery);
+
+    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) from tbl_rating WHERE bookID = '$bookID'";
+
+
+    while ($bookRow = mysqli_fetch_assoc($bookResult)){
+        $bookTitle = $bookRow['bookTitle'];
+        $bookAuthor = $bookRow['firstName']." ". $bookRow['lastName'];
+        $bookCover = $bookRow['bookCover'];
+      
+    }
+
+
+}else{
+    header('Location: ../');
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +40,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BookBlast | Website</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/homepage/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="../assets/user/img/homepage/bookblast-logo.png" />
     <link>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -125,7 +160,7 @@
 
                 <div class="title-content">
                     <h2 class="text-white m-0" style="font-size: 4rem;">
-                        Alice in Wonderland
+                        <?php echo $bookTitle ?>
                     </h2>
                     <div class="icons-wrapper">
                         <input type="checkbox" class="heart-checkbox" id="heart-checkbox">
@@ -144,10 +179,10 @@
 
             <!-- Author and Rating -->
             <div class="author-section mt-2">
-                <h3 class="text-white mb-1" style="font-size: 2rem;">John Doe</h3>
+                <h3 class="text-white mb-1" style="font-size: 2rem;"><?php echo $bookAuthor?></h3>
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-star checked"></span>
-                    <span class="text-white">4/5</span>
+                    <span class="text-white">3/5</span>
                 </div>
             </div>
         </div>
@@ -157,7 +192,7 @@
         <div class="row justify-content-center mb-5">
             <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                 <div class="card" style="border-radius: 10px;">
-                    <img src="assets/img/bookview/peterBig.png" class="card-img-top img-fluid" alt="Book Image"
+                    <img src="../assets/shared/img/bookCovers/<?php echo $bookCover?>" class="card-img-top img-fluid" alt="Book Image"
                         style="max-width: 100%; height: auto;">
                 </div>
 
