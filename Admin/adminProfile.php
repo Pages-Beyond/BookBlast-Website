@@ -24,7 +24,7 @@ if (isset($_POST['btnUpdate'])) {
     executeQuery($updateQuery);
 }
 
-$query = "SELECT * FROM tbl_users WHERE role = 'admin' LIMIT 1";
+$query = "SELECT * FROM tbl_users WHERE role = 'admin'";
 $result = executeQuery($query);
 $user = mysqli_fetch_assoc($result);
 
