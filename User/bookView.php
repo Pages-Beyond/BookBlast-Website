@@ -1,37 +1,89 @@
 <?php
 include('../shared/connect.php');
+session_start();
+
+
+$userID = $_SESSION['userID'];
 
 $bookTitle = '';
 $bookAuthor = '';
 $bookCover = '';
 $bookRating = '';
+$bookID = '';
+$dateReturned ='';
+$disabled = '';
+$favorite = '';
 
-if (isset($_GET['bookID'])){
+if (isset($_GET['bookID']) && $_GET['bookID'] != '') {
     $bookID = $_GET['bookID'];
+
+} else {
+    header('location: ../');
+
+}
+
+if ($bookID != '') {
     $getBookDataQuery = "SELECT * from tbl_Books 
     LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID 
     WHERE tbl_books.bookID = '$bookID';";
 
-    $bookResult = executeQuery($getBookDataQuery);
+    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) as bookRating from tbl_reviews WHERE bookID = '$bookID';";
 
-    $getBookRatingQuery = "SELECT ROUND(AVG(userRating),1) from tbl_rating WHERE bookID = '$bookID'";
+    $bookDataResult = executeQuery($getBookDataQuery);
 
+    while ($bookDataRow = mysqli_fetch_assoc($bookDataResult)) {
+        $bookTitle = $bookDataRow['bookTitle'];
+        $bookAuthor = $bookDataRow['firstName'] . " " . $bookDataRow['lastName'];
+        $bookCover = $bookDataRow['bookCover'];
 
-    while ($bookRow = mysqli_fetch_assoc($bookResult)){
-        $bookTitle = $bookRow['bookTitle'];
-        $bookAuthor = $bookRow['firstName']." ". $bookRow['lastName'];
-        $bookCover = $bookRow['bookCover'];
-      
+    }
+
+    $bookRatingResult = executeQuery($getBookRatingQuery);
+    while ($bookRatingRow = mysqli_fetch_assoc($bookRatingResult)) {
+        $bookRating = $bookRatingRow['bookRating'];
     }
 
 
-}else{
-    header('Location: ../');
+
+}
+
+if (isset($_POST['btnBorrow'])) {
+    $insertUserTransactionQuery = "INSERT INTO `tbl_transactions`(`bookID`, `userID`, `isApproved`, `isDeclined`, `status`) 
+    VALUES ('$bookID','$userID','pending','no','pending',);";
+
+    executeQuery($insertUserTransactionQuery);
+
+
 }
 
 
 
+
+
+$getUserTransactionQuery ="SELECT tbl_transactions.dateReturned, tbl_books.stocks, tbl_users.userLimit FROM `tbl_transactions` LEFT JOIN tbl_users ON tbl_transactions.userID = tbl_users.userID LEFT JOIN tbl_books ON tbl_transactions.bookID = tbl_books.bookID WHERE tbl_transactions.userID = '$userID' AND tbl_transactions.bookID='$bookID';";
+$userTransactionResult = executeQuery($getUserTransactionQuery);
+
+while ($row = mysqli_fetch_assoc($userTransactionResult)){
+    $dateReturned = $row['dateReturned'];
+    $stocks = $row['stocks'];
+    $userLimit = $row['userLimit'];
+    $disabled = ($dateReturned == NULL || $stocks <= 0 || $userLimit == 5) ? 'disabled': '';
+
+}
+
+$getUserFavoriteQuery = "SELECT `bookID`, `userID` FROM `tbl_favorites` WHERE userID = '$userID' and bookID = '$bookID'";
+$userFavoriteResult = executeQuery($getUserFavoriteQuery);
+
+$favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
+    
+
+
+
+
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +204,7 @@ if (isset($_GET['bookID'])){
         <div class="mb-4">
             <!-- Title Section with Back Arrow -->
             <div class="title-container">
-                <a href="#" onclick="history.go(-1)">
+                <a href="../">
                     <div class="back-arrow">
                         <i class="fa fa-chevron-left text-white" style="font-size: 2rem;"></i>
                     </div>
@@ -160,12 +212,12 @@ if (isset($_GET['bookID'])){
 
                 <div class="title-content">
                     <h2 class="text-white m-0" style="font-size: 4rem;">
-                        <?php echo $bookTitle ?>
+                    <?php echo $bookTitle?>
                     </h2>
-                    <div class="icons-wrapper">
-                        <input type="checkbox" class="heart-checkbox" id="heart-checkbox">
-                        <label for="heart-checkbox" class="heart">❤</label>
-                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox">
+                    <div class="icons-wrapper"  data-book-id="123">
+                    <input type="checkbox" class="heart-checkbox" id="heart-checkbox" name="favoriteBtn" onchange="handleFavorite(this)" <?php echo $favorite?>>
+                    <label for="heart-checkbox" class="heart">❤</label>
+                        <input type="checkbox" class="wishlist-checkbox" id="wishlist-checkbox" onchange="handleWishlist(this)">
                         <label for="wishlist-checkbox" class="wishlist">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-bookmark-star-fill" viewBox="0 0 16 16">
@@ -179,10 +231,10 @@ if (isset($_GET['bookID'])){
 
             <!-- Author and Rating -->
             <div class="author-section mt-2">
-                <h3 class="text-white mb-1" style="font-size: 2rem;"><?php echo $bookAuthor?></h3>
+                <h3 class="text-white mb-1" style="font-size: 2rem;"><?php echo $bookAuthor ?></h3>
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-star checked"></span>
-                    <span class="text-white">3/5</span>
+                    <span class="text-white"><?php echo $bookRating ?>/5</span>
                 </div>
             </div>
         </div>
@@ -192,105 +244,144 @@ if (isset($_GET['bookID'])){
         <div class="row justify-content-center mb-5">
             <div class="col-12 col-sm-10 col-md-8 col-lg-6">
                 <div class="card" style="border-radius: 10px;">
-                    <img src="../assets/shared/img/bookCovers/<?php echo $bookCover?>" class="card-img-top img-fluid" alt="Book Image"
-                        style="max-width: 100%; height: auto;">
+                    <img src="../assets/shared/img/bookCovers/<?php echo $bookCover ?>" class="card-img-top img-fluid"
+                        alt="Book Image" style="max-width: 100%; height: auto;">
                 </div>
 
                 <div class="d-flex justify-content-end mt-3">
-                    <button class="btn"
-                        style="background-color: #7D97A0; color: white; padding: 8px 14px; font-size: 16px;">Borrow</button>
-                </div>
-            </div>
-        </div>
+              
 
+                    <button type='button' class="btn" data-bs-toggle="modal"
+                        style="background-color: #7D97A0; color: white; padding: 8px 14px; font-size: 16px"
+                        data-bs-target="#deleteModal"<?php echo $disabled?>>Borrow</button>
+                    <form method="POST" action="bookView.php?bookID=<?php echo $bookID ?>">
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">BookBlast:
+                                            <?php echo $bookTitle ?></h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
 
-        <!-- Reviews Section -->
-        <h2 class="text-white mb-4">Reviews</h2>
-        <div class="row g-4">
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="d-flex p-3">
-                        <img src="assets/img/bookview/img-profile.png" class="rounded-circle"
-                            style="width: 80px; height: 80px;" alt="Profile">
-                        <div class="ms-3">
-                            <h5 class="card-title">Janna Macatangay</h5>
-                            <p class="card-text">This card has even longer content than the first to show that equal
-                                height action.</p>
-                            <div>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star checked"></span>
-                                <span class="fa fa-star"></span>
-                                <span class="fa fa-star"></span>
-                            </div>
-                        </div>
-                    </div>
+                                    <div class="modal-body">
+                                        Do you want to borrow this book?
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" name="btnBorrow" class="btn btn-primary"
+                                            >Yes</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
+    </div>
+    </div>
+
+
+    <!-- Reviews Section -->
+    <h2 class="text-white mb-4">Reviews</h2>
+    <div class="row g-4">
+        <?php
+        $getUserReviewQuery = "SELECT tbl_reviews.userID, tbl_reviews.userReview, tbl_reviews.userRating, tbl_users.userProfilePic, tbl_userinfo.firstName, tbl_userinfo.lastName FROM `tbl_reviews` 
+            LEFT JOIN tbl_users ON tbl_reviews.userID = tbl_users.userID
+            LEFT JOIN tbl_userinfo ON tbl_users.userID = tbl_userinfo.userID 
+            WHERE bookID = $bookID;";
+        $userReviewResult = executeQuery($getUserReviewQuery);
+        while ($userReviewRows = mysqli_fetch_assoc($userReviewResult)) {
+            $userReview = $userReviewRows['userReview'];
+            $userRating = $userReviewRows['userRating'];
+            $userProfilePic = $userReviewRows['userProfilePic'];
+            $userName = $userReviewRows['firstName'] . " " . $userReviewRows['lastName'];
+
+
+
+            ?>
+            <div class="col-12 col-lg-6">
+                <div class="card">
+                    <div class="d-flex p-3">
+                        <img src="../assets/shared/img/userpfp/<?php echo $userProfilePic ?>" class="rounded-circle"
+                            style="width: 80px; height: 80px;" alt="Profile">
+                        <div class="ms-3">
+                            <h5 class="card-title"><?php echo $userName ?></h5>
+                            <p class="card-text"><?php echo $userReview ?></p>
+                            <div>
+                                <span><?php echo $userRating ?>/5</span>
+                                <?php
+                                for ($i = 0; $i < 5; $i++) {
+                                    $checked = ($i < $userRating) ? 'checked' : '';
+                                    ?>
+                                    <span class="fa fa-star <?php echo $checked; ?>"></span>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+
+    </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    function handleFavorite(checkbox) {
+        const isFavorite = checkbox.checked; // True if checked, false otherwise
+        const bookID = <?php echo $bookID ?>;
+
+        const formData = new FormData();
+        formData.append('bookID',  bookID);
+        formData.append('isFavorite', isFavorite ? 1 : 0);
+
+        fetch('handle_favorite.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+
+<script>
+    function handleWishlist(checkbox) {
+        const isWishlist = checkbox.checked; // True if checked, false otherwise
+        const bookID = <?php echo $bookID ?>;
+
+        const formData = new FormData();
+        formData.append('bookID',  bookID);
+        formData.append('isWishlist', isWishlist ? 1 : 0);
+
+        fetch('handle_wishlist.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
 </body>
 
 </html>
