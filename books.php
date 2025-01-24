@@ -134,12 +134,25 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                             </a>
                         </div>
                         <!-- Sort By button -->
-                        <div class="col-auto">
-                            <button type="button" class="btn"
+                        <div class="col d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn mx-1"
+                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;" >
+                                Sort
+                            </button>
+                            <button type="button" class="btn mx-1"
                                 style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
-                                Sort By
+                                Order
                             </button>
                         </div>
+
+                        <!-- <div class="col" style="background-color: red;">
+                            <div class="container d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn"
+                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
+                                Order
+                            </button>
+                            </div>
+                        </div> -->
                     </div>
                     <hr>
                 </div>
