@@ -1,34 +1,21 @@
-<?php
+<?php 
+
 include('connect.php');
 
-if (isset($_POST['btnAdd'])) {
-    // Insert New User
-    $userName = $_POST['userName'];
-    $contactNumber = $_POST['contactNumber'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
 
-    $insertQuery = "INSERT INTO tbl_users (userName, contactNumber, email, address, role) VALUES ('$userName', '$contactNumber', '$email', '$address', 'user')";
-    executeQuery($insertQuery);
-}
+session_start();
 
-if (isset($_POST['btnUpdate'])) {
-    // Update Existing User
-    $userName = $_POST['userName'];
-    $contactNumber = $_POST['contactNumber'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    $userID = $_POST['userID'];
+// Fetch user information from the database
+// $userID = $_SESSION['usersID'];
 
-    $updateQuery = "UPDATE tbl_users SET userName='$userName', contactNumber='$contactNumber', email='$email', address='$address' WHERE userID='$userID' and role='user'";
-    executeQuery($updateQuery);
-}
+$userID = '1';
 
-$query = "SELECT * FROM tbl_users WHERE role = 'user' LIMIT 1";
-$result = executeQuery($query);
-$user = mysqli_fetch_assoc($result);
+
 
 ?>
+
+
+
 <!doctype html>
 <html lang="en">
 
