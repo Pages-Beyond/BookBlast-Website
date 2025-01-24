@@ -2,7 +2,7 @@
  <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img id="navbar-profile-photo" src="../assets/shared/img/profile/<?php echo $user['userProfilePic']?>" alt="Admin" class="navbar-brand-img">
+                <img id="navbar-profile-photo" src="../assets/shared/img/userpfp/<?php echo $user['userProfilePic']?>" alt="Admin" class="navbar-brand-img">
                 <span class="navbar-brand-text">Admin Profile</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-expanded="false" aria-label="Toggle navigation">

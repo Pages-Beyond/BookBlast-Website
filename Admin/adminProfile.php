@@ -53,7 +53,7 @@ if (isset($_POST['btnUpdateProfile'])) {
     $profileNewFileName = $imgNewName . $imgFileExt;
 
     //SET THE LOCATION
-    $imgFolder = "../assets/shared/img/profile/";
+    $imgFolder = "../assets/shared/img/userpfp/";
 
     move_uploaded_file($imgFileUploadTMP, $imgFolder . $profileNewFileName);
 
@@ -72,7 +72,7 @@ if (isset($_POST['btnUpdateProfile'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="assets/img/bookblast-logo.png" />
+    <link rel="icon" href="../assets/admin/img/bookblast-logo.png" type="image/png">
     <link rel="stylesheet" href="../assets/admin/css/adminProfile.css">
 </head>
 
@@ -85,7 +85,7 @@ if (isset($_POST['btnUpdateProfile'])) {
         <div class="row align-items-center">
             <div class="col-12 col-md-4 text-center mb-4 mb-md-0">
                 <div class="profile-photo-container d-flex justify-content-center">
-                    <img id="profile-photo" src="../assets/shared/img/profile/<?php echo $user['userProfilePic'] ?>"
+                    <img id="profile-photo" src="../assets/shared/img/userpfp/<?php echo $user['userProfilePic'] ?>"
                         alt="Profile Photo" class="rounded-circle"
                         style="width: 200px; height: 200px; object-fit: cover;">
                 </div>

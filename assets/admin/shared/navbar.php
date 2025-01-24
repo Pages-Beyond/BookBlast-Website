@@ -1,7 +1,7 @@
 <nav class="navbar navbar-fixed-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <div class="container-fluid">
             <div class="navbar-brand d-flex align-items-center mx-3">
-                <img src="../assets/shared/img/profile/<?php echo $userProfilePic?>" alt="Admin" class="navbar-brand-img">
+                <img src="../assets/shared/img/userpfp/<?php echo $userProfilePic?>" alt="Admin" class="navbar-brand-img">
                 <span class="navbar-brand-text">Admin</span>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
