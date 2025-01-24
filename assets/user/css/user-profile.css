@@ -99,31 +99,13 @@ body {
     }
 }
 
-.card {
-    background-color: #EBDDAE;
-    max-width: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin-right: 5rem;
-    margin-left: 0rem;
 
-}
 
-.card-img-top {
-    width: 60%;
-    height: 100%;
-    object-fit: contain;
-}
 
-.bookCard {
-    margin: 100px;
-}
 
 /* Responsiveness for Add Card */
 @media (max-width: 576px) {
-    .card .mt-2 h2 {
+    .mt-2 h2 {
         font-size: 1.5rem;
         /* Smaller font size for smaller screens */
     }
@@ -154,6 +136,16 @@ body {
     border-radius: 20px; /* Rounded corners */
     display: inline-block; /* Ensures the background wraps only around the text */
     font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.pending-now-title{
+        background-color: #B26424; /* Rounded background color */
+        color: white; /* Text color to contrast the background */
+        padding: 8px 16px; /* Padding for spacing */
+        border-radius: 20px; /* Rounded corners */
+        display: inline-block; /* Ensures the background wraps only around the text */
+        font-size: 1.5rem; /* Adjust font size as needed */
+  
 }
 
 .done-title {

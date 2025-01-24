@@ -131,22 +131,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Third Card -->
-                                <div class="col-md-4 col-lg-3 mb-4">
-                                    <div class="card" style="max-width: 14rem; min-width: 12rem; margin-bottom: 1rem;">
-                                        <img src="assets/img/userDashboard/peterpan.png" class="card-img-top"
-                                            alt="Dashboard Image" style="height: 160px; object-fit: cover;">
-                                    </div>
-                                    <div class="mt-2" style="max-width: 14rem;">
-                                        <h2 class="mb-0 me-2 text-wrap"
-                                            style="font-size: 1.25rem; word-wrap: break-word;">
-                                            Peter Pan Alice in Wonderland The Avengers
-                                        </h2>
-                                        <h5 class="text-wrap" style="font-size: 1rem; word-wrap: break-word;">
-                                            John Doe, Jane Doe, Sila sila, Tayo tayo
-                                        </h5>
-                                    </div>
-                                </div>
+                            
                             </div>
                         </a>
 
@@ -325,108 +310,70 @@
             function toggleFavorite(button) {
                 const card = button.closest('.favorite-card');
                 const heartIcon = button.querySelector('i');
-
+        
                 // Toggle the heart icon (filled/empty)
                 heartIcon.classList.toggle('fas');
                 heartIcon.classList.toggle('far');
-
+        
                 // If unhearted (empty heart), remove the card from favorites
                 if (heartIcon.classList.contains('far')) {
                     card.remove();
                 }
             }
-
+        
             // Function to toggle wishlist state and remove item if unfilled
             function toggleWishlist(button) {
                 const icon = button.querySelector('i');
                 const card = button.closest('.wishlist-card');
-
+        
                 if (icon.classList.contains('fas')) {
                     // Change to unfilled icon
                     icon.classList.remove('fas');
                     icon.classList.add('far');
-
+        
                     // Remove the card from the wishlist
                     card.remove();
                 } else {
                     // Change to filled icon
                     icon.classList.remove('far');
                     icon.classList.add('fas');
-
-                    // Optionally, you can add code here to move the item back to the wishlist if needed
                 }
             }
-
-            // Select all sidebar links
-            const sidebarLinks = document.querySelectorAll('.sidebar .nav-link');
-
-            // Function to handle the active state on click
-            sidebarLinks.forEach(link => {
-                link.addEventListener('click', function () {
-                    // Remove 'active' class from all sidebar links
-                    sidebarLinks.forEach(link => link.classList.remove('active'));
-
-                    // Add 'active' class to the clicked link
-                    this.classList.add('active');
-
-                    // Show the corresponding section
-                    const sectionId = this.id.replace('-link', '-section');
-                    document.querySelectorAll('.book-section, .favorites-section, .wishlists-section, .transactions-section').forEach(section => {
-                        section.style.display = 'none';
+        
+            // Sidebar Navigation Logic
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get all the sidebar links and sections
+                const sidebarLinks = document.querySelectorAll('.sidebar .nav-link');
+                const sections = document.querySelectorAll('.book-section, .favorites-section, .wishlists-section, .transactions-section');
+        
+                // Function to hide all sections
+                function hideAllSections() {
+                    sections.forEach(section => (section.style.display = 'none'));
+                }
+        
+                // Add click event listener to each link
+                sidebarLinks.forEach(link => {
+                    link.addEventListener('click', function () {
+                        // Remove 'active' class from all links
+                        sidebarLinks.forEach(link => link.classList.remove('active'));
+        
+                        // Add 'active' class to clicked link
+                        this.classList.add('active');
+        
+                        // Show the corresponding section
+                        hideAllSections();
+                        const sectionId = this.id.replace('-link', '-section');
+                        document.getElementById(sectionId).style.display = 'block';
                     });
-                    document.getElementById(sectionId).style.display = 'block';
                 });
-            });
-
-            // Automatically highlight the first link ('Books') as active when the page loads
-            document.getElementById('books-link').classList.add('active');
-            document.getElementById('book-section').style.display = 'block';
-
-
-            // Get all the sidebar links
-            const bookLink = document.getElementById('books-link');
-            const userLink = document.getElementById('favorites-link');
-            const requestLink = document.getElementById('wishlists-link');
-            const transactionLink = document.getElementById('transactions-link');
-
-            // Get the content sections
-            const bookSection = document.getElementById('book-section');
-            const favoritesSection = document.getElementById('favorites-section');
-            const wishlistsSection = document.getElementById('wishlists-section');
-            const transactionsSection = document.getElementById('transactions-section');
-
-            // Function to hide all sections
-            function hideAllSections() {
-                bookSection.style.display = 'none';
-                favoritesSection.style.display = 'none';
-                wishlistsSection.style.display = 'none';
-            }
-
-            // Add click event listeners to each link
-            bookLink.addEventListener('click', () => {
+        
+                // Automatically highlight the first link ('Books') and show its section
+                sidebarLinks[0].classList.add('active'); // First link as active
                 hideAllSections();
-                bookSection.style.display = 'block';
+                sections[0].style.display = 'block'; // Show first section
             });
-
-            userLink.addEventListener('click', () => {
-                hideAllSections();
-                favoritesSection.style.display = 'block';
-            });
-
-            requestLink.addEventListener('click', () => {
-                hideAllSections();
-                wishlistsSection.style.display = 'block';
-            });
-
-            transactionLink.addEventListener('click', () => {
-                hideAllSections();
-                transactionsSection.style.display = 'block';
-            });
-
-            // Show the default section (Books)
-            hideAllSections();
-            bookSection.style.display = 'block';
         </script>
+        
 </body>
 
 </html>

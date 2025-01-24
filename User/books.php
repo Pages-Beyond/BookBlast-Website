@@ -1,6 +1,9 @@
 <?php
-include("connect.php");
-include("classes.php");
+session_start();
+$userPic = $_SESSION['userPic'];
+$userID = $_SESSION['userID'];
+include("../shared/connect.php");
+include("../shared/classes.php");
 
 $books = array();
 $categoryID = null;
@@ -15,28 +18,58 @@ if ($categoryID !== null && isset($categoryNames[$categoryID])) {
 }
 
 $booksQuery = "SELECT 
-        tbl_books.bookID, 
-        tbl_books.categoryID, 
-        tbl_books.bookTitle, 
-        tbl_books.authorID, 
-        tbl_books.bookCover,
-        tbl_authors.firstName, 
-        tbl_authors.lastName 
-    FROM tbl_books
-    INNER JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID";
+    tbl_books.categoryID,
+    tbl_books.bookID, 
+    tbl_books.bookTitle, 
+    tbl_books.authorID, 
+    tbl_books.bookCover, 
+    tbl_authors.firstName, 
+    tbl_authors.lastName, 
+    ROUND(AVG(tbl_reviews.userRating), 1) AS avgRating 
+FROM tbl_books
+LEFT JOIN tbl_reviews ON tbl_books.bookID = tbl_reviews.bookID
+LEFT JOIN tbl_authors ON tbl_books.authorID = tbl_authors.authorID";
+
 
 if ($categoryID !== null) {
     $booksQuery .= " WHERE tbl_books.categoryID = '$categoryID'";
+}
 
+$booksQuery .= " GROUP BY 
+    tbl_books.bookID, 
+    tbl_books.bookTitle, 
+    tbl_books.authorID, 
+    tbl_books.bookCover, 
+    tbl_authors.firstName, 
+    tbl_authors.lastName";
+
+if ($categoryID !== null) {
     $categoryQuery = "SELECT categoryName FROM tbl_categories WHERE categoryID = '$categoryID'";
     $categoryResult = executeQuery($categoryQuery);
     $categoryRow = mysqli_fetch_assoc($categoryResult);
     $categoryName = $categoryRow['categoryName'];
 }
 
+
 $booksResults = executeQuery($booksQuery);
 
+
+
+
+
 while ($bookRow = mysqli_fetch_assoc($booksResults)) {
+    $bookID = $bookRow['bookID'];
+    $getUserFavoriteQuery = "SELECT `bookID`, `userID` FROM `tbl_favorites` WHERE userID = $userID AND bookID = $bookID";
+    $userFavoriteResult = executeQuery($getUserFavoriteQuery);
+    $favorite = (mysqli_num_rows($userFavoriteResult) > 0) ? 'checked' : '';
+
+
+    $getUserWishlistQuery = "SELECT `bookID`, `userID` FROM `tbl_wishlist` WHERE userID = '$userID' and bookID = '$bookID'";
+    $userWishlistResult = executeQuery($getUserWishlistQuery);
+
+    $wishlist = (mysqli_num_rows($userWishlistResult) > 0) ? 'checked' : '';
+
+
     array_push($books, new Book(
         $bookRow['bookID'],
         $bookRow['categoryID'],
@@ -44,9 +77,21 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
         $bookRow['authorID'],
         $bookRow['bookCover'],
         $bookRow['firstName'],
-        $bookRow['lastName']
+        $bookRow['lastName'],
+        $bookRow['avgRating'],
+        $favorite,
+        $wishlist
+
+
+
+
     ));
 }
+
+
+
+
+
 ?>
 
 <!doctype html>
@@ -56,13 +101,13 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BookBlast | Website</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/books/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="../assets/user/img/homepage/bookblast-logo.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" href="assets/user/css/books.css">
+    <link rel="stylesheet" href="../assets/user/css/books.css">
 
 </head>
 
@@ -70,8 +115,8 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
     <nav class="navbar navbar-expand-lg shadow" style="background-color: #5E4447;">
         <div class="container-fluid">
             <!-- BookBlast Logo -->
-            <a href="homepage.html" class="navbar-brand" style="padding-left: 30px;">
-                <img src="assets/user/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
+            <a href="../" class="navbar-brand" style="padding-left: 30px;">
+                <img src="../assets/user/img/homepage/bookblast-logoSmall.png" alt="BookBlast Logo">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -82,20 +127,20 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <!-- Navbar links -->
                     <li class="nav-item active-main-item">
-                        <a class="nav-link" href="homepage.html">Home</a>
+                        <a class="nav-link" href="../index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="books.html">Books</a>
+                        <a class="nav-link" href="books.php">Books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="homepage.html#about">About</a>
+                        <a class="nav-link" href="../index.php#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="homepage.html#help">Help</a>
+                        <a class="nav-link" href="../index.php#help">Help</a>
                     </li>
                     <!-- Profile Image -->
-                    <a class="profile" href="userDashboard.html">
-                        <img src="assets/user/img/homepage/img-profile.png" alt="Profile">
+                    <a class="profile" href="userDashboard.php">
+                        <img src="../assets/shared/img/userpfp/<?php echo $userPic ?>" alt="Profile">
                     </a>
                 </ul>
 
@@ -134,25 +179,18 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                             </a>
                         </div>
                         <!-- Sort By button -->
-                        <div class="col d-flex align-items-center justify-content-center">
+                        <!-- <div class="col d-flex align-items-center justify-content-center">
                             <button type="button" class="btn mx-1"
-                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;" >
+                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
                                 Sort
                             </button>
                             <button type="button" class="btn mx-1"
                                 style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
                                 Order
                             </button>
-                        </div>
-
-                        <!-- <div class="col" style="background-color: red;">
-                            <div class="container d-flex align-items-center justify-content-center">
-                            <button type="button" class="btn"
-                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
-                                Order
-                            </button>
-                            </div>
                         </div> -->
+
+
                     </div>
                     <hr>
                 </div>
@@ -200,11 +238,11 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
             <!-- Books -->
             <div class="col-12 col-md-9">
                 <?php if ($categoryName): ?>
-                <div class="container mt-4">
-                    <h3 class="text-center text-uppercase" style="color: white;">
-                        <?php echo $categoryName; ?>
-                    </h3>
-                </div>
+                    <div class="container mt-4">
+                        <h3 class="text-center text-uppercase" style="color: white;">
+                            <?php echo $categoryName; ?>
+                        </h3>
+                    </div>
                 <?php endif; ?>
 
                 <div class="row">
@@ -241,6 +279,53 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+
+        <script>
+            function handleFavorite(checkbox) {
+                const isFavorite = checkbox.checked;
+                const bookID = checkbox.id.replace('favorite', ''); 
+                console.log('Clicked checkbox for book ID:', bookID);
+                const formData = new FormData();
+                formData.append('bookID', bookID);
+                formData.append('isFavorite', isFavorite ? 1 : 0);
+
+                fetch('handle_favorite.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        </script>
+
+
+        <script>
+            function handleWishlist(checkbox) {
+                const isWishlist = checkbox.checked; 
+                const bookID = checkbox.id.replace('wishlist', ''); 
+                console.log('Clicked checkbox for book ID:', bookID);
+                const formData = new FormData();
+                formData.append('bookID', bookID);
+                formData.append('isWishlist', isWishlist ? 1 : 0);
+
+                fetch('handle_wishlist.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        </script>
 </body>
 
 </html>
