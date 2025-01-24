@@ -1,6 +1,6 @@
 <?php
-include("connect.php");
-include("classes.php");
+include("../shared/connect.php");
+include("../shared/classes.php");
 
 $books = array();
 $categoryID = null;
@@ -62,7 +62,7 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" href="assets/user/css/books.css">
+    <link rel="stylesheet" href="../assets/user/css/books.css">
 
 </head>
 
@@ -145,14 +145,6 @@ while ($bookRow = mysqli_fetch_assoc($booksResults)) {
                             </button>
                         </div>
 
-                        <!-- <div class="col" style="background-color: red;">
-                            <div class="container d-flex align-items-center justify-content-center">
-                            <button type="button" class="btn"
-                                style="background-color: #7D97A0; border-color: #7D97A0; color: white;">
-                                Order
-                            </button>
-                            </div>
-                        </div> -->
                     </div>
                     <hr>
                 </div>

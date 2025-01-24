@@ -24,8 +24,8 @@ class Book
         return "
             <div class='col'>
                 <div class='card' style='background-color: transparent; border: none;'>
-                    <a href='User/bookView.php?bookID={$this->bookID}' style='text-decoration: none; color: white;'>
-                        <img src='assets/shared/img/bookCovers/{$this->bookCover}' class='card-img-top' alt='{$this->bookTitle}' style='width: 200px; height: 300px; object-fit: cover;'>
+                    <a href='bookView.php?bookID={$this->bookID}' style='text-decoration: none; color: white;'>
+                        <img src='../assets/shared/img/bookCovers/{$this->bookCover}' class='card-img-top' alt='{$this->bookTitle}' style='width: 200px; height: 300px; object-fit: cover;'>
                     </a>
                     <div class='card-body' style='color: white; width: 200px; display: flex; flex-direction: column; justify-content: flex-end; padding: 10px;'>
                         <!-- Book Title -->

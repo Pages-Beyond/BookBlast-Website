@@ -28,7 +28,7 @@ if (isset($_POST['btnUpdate'])) {
 $query = "SELECT * FROM tbl_users WHERE role = 'user'";
 $result = executeQuery($query);
 $user = mysqli_fetch_assoc($result);
-=======
+
 
 session_start();
 
