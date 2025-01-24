@@ -182,10 +182,10 @@ if (isset($_POST['feedbackBtn'])) {
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="homepage.html">Home</a>
+                        <a class="nav-link text-white" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="books.html">Books</a>
+                        <a class="nav-link text-white" href="books.php">Books</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#about">About</a>
