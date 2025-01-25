@@ -11,8 +11,6 @@ if (!isset($_SESSION['password'])) {
 
 $userID = $_SESSION['userID'];
 
-
-
 if (isset($_POST['btnUpdate'])) {
     // Update Existing User
     $firstName = $_POST['firstName'];
@@ -57,7 +55,7 @@ if (isset($_POST['btnUpdateProfile'])) {
     $profileNewFileName = $imgNewName . $imgFileExt;
 
     //SET THE LOCATION
-    $imgFolder = "assets/shared/img/userpfp/";
+    $imgFolder = "../assets/shared/img/userpfp/";
 
     move_uploaded_file($imgFileUploadTMP, $imgFolder . $profileNewFileName);
 
@@ -78,7 +76,7 @@ if (isset($_POST['btnUpdateProfile'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="assets/img/bookblast-logo.png" />
+    <link rel="icon" type="image/x-icon" href="../assets/user/img/profile/bookblast-logo.png"/>
     <link rel="stylesheet" href="../assets/user/css/user-profile.css">
 </head>
 
@@ -137,7 +135,7 @@ if (isset($_POST['btnUpdateProfile'])) {
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content">
+                                <div class="modal-content" style="background-color: #C29A7D;">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Book Blast</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -269,13 +267,11 @@ if (isset($_POST['btnUpdateProfile'])) {
             const newUsername = document.getElementById('edit-username').value;
             const newMobileNumber = document.getElementById('edit-mobile-number').value;
             const newEmail = document.getElementById('edit-email').value;
-            const newAddress = document.getElementById('edit-address').value;
 
             // Update the profile information on the page
             document.getElementById('username').textContent = newUsername; // Update Username
             document.getElementById('mobile-number').textContent = newMobileNumber;
             document.getElementById('email').textContent = newEmail;
-            document.getElementById('address').textContent = newAddress;
 
             // Close the modal after saving changes
             const modal = bootstrap.Modal.getInstance(document.getElementById('editUserInfoModal'));

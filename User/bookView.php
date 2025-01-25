@@ -49,7 +49,7 @@ if ($bookID != '') {
 
 if (isset($_POST['btnBorrow'])) {
     $insertUserTransactionQuery = "INSERT INTO `tbl_transactions`(`bookID`, `userID`, `isApproved`, `isDeclined`, `status`) 
-    VALUES ('$bookID','$userID','pending','no','pending',);";
+    VALUES ('$bookID','$userID','pending','no','pending');";
 
     executeQuery($insertUserTransactionQuery);
 
