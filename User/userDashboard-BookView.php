@@ -16,7 +16,7 @@ $userID = $_SESSION['userID'];
 $userPic = $_SESSION['userPic'];
 
 $disabled = '';
-
+$review = '';
 
 
 $getUserNameQuery = "SELECT tbl_userInfo.firstName,  tbl_userInfo.lastName FROM `tbl_users` LEFT JOIN tbl_userinfo on tbl_users.userID = tbl_userinfo.userID WHERE tbl_users.userID = $userID";
@@ -122,7 +122,6 @@ $reviewQuery = executeQuery($getReviewQuery);
 if (mysqli_num_rows($reviewQuery) > 0){
    $review = 'close';
 }
-
 
 ?>
 

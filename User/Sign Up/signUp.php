@@ -118,11 +118,11 @@ if (isset($_POST['btnRegister'])) {
             <div class="row justify-content-center g-1">
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <input type="text" class="form-control" placeholder="First Name" name="firstName"
-                        value="<?php echo htmlspecialchars($firstName); ?>">
+                        value="<?php echo htmlspecialchars($firstName); ?>" required>
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <input type="text" class="form-control" placeholder="Last Name" name="lastName"
-                        value="<?php echo htmlspecialchars($lastName); ?>">
+                        value="<?php echo htmlspecialchars($lastName); ?>" required>
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
@@ -130,13 +130,13 @@ if (isset($_POST['btnRegister'])) {
                     <small>Format: 09xx-xxx-xxxx</small>
                     <input type="text" class="form-control"
                         placeholder="Contact Number" name="contactNumber" maxlength="11"
-                        value="<?php echo htmlspecialchars($contactNumber); ?>">
+                        value="<?php echo htmlspecialchars($contactNumber); ?>" required>
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <input type="text" class="form-control" placeholder="Lot no./Street/House no." name="street"
-                        value="<?php echo htmlspecialchars($street); ?>">
+                        value="<?php echo htmlspecialchars($street); ?>" required>
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <select class="form-select customSelect form-select-md" onchange="this.form.submit()"
@@ -162,7 +162,7 @@ if (isset($_POST['btnRegister'])) {
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <select class="form-select customSelect form-select-md" name="citySelect"
-                        onchange="this.form.submit()" <?php echo empty($provinceSelectResult) ? 'disabled' : ''; ?>>
+                        onchange="this.form.submit()" <?php echo empty($provinceSelectResult) ? 'disabled' : ''; ?> required>
                         <option value="" selected>Select City</option>
                         <?php
                         if ($provinceCodearr) {
@@ -182,8 +182,8 @@ if (isset($_POST['btnRegister'])) {
                     </select>
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
-                    <select class="form-select customSelect form-select-md" name="barangaySelect"
-                        onchange="this.form.submit()" <?php echo empty($citySelectResult && $provinceSelectResult) ? 'disabled' : ''; ?>>
+                    <select class="form-select customSelect form-select-md" name="barangaySelect" 
+                        onchange="this.form.submit()" <?php echo empty($citySelectResult && $provinceSelectResult) ? 'disabled' : ''; ?> required>
                         <option value="" selected>Select Barangay</option>
                         <?php
                         if ($citymunCodearr) {
@@ -207,19 +207,19 @@ if (isset($_POST['btnRegister'])) {
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
                     <input type="text" class="form-control" placeholder="Email" name="email"
-                        value="<?php echo htmlspecialchars($email); ?>">
+                        value="<?php echo htmlspecialchars($email); ?>" required>
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
                     <input type="password" class="form-control" placeholder="Password" name="password"
-                        value="<?php echo htmlspecialchars($password); ?>">
+                        value="<?php echo htmlspecialchars($password); ?>" required>
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
                     <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword"
-                        value="<?php echo htmlspecialchars($confirmPassword); ?>">
+                        value="<?php echo htmlspecialchars($confirmPassword); ?>" required>
                 </div>
             </div>
             <div class="row justify-content-center g-1 mt-4">

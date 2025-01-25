@@ -21,7 +21,7 @@ $userPicResult = executeQuery($getUserPicQuery);
 while ($userPicRows = mysqli_fetch_assoc($userPicResult)) {
     $_SESSION['userPic'] = $userPicRows['userProfilePic'];
     $userPic = $userPicRows['userProfilePic'];
-    
+
 }
 
 if (isset($_POST['feedbackBtn'])) {
@@ -89,11 +89,12 @@ if (isset($_POST['feedbackBtn'])) {
 
     .navbar-brand img {
         max-height: 40px;
+        object-fit: cover;
     }
 
     .profile img {
         width: auto;
-        max-height: 35px;
+        max-height: 40px;
         border-radius: 50%;
         transition: all 0.3s ease;
         margin-top: -5px;
@@ -199,8 +200,8 @@ if (isset($_POST['feedbackBtn'])) {
                 <div class="d-flex justify-content-center mt-3 mt-lg-0">
 
                     <a class="profile" href="User/userDashboard.php">
-                        <img src="assets/shared/img/userpfp/<?php echo $userPic; ?>" alt="Profile" class="rounded-circle"
-                            style="width: 40px; height: 40px;">
+                        <img src="assets/shared/img/userpfp/<?php echo $userPic; ?>" alt="Profile"
+                            class="navbar-brand" style="width: 40px; height: 40px;">
                     </a>
                 </div>
             </div>

@@ -103,7 +103,7 @@ if (isset($_POST['btnUpdateProfile'])) {
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog">
-                                <div class="modal-content">
+                                <div class="modal-content" style="background-color: #C29A7D;">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Book Blast</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
