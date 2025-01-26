@@ -140,7 +140,7 @@ if (isset($_POST['btnRegister'])) {
                 </div>
                 <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2">
                     <select class="form-select customSelect form-select-md" onchange="this.form.submit()"
-                        name="provinceSelect">
+                        name="provinceSelect" required>
                         <option value='' selected>Select Province</option>
                         <?php
                         $getProvinceQuery = "SELECT provinceID, provCode, provDesc  FROM `refprovince` ORDER BY provDesc ASC;";
@@ -150,7 +150,7 @@ if (isset($_POST['btnRegister'])) {
                             $selected = ($provinceSelectResult == $provinceRows['provinceID'] . ',' . $provinceRows['provCode']) ? 'selected' : '';
                             ?>
                             <option value="<?php echo $provinceRows['provinceID'] . ',' . $provinceRows['provCode'] ?>"
-                                <?php echo $selected ?>>
+                                <?php echo $selected ?> required>
                                 <?php echo $provinceRows['provDesc']; ?>
                             </option>
                             <?php
@@ -206,7 +206,7 @@ if (isset($_POST['btnRegister'])) {
             </div>
             <div class="row justify-content-center g-1 mt-2">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-                    <input type="text" class="form-control" placeholder="Email" name="email"
+                    <input type="email" class="form-control" placeholder="Email" name="email"
                         value="<?php echo htmlspecialchars($email); ?>" required>
                 </div>
             </div>

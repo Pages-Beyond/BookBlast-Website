@@ -52,7 +52,7 @@ if (isset($_POST['btnSubmit'])) {
     $imgNewFileName = $imgNewName . $imgFileExt;
 
     //SET THE LOCATION
-    $imgFolder = "../assets/img/bookCovers/";
+    $imgFolder = "../assets/shared/img/bookCovers/";
 
     move_uploaded_file($imgFileUploadTMP, $imgFolder . $imgNewFileName);
 
